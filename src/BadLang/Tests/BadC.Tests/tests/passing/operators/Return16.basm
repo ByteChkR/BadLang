@@ -1,0 +1,21 @@
+.dependency TestFramework
+
+.data data data_raw BASM_DATA
+{
+	.cstr FailMsg assembly "16-bit Return Failed"
+}
+
+.code code code_raw BadC
+{
+	void __main__() : export
+	{
+		i16 v = Test();
+		TestFramework::Assert::Equals16(v, 1, &data::FailMsg);
+		halt;
+	}
+
+	i16 Test()
+	{
+		return 1;
+	}
+}

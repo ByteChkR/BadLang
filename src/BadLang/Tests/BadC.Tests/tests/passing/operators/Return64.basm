@@ -1,0 +1,21 @@
+.dependency TestFramework
+
+.data data data_raw BASM_DATA
+{
+	.cstr FailMsg assembly "64-bit Return Failed"
+}
+
+.code code code_raw BadC
+{
+	void __main__() : export
+	{
+		i64 v = Test();
+		TestFramework::Assert::Equals64(v, 1, &data::FailMsg);
+		halt;
+	}
+
+	i64 Test()
+	{
+		return 1;
+	}
+}

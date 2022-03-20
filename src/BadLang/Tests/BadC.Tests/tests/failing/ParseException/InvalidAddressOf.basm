@@ -1,0 +1,9 @@
+
+.code code code_raw BadC
+{
+	void __main__() : export
+	{
+		i64 valueA = &10;
+		halt;
+	}
+}

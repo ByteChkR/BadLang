@@ -1,0 +1,331 @@
+.data Allocator_Data data_raw BASM_DATA
+{
+
+	.cstr InvalidBlockLength assembly "The Block Length for the allocator has an invalid size"
+	.cstr InvalidTableSize assembly "The TableSize is not a multiple of sizeof(AllocatorEntry)"
+	.cstr OutOfTableEntries assembly "Reached Allocator Table Entry Limit"
+	.cstr EntryShrinkNotSupported assembly "Shrinking a AllocatorEntry is not supported"
+	.cstr PointerNotPartOfAllocator assembly "The given pointer is not a part of this allocator"
+	
+
+
+
+	.cstr DebugEntryIndex assembly "\t\tE: "
+	.cstr DebugEntryPtr assembly " P: "
+	.cstr DebugEntrySize assembly " S: "
+	.cstr DebugEntryFree assembly " F: "
+	.cstr DebugTableHeader assembly "Allocation Table:"
+	.cstr DebugTotalTableEntries assembly "\tTotal Table Entries: "
+	.cstr DebugTotalSize assembly "\tTotal Size: "
+	.cstr DebugUsableSize assembly "\tUsable Size: "
+
+}
+
+.code Allocator code_raw BadC
+{
+
+	struct AllocatorEntry : assembly
+	{
+		i64 m_Pointer;
+		i64 m_Size;
+		i8 m_IsFree;
+
+		i8 IsUsed()
+		{
+			i8 r = this->m_Pointer != 0;
+			return r;
+		}
+
+		void SetFree(i8 isFree) : assembly
+		{
+			this->m_IsFree = isFree;
+			return;
+		}
+
+		void SetSize(i64 size) : assembly
+		{
+			this->m_Size = size;
+			return;
+		}
+
+		void SetPointer(i64 ptr) : assembly
+		{
+			this->m_Pointer = ptr;
+			return;
+		}
+
+		i8 IsFree() : assembly
+		{
+			return this->m_IsFree;
+		}
+
+		i64 Size() : assembly
+		{
+			return this->m_Size;
+		}
+
+		i64 Pointer() : assembly
+		{
+			return this->m_Pointer;
+		}
+	}
+
+	struct Allocator : export
+	{
+		i64 m_BlockStart;
+		i64 m_BlockLength;
+		i64 m_TableSize;
+
+		void InitBlock()
+		{
+
+			if(this->m_BlockLength < this->m_TableSize)
+			{
+				Error::Error(&Allocator_Data::InvalidBlockLength);
+			};
+
+
+			i64 current = this->m_BlockStart;
+			i64 end = current + this->m_BlockLength;
+
+			//while(current < end) { *cast<i8*>(current) = 0; current++; };
+
+			return;
+		}
+		void InitTable()
+		{
+
+			if(this->m_TableSize % sizeof(AllocatorEntry) != 0)
+			{
+				Error::Error(&Allocator_Data::InvalidTableSize);
+			};
+
+			AllocatorEntry* entry = cast<AllocatorEntry*>(this->m_BlockStart);
+
+			entry->SetPointer(this->m_BlockStart + this->m_TableSize);
+			entry->SetSize(this->GetUsableSize());
+			entry->SetFree(1);
+			return;
+		}
+
+		AllocatorEntry* FindFree(i64 minSize)
+		{
+			i64 entryCount = this->GetEntryCount();
+			i64 current = 0;
+			while(current < entryCount)
+			{
+				AllocatorEntry* ptr = cast<AllocatorEntry*>(this->m_BlockStart + current * sizeof(AllocatorEntry));
+				if(ptr->IsUsed() != 0 && ptr->IsFree() != 0 && ptr->Size() >= minSize)
+				{
+					return ptr;
+				};
+
+				current++;
+			};
+			Error::Error(&Allocator_Data::OutOfTableEntries);
+			return cast<AllocatorEntry*>(0);
+		}
+
+		AllocatorEntry* FindUnused()
+		{
+			i64 entryCount = this->GetEntryCount();
+			i64 current = 0;
+			while(current < entryCount)
+			{
+				AllocatorEntry* ptr = cast<AllocatorEntry*>(this->m_BlockStart + current * sizeof(AllocatorEntry));
+				if(ptr->IsUsed() == 0)
+				{
+					return ptr;
+				};
+
+				current++;
+			};
+			Error::Error(&Allocator_Data::OutOfTableEntries);
+			return cast<AllocatorEntry*>(0);
+		}
+
+		AllocatorEntry* FindPrevious(AllocatorEntry* cur)
+		{
+			i64 entryCount = this->GetEntryCount();
+			i64 current = 0;
+			while(current < entryCount)
+			{
+				AllocatorEntry* ptr = cast<AllocatorEntry*>(this->m_BlockStart + current * sizeof(AllocatorEntry));
+				if(ptr->IsUsed() != 0 && ptr->Pointer() + ptr->Size() == cur->Pointer())
+				{
+					return ptr;
+				};
+
+				current++;
+			};
+			return cast<AllocatorEntry*>(0);
+		}
+
+
+		AllocatorEntry* FindByPointer(i64 p)
+		{
+			i64 entryCount = this->GetEntryCount();
+			i64 current = 0;
+			while(current < entryCount)
+			{
+				AllocatorEntry* ptr = cast<AllocatorEntry*>(this->m_BlockStart + current * sizeof(AllocatorEntry));
+				if(ptr->IsUsed() != 0 && ptr->Pointer() == p)
+				{
+					return ptr;
+				};
+
+				current++;
+			};
+			return cast<AllocatorEntry*>(0);
+		}
+
+		void Resize(AllocatorEntry* entry, i64 size)
+		{
+			if(entry->Size() < size)
+			{
+				Error::Error(&Allocator_Data::EntryShrinkNotSupported);
+				return;
+			};
+
+			i64 remainingSize = entry->Size() - size;
+			if(remainingSize == 0)
+			{
+				return;
+			};
+
+			AllocatorEntry* unused = this->FindUnused();
+			unused->SetPointer(entry->Pointer() + size);
+			unused->SetSize(remainingSize);
+			unused->SetFree(1);
+
+			entry->SetSize(size);
+
+			return;
+		}
+
+		void SetBlock(i64 blockStart, i64 blockSize, i64 tableSize) : export
+		{
+			this->m_BlockStart = blockStart;
+			this->m_BlockLength = blockSize;
+			this->m_TableSize = tableSize * sizeof(AllocatorEntry);
+
+
+			//Initialize block and set up the allocation table
+			this->InitBlock();
+			this->InitTable();
+
+			return;
+		}
+
+		void* Allocate(i64 size) : export
+		{
+			AllocatorEntry* free = this->FindFree(size);
+			this->Resize(free, size);
+			free->SetFree(0);
+			return cast<void*>(free->Pointer());
+		}
+
+		void Free(void* ptr) : export
+		{
+			AllocatorEntry* used = this->FindByPointer(cast<i64>(ptr));
+
+			if(cast<i64>(used) == 0)
+			{
+				Error::Error(&Allocator_Data::PointerNotPartOfAllocator);
+				return;
+			};
+
+			used->SetFree(1);
+
+			this->DefragmentTableEntry(used);
+
+			return;
+		}
+
+		void DefragmentTableEntry(AllocatorEntry* entry)
+		{
+			AllocatorEntry* prev = this->FindPrevious(entry);
+
+			if(cast<i64>(prev) != 0 && prev->IsFree())
+			{
+				prev->SetSize(prev->Size() + entry->Size());
+				entry->SetPointer(0);
+				entry->SetSize(0);
+				entry->SetFree(0);
+				entry = prev;
+			};
+
+			AllocatorEntry* next = this->FindByPointer(entry->Pointer() + entry->Size());
+			if(cast<i64>(next) != 0 && next->IsFree())
+			{
+				entry->SetSize(entry->Size() + next->Size());
+				next->SetPointer(0);
+				next->SetSize(0);
+				next->SetFree(0);
+			};
+
+			return;
+		}
+
+		i64 GetUsableSize() : export
+		{
+			return this->m_BlockLength - this->m_TableSize;
+		}
+
+		i64 GetTotalSize() : export
+		{
+			return this->m_BlockLength;
+		}
+
+		i64 GetEntryCount()
+		{
+			return this->m_TableSize / sizeof(AllocatorEntry);
+		}
+
+		void PrintAllocationEntry(AllocatorEntry* ptr, i64 current)
+		{
+			if(ptr->IsUsed())
+			{
+				Console::Interop::Write(&Allocator_Data::DebugEntryIndex);
+				Console::Interop::WriteNum(cast<i64>(current));
+				Console::Interop::Write(&Allocator_Data::DebugEntryPtr);
+				Console::Interop::WriteHex(ptr->Pointer());
+				Console::Interop::Write(&Allocator_Data::DebugEntrySize);
+				Console::Interop::WriteNum(ptr->Size());
+				Console::Interop::Write(&Allocator_Data::DebugEntryFree);
+				Console::Interop::WriteNum(cast<i64>(ptr->IsFree()));
+				Console::Interop::WriteChar(0x0A);
+			};
+			return;
+		}
+
+		void PrintAllocationTable() : export
+		{
+			i64 entryCount = this->GetEntryCount();
+			i64 current = 0;
+
+
+			Console::Interop::WriteLine(&Allocator_Data::DebugTableHeader);
+			Console::Interop::Write(&Allocator_Data::DebugTotalTableEntries);
+			Console::Interop::WriteNum(this->GetEntryCount());
+			Console::Interop::WriteChar(0x0A);
+			Console::Interop::Write(&Allocator_Data::DebugTotalSize);
+			Console::Interop::WriteHex(this->GetTotalSize());
+			Console::Interop::WriteChar(0x0A);
+			Console::Interop::Write(&Allocator_Data::DebugUsableSize);
+			Console::Interop::WriteHex(this->GetUsableSize());
+			Console::Interop::WriteChar(0x0A);
+
+			while(current < entryCount)
+			{
+				i64 addr = this->m_BlockStart + current * sizeof(AllocatorEntry);
+				AllocatorEntry* ptr = cast<AllocatorEntry*>(addr);
+				this->PrintAllocationEntry(ptr, current);
+
+				current++;
+			};
+			return;
+		}
+	}
+
+}

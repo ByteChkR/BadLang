@@ -1,0 +1,100 @@
+.dependency TestFramework
+
+.data data data_raw BASM_DATA
+{
+	.cstr FailMsg1 assembly "Structure Test 1 Failed"
+	.cstr FailMsg2 assembly "Structure Test 2 Failed"
+	.cstr FailMsg3 assembly "Structure Test 3 Failed"
+}
+
+.code code code_raw BadC
+{
+	
+
+	struct TestStruct : export
+	{
+		i64 privateField;
+		i64 InternalField : assembly;
+		i64 PublicField : export;
+
+		i8 PrivateFunction(i64 expected)
+		{
+			return this->privateField == expected;
+		}
+
+		i8 InternalFunction(i64 expected) : assembly
+		{
+			return this->InternalField == expected;
+		}
+
+		i8 PublicFunction(i64 expected) : export
+		{
+			return this->PublicField == expected;
+		}
+
+		i8 Test(i64 privExpected, i64 internalExpected, i64 publicExpected) : export
+		{
+			TestFramework::Assert::Equals8(this->PrivateFunction(privExpected), 1, &data::FailMsg3);
+			TestFramework::Assert::Equals8(this->InternalFunction(internalExpected), 1, &data::FailMsg3);
+			TestFramework::Assert::Equals8(this->PublicFunction(publicExpected), 1, &data::FailMsg3);
+			return 	this->PrivateFunction(privExpected) &&
+					this->InternalFunction(internalExpected) &&
+					this->PublicFunction(publicExpected);
+		}
+
+	}
+
+	void __main__() : export
+	{
+		TestStruct struct;
+		Test2(&struct);
+		Test3(struct); //Copy Structure
+
+		TestFramework::Assert::Equals8(struct.Test(0, 0, 0), 1, &data::FailMsg1);
+
+
+		Test1(&struct);
+
+		TestFramework::Assert::Equals8(struct.Test(0, 10, 20), 1, &data::FailMsg2);
+
+		halt;
+	}
+
+	void Test1(TestStruct* struct)
+	{
+		// Use Indirect Member Access with struct pointer
+		struct->InternalField = 10;
+		struct->PublicField = 20;
+		struct->InternalFunction(10);
+		struct->PublicFunction(20);
+		return;
+	}
+	void Test2(TestStruct* ptr)
+	{
+		//Dereference struct pointer(copy from pointer)
+		//	Will not change the structure at ptr
+		TestStruct struct = *ptr;
+		struct.InternalField = 10;
+		struct.PublicField = 20;
+		struct.InternalFunction(10);
+		struct.PublicFunction(20);
+		return;
+	}
+	void Test3(TestStruct struct)
+	{
+		// Use Struct argument
+		//	Will not change the structure that has been passed in
+		struct.InternalField = 10;
+		struct.PublicField = 20;
+		struct.InternalFunction(10);
+		struct.PublicFunction(20);
+		return;
+	}
+
+	void Test4(code::TestStruct struct)
+	{
+		code::TestStruct anotherone;
+		return;
+	}
+
+}

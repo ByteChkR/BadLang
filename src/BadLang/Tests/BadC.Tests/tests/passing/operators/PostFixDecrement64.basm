@@ -1,0 +1,20 @@
+.dependency TestFramework
+
+.data data data_raw BASM_DATA
+{
+	.cstr FailMsg assembly "64-bit Post Fix Decrement Failed"
+}
+
+.code code code_raw BadC
+{
+	void __main__() : export
+	{
+		i64 value = 1;
+
+		TestFramework::Assert::Equals64(value--, 1, &data::FailMsg);
+		TestFramework::Assert::Equals64(value, 0, &data::FailMsg);
+
+
+		halt;
+	}
+}

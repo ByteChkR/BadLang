@@ -1,0 +1,23 @@
+
+.code Test code_raw BadC
+{
+	struct TestStruct : export
+	{
+		i64 PrivateField;
+		void PrivateFunc()
+		{
+			return;
+		}
+	}
+}
+
+.code code code_raw BadC
+{
+	void __main__() : export
+	{
+		Test::TestStruct struct;
+		i64 fieldValue = struct.PrivateField;
+		struct.PrivateFunc();
+		halt;
+	}
+}

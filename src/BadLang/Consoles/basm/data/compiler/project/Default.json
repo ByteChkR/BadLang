@@ -1,0 +1,6 @@
+{
+  "IncludeFiles": [
+    "$(CompilerDirectory)/data/compiler/project/DefaultVariables.json",
+    "$(CompilerDirectory)/data/compiler/project/CoreProjects/CoreProjects.json"
+  ]
+}

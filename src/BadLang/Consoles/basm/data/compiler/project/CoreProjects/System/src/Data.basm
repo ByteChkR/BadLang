@@ -1,0 +1,5 @@
+.data System_Data data_raw BASM_DATA
+{
+	.cstr Main_Called assembly "Do not start the System Library directly."
+	.cstr Error_Prefix assembly "[FATAL] "
+}

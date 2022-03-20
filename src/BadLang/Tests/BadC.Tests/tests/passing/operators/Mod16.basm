@@ -1,0 +1,18 @@
+.dependency TestFramework
+
+.data data data_raw BASM_DATA
+{
+	.cstr FailMsg assembly "16-bit Mod Failed"
+}
+
+.code code code_raw BadC
+{
+	void __main__() : export
+	{
+		i16 value = 7 % 5;
+
+		TestFramework::Assert::Equals16(value, 2, &data::FailMsg);
+
+		halt;
+	}
+}

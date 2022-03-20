@@ -1,0 +1,61 @@
+.dependency TestFramework
+
+.data data data_raw BASM_DATA
+{
+	.cstr FailMsg assembly "Nested Structure Test Failed"
+}
+
+
+.code code code_raw BadC
+{
+	
+	struct InnerStruct : export
+	{
+		i64 Value;
+
+		i8 Test(i64 expected) : assembly
+		{
+			return this->Value == expected;
+		}
+	}
+
+	struct Test : export
+	{
+		InnerStruct Inner;
+
+		i8 TestInner(i64 expected) : assembly
+		{
+			return this->Inner.Value == expected;
+		}
+	}
+
+	void __main__() : export
+	{
+		Test test;
+		test.Inner.Value = 10;
+		i64 value = test.Inner.Value;
+
+		if(value != 10)
+		{
+			TestFramework::Assert::Fail(&data::FailMsg);
+		};
+		if(test.Inner.Value != 10)
+		{
+			TestFramework::Assert::Fail(&data::FailMsg);
+		};
+
+		if(test.TestInner(10) == 0)
+		{
+			TestFramework::Assert::Fail(&data::FailMsg);
+		};
+		
+		if(test.Inner.Test(10) == 0)
+		{
+			TestFramework::Assert::Fail(&data::FailMsg);
+		};
+
+
+		halt;
+	}
+
+}

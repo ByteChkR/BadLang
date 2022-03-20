@@ -1,0 +1,18 @@
+.dependency TestFramework
+
+.data data data_raw BASM_DATA
+{
+	.cstr FailMsg assembly "64-bit Mul Failed"
+}
+
+.code code code_raw BadC
+{
+	void __main__() : export
+	{
+		i64 value = 2 * 5;
+
+		TestFramework::Assert::Equals64(value, 10, &data::FailMsg);
+
+		halt;
+	}
+}

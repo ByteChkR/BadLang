@@ -1,0 +1,11 @@
+
+.code code code_raw BadC
+{
+	void __main__() : local
+	{
+		Error::Error(&System_Data::Main_Called);
+
+		halt;
+	}
+}
+

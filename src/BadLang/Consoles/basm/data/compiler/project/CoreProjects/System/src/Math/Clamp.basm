@@ -1,0 +1,64 @@
+
+.code Math:Clamp code_raw BadC
+{
+	i8 Clamp8(i8 min, i8 max, i8 value) : export
+	{
+		if(value < min)
+		{
+			return min;
+		};
+
+		if(value > max)
+		{
+			return max;
+		};
+
+		return value;
+	}
+
+	i16 Clamp16(i16 min, i16 max, i16 value) : export
+	{
+		if(value < min)
+		{
+			return min;
+		};
+
+		if(value > max)
+		{
+			return max;
+		};
+
+		return value;
+	}
+
+
+	i32 Clamp32(i32 min, i32 max, i32 value) : export
+	{
+		if(value < min)
+		{
+			return min;
+		};
+
+		if(value > max)
+		{
+			return max;
+		};
+
+		return value;
+	}
+
+	i64 Clamp64(i64 min, i64 max, i64 value) : export
+	{
+		if(value < min)
+		{
+			return min;
+		};
+
+		if(value > max)
+		{
+			return max;
+		};
+
+		return value;
+	}
+}

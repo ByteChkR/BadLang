@@ -1,0 +1,13 @@
+.dependency TestFramework
+
+.code code code_raw BASM
+{
+	__main__: export
+		Nop
+		Nop
+		Nop
+		Nop
+		Nop
+		Nop
+		Halt
+}

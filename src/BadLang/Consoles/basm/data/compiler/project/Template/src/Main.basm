@@ -1,0 +1,16 @@
+.dependency Console
+
+.data data data_raw BASM_DATA readonly
+{
+	.cstr HELLO_WORLD assembly "Hello World!"
+}
+
+.code code code_raw BadC
+{
+	void __main__()
+	{
+		Console::Interop::Clear();
+		Console::Interop::WriteLine(&data::HELLO_WORLD);
+		halt;
+	}
+}

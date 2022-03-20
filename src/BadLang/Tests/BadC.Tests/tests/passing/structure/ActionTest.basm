@@ -1,0 +1,64 @@
+
+.dependency TestFramework
+
+.data data data_raw BASM_DATA readonly
+{
+	.cstr FailMsg assembly "Action Tests Failed"
+	.i8 TestCheck assembly 0
+}
+
+.code code code_raw BadC
+{
+
+	void Hello()
+	{
+		data::TestCheck++;
+		return;
+	}
+
+	void Write(i16* str)
+	{
+		data::TestCheck++;
+		return;
+	}
+
+	i8 Add(i8 a, i8 b)
+	{
+		data::TestCheck++;
+		return a + b;
+	}
+
+	void Do(Func<i8, i8, i8> f, i8 a, i8 b)
+	{
+		data::TestCheck++;
+		i8 value = f(a, b);
+		return;
+	}
+
+	void __main__()
+	{
+		Action a = &Hello;
+		a();
+
+		Action<i16*> b = &Write;
+
+		b(&data::FailMsg);
+
+		Func<i8, i8, i8> c = &Add;
+
+		i8 v = c(1,2);
+
+
+		Action<Func<i8, i8, i8>, i8, i8> d = &Do;
+
+		d(c, 5, 6);
+
+		i64 addr = cast<i64>(d);
+
+		cast<Action<Func<i8, i8, i8>, i8, i8>>(addr)(c, 5, 6);
+
+		TestFramework::Assert::Equals8(data::TestCheck, 7, &data::FailMsg);
+
+		halt;
+	}
+}

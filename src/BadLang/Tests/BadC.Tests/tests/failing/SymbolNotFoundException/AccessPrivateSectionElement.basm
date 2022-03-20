@@ -1,0 +1,17 @@
+
+.code Test code_raw BadC
+{
+	void LocalFunc()
+	{
+		return;
+	}
+}
+
+.code code code_raw BadC
+{
+	void __main__() : export
+	{
+		Test::LocalFunc();
+		halt;
+	}
+}

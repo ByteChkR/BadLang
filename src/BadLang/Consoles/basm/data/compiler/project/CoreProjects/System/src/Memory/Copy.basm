@@ -1,0 +1,63 @@
+.code Memory:Copy code_raw BASM
+{
+	Copy: export
+		; [from*, to*, len]
+		; Check if we finished copying
+		DupI32 ; Duplicate Length [from*, to*, len, len]
+		PushI64 __MTOOLS_RETURN__ ; [from*, to*, len, len, __MTOOLS_RETURN__]
+		BranchZeroI32 ; [from*, to*, len]
+
+		PushSP ; [from*, to*, len, SP]
+		PushI64 4 ; [from*, to*, len, SP, 4]
+		AddI64 ; Move Stack Pointer over Length [from*, to*, len, SP + 4]
+		PushI64 8 ; [from*, to*, len, SP + 4, 8]
+		AddI64 ; Move Stack Pointer over To Pointer [from*, to*, len, SP + 12(from**)]
+		
+		LoadI64 ; Load From Pointer [from*, to*, len, from*]
+		LoadI8 ; Load byte from pointer [from*, to*, len, from]
+
+		PushSP ; [from*, to*, len, from, SP]
+		PushI64 5 ; [from*, to*, len, from, SP, 5]
+		AddI64 ; Move Stack pointer over length [from*, to*, len, from, SP + 5(to**)]
+		LoadI64 ; Load to Pointer [from*, to*, len, from, to*]
+		StoreI8 ; Write Byte to pointer [from*, to*, len]
+
+		; Increment from*
+		PushSP ; [from*, to*, len, SP]
+		PushI64 4 ; [from*, to*, len, SP, 4]
+		AddI64 ; Move Stack Pointer over Length [from*, to*, len, SP + 4]
+		PushI64 8 ; [from*, to*, len, SP + 4, 8]
+		AddI64 ; Move Stack Pointer over To Pointer [from*, to*, len, SP + 12(from**)]
+		DupI64 ; [from*, to*, len, from**, from**]
+		LoadI64 ; Load From Pointer Address [from*, to*, len, from**, from*]
+
+		PushI64 1 ; [from*, to*, len, from**, from*, 1]
+		AddI64 ; [from*, to*, len, from**, from* + 1]
+		SwapI64 ; [from*, to*, len, from* + 1, from**]
+		StoreI64 ; [from*, to*, len]
+
+		; Increment to*
+		PushSP ; [from*, to*, len, from, SP]
+		PushI64 4 ; [from*, to*, len, from, SP, 4]
+		AddI64 ; Move Stack pointer over length [from*, to*, len, from, SP + 4(to**)]
+		DupI64 ; [from*, to*, len, to**, to**]
+		LoadI64 ; Load To Pointer Address [from*, to*, len, to**, to*]
+
+		PushI64 1 ; [from*, to*, len, to**, to*, 1]
+		AddI64 ; [from*, to*, len, to**, to* + 1]
+		SwapI64 ; [from*, to*, len, to* + 1, to**]
+		StoreI64 ; [from*, to*, len]
+
+		; Decrement len
+		PushI32 1
+		SubI32
+
+		PushI64 Copy
+		Jump ; Jump back to top
+
+	__MTOOLS_RETURN__: local
+		Pop32 ; Pop Len
+		Pop64 ; Pop To
+		Pop64 ; Pop From
+		Return
+}

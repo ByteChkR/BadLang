@@ -1,0 +1,21 @@
+.dependency TestFramework
+
+.data data data_raw BASM_DATA
+{
+	.i8 VALUE assembly 0
+	.cstr FailMsg assembly "8-bit Pointer Assignment Failed"
+}
+
+.code code code_raw BadC
+{
+	void __main__() : export
+	{
+		i8* ptr = &data::VALUE;
+
+		*ptr = 10;
+
+		TestFramework::Assert::Equals8(data::VALUE, 10, &data::FailMsg);
+
+		halt;
+	}
+}

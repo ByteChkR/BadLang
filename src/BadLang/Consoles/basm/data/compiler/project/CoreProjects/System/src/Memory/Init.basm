@@ -1,0 +1,52 @@
+.code Memory:Init code_raw BASM
+{
+	Init: export
+		; <ptr:I64> <len:I32>
+
+		; if len == 0 return
+		DupI32
+		PushI64 __INIT_RETURN__
+		BranchZeroI32
+
+		PushI8 0 ; Load Value we want to write
+
+		; Load PTR address
+		PushSP
+		PushI64 5 ; Account for pushed byte and size of len
+		AddI64
+		LoadI64
+
+		; Write Value to Pointer
+		StoreI8
+		
+
+		; Load PTR address
+		PushSP
+		PushI64 4
+		AddI64
+
+		DupI64 ; Duplicate ptr**
+
+		; Load ptr*
+		LoadI64
+
+		; ptr* + 1
+		PushI64 1
+		AddI64
+
+		; Store ptr* + 1 into ptr**
+		StoreI64
+
+		; Decrement len
+		PushI32 1
+		AddI32
+
+		; Jump back to top
+		PushI64 Init
+		Jump 
+
+	__INIT_RETURN__: local
+		Pop32 ; Pop LEN
+		Pop64 ; Pop PTR
+		Return
+}

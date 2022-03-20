@@ -1,0 +1,20 @@
+.dependency TestFramework
+
+.data data data_raw BASM_DATA
+{
+	.cstr FailMsg assembly "32-bit Bitwise Self And Failed"
+}
+
+.code code code_raw BadC
+{
+	void __main__() : export
+	{
+		i32 value = 1;
+
+		value &= 2;
+
+		TestFramework::Assert::Equals32(value, 0, &data::FailMsg);
+
+		halt;
+	}
+}

@@ -1,0 +1,19 @@
+.dependency TestFramework
+
+.data data data_raw BASM_DATA
+{
+	.cstr FailMsg assembly "8-bit Pre Fix Increment Failed"
+}
+
+.code code code_raw BadC
+{
+	void __main__() : export
+	{
+		i8 value = 1;
+
+		TestFramework::Assert::Equals8(++value, 2, &data::FailMsg);
+
+
+		halt;
+	}
+}

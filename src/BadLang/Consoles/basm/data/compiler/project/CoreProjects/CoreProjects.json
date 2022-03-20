@@ -1,0 +1,10 @@
+{
+  "Variables": {
+    "SystemHeader": "$(LibraryPath)/System.header.basm",
+    "SystemProject": "$(CoreProjects)/System/project.json",
+    "CollectionsHeader": "$(LibraryPath)/Collections.header.basm",
+    "CollectionsProject": "$(CoreProjects)/Collections/project.json",
+    "TestingHeader": "$(LibraryPath)/Testing.header.basm",
+    "TestingProject": "$(CoreProjects)/Testing/project.json"
+  }
+}

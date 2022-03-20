@@ -1,0 +1,80 @@
+.code Array code_raw BadC
+{
+	struct Array : export
+	{
+
+		void** m_Pointer;
+		i32 m_Size;
+		void Array(void** ptr, i32 size) : export
+		{
+			this->m_Pointer = ptr;
+			this->m_Size = size;
+			if(size < 0)
+			{
+				System::Error::Error(&Collection_Data::NegativeCollectionSize);
+			};
+		}
+
+		i32 Size() : export
+		{
+			return this->m_Size;
+		}
+
+		void** GetPointer() : export
+		{
+			return this->m_Pointer;
+		}
+
+		void CheckRange(i32 index)
+		{
+			if(index < 0 || index >= this->m_Size)
+			{
+				System::Error::Error(&Collection_Data::IndexOutOfBounds);
+			};
+		}
+
+		void Set(i32 index, void* element) : export
+		{
+			this->CheckRange(index);
+			this->m_Pointer[cast<i64>(index)] = element;
+		}
+
+		void* Get(i32 index)
+		{
+			this->CheckRange(index);
+			return this->m_Pointer[cast<i64>(index)];
+		}
+
+		i8 Contains(void* element)
+		{
+			i32 current = 0;
+			i32 size = this->m_Size;
+			while(current < size)
+			{
+				if(this->m_Pointer[cast<i64>(current)] == element)
+				{
+					return 1;
+				};
+				current++;
+			};
+			return 0;
+		}
+
+		i32 IndexOf(void* element)
+		{
+			i32 current = 0;
+			i32 size = this->m_Size;
+			while(current < size)
+			{
+				if(this->m_Pointer[cast<i64>(current)] == element)
+				{
+					return current;
+				};
+				current++;
+			};
+			return -1;
+		}
+
+	}
+
+}

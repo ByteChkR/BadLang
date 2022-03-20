@@ -1,0 +1,19 @@
+.dependency TestFramework
+
+.data data data_raw BASM_DATA
+{
+	.i64 VALUE assembly 10
+	.cstr FailMsg assembly "64-bit Pointer Dereference Failed"
+}
+
+.code code code_raw BadC
+{
+	void __main__() : export
+	{
+		i64* ptr = &data::VALUE;
+
+		TestFramework::Assert::Equals64(*ptr, 10, &data::FailMsg);
+
+		halt;
+	}
+}

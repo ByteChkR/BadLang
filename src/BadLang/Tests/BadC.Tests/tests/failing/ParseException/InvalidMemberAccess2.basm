@@ -1,0 +1,19 @@
+
+.code code code_raw BadC
+{
+
+	struct Test : assembly
+	{
+		i64 Func() : assembly
+		{
+			return 0;
+		}
+	}
+
+	void __main__() : export
+	{
+		Test* test;
+		i64 v = test.Func();
+		halt;
+	}
+}

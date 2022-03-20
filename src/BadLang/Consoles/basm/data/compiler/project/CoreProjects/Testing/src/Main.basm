@@ -1,0 +1,16 @@
+.dependency System
+.dependency Console
+
+.data data data_raw BASM_DATA readonly
+{
+	.cstr MAIN_CALLED assembly "Testing Assembly can not be started as standlone"
+}
+
+.code code code_raw BadC
+{
+	void __main__()
+	{
+		System::Error::Error(&data::MAIN_CALLED);
+		halt;
+	}
+}

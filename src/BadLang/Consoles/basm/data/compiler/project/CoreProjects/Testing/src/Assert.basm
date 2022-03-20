@@ -1,0 +1,90 @@
+
+
+
+.code Assert code_raw BadC
+{
+	
+
+	void Equals8(i8 actual, i8 expected, i16* message) : export
+	{
+		if(actual != expected)
+		{
+			System::Error::Error(message);
+		};
+		return;
+	}
+
+	void Equals16(i16 actual, i16 expected, i16* message) : export
+	{
+		if(actual != expected)
+		{
+			System::Error::Error(message);
+		};
+		return;
+	}
+
+	void Equals32(i32 actual, i32 expected, i16* message) : export
+	{
+		if(actual != expected)
+		{
+			System::Error::Error(message);
+		};
+		return;
+	}
+
+	void Equals64(i64 actual, i64 expected, i16* message) : export
+	{
+		if(actual != expected)
+		{
+			System::Error::Error(message);
+		};
+		return;
+	}
+
+
+	void NotEquals8(i8 actual, i8 expected, i16* message) : export
+	{
+		if(actual == expected)
+		{
+			System::Error::Error(message);
+		};
+		return;
+	}
+
+	void NotEquals16(i16 actual, i16 expected, i16* message) : export
+	{
+		if(actual == expected)
+		{
+			System::Error::Error(message);
+		};
+		return;
+	}
+
+	void NotEquals32(i32 actual, i32 expected, i16* message) : export
+	{
+		if(actual == expected)
+		{
+			System::Error::Error(message);
+		};
+		return;
+	}
+
+	void NotEquals64(i64 actual, i64 expected, i16* message) : export
+	{
+		if(actual == expected)
+		{
+			System::Error::Error(message);
+		};
+		return;
+	}
+
+	void Fail(i16* message) : export
+	{
+		System::Error::Error(message);
+		return;
+	}
+
+}
+
+
+

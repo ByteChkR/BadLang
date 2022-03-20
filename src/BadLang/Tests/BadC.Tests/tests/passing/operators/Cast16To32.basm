@@ -1,0 +1,20 @@
+.dependency TestFramework
+
+.data data data_raw BASM_DATA
+{
+	.cstr FailMsg assembly "16-bit to 32-bit Cast Failed"
+}
+
+.code code code_raw BadC
+{
+	void __main__() : export
+	{
+		i16 valueA = 10;
+
+		i32 value = cast<i32>(valueA);
+
+		TestFramework::Assert::Equals32(value, 10, &data::FailMsg);
+
+		halt;
+	}
+}

@@ -1,0 +1,11 @@
+
+.code code code_raw BadC
+{
+	void __main__() : export
+	{
+		i16 valueA = 10;
+		i8 valueB = 11;
+		valueA ^= valueB;
+		halt;
+	}
+}

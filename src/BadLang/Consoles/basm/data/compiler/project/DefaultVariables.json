@@ -1,0 +1,9 @@
+{
+  "Variables": {
+    "DefaultTarget": "build",
+    "DefaultOutput": "./bin/$(Target)/$(ProjectName).bvm",
+    "CoreProjects": "$(CompilerDirectory)data/compiler/project/CoreProjects",
+    "InteropHeaders": "$(CompilerDirectory)data/runtime/interop/Headers",
+    "LibraryPath": "$(CompilerDirectory)data/runtime/libs"
+  }
+}

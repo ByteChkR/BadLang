@@ -1,0 +1,14 @@
+.dependency Console
+
+.code Error code_raw BadC
+{
+	
+	void Error(i16* errMsg) : export
+	{
+		Console::Interop::Write(&System_Data::Error_Prefix);
+		Console::Interop::WriteLine(errMsg);
+		halt;
+	}
+
+}
+

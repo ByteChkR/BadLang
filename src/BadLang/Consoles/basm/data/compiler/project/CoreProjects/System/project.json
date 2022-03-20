@@ -1,0 +1,16 @@
+{
+  "ProjectName": "System",
+  "DefaultTarget": "$(DefaultTarget)",
+  "Targets": [
+    {
+      "Name": "$(DefaultTarget)",
+      "Sources": [
+        "./src"
+      ],
+      "OutputFile": "$(LibraryPath)/$(ProjectName).bvm"
+    }
+  ],
+  "IncludeFiles": [
+    "$(CompilerDirectory)data/compiler/project/Default.json"
+  ]
+}

@@ -1,0 +1,21 @@
+.dependency TestFramework
+
+.data data data_raw BASM_DATA
+{
+	.i32 VALUE assembly 0
+	.cstr FailMsg assembly "32-bit Cast Pointer Assignment Failed"
+}
+
+.code code code_raw BadC
+{
+	void __main__() : export
+	{
+		void* ptr = &data::VALUE;
+
+		*cast<i32*>(ptr) = 10;
+
+		TestFramework::Assert::Equals32(data::VALUE, 10, &data::FailMsg);
+
+		halt;
+	}
+}

@@ -1,0 +1,20 @@
+.dependency TestFramework
+
+.data data data_raw BASM_DATA
+{
+	.cstr FailMsg assembly "If Branch Failed"
+}
+
+.code code code_raw BadC
+{
+	void __main__() : export
+	{
+		
+		if(0)
+		{
+			TestFramework::Assert::Fail(&data::FailMsg);
+		};
+
+		halt;
+	}
+}

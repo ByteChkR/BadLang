@@ -1,0 +1,27 @@
+.dependency TestFramework
+
+.data data data_raw BASM_DATA
+{
+	.cstr TestString assembly "Hello World"
+	.array TestArray assembly i16 12 ; 12 Characters(Hello World + \0)
+	.cstr FailMsg assembly "Array Access/String Copy Failed"
+}
+
+.code code code_raw BadC
+{
+	void __main__() : export
+	{
+		i16* from = &data::TestString;
+		i16* to = &data::TestArray;
+
+		i64 i = 0;
+		while(i < 12)
+		{
+			to[i] = from[i];
+			i++;
+		};
+
+		TestFramework::Assert::EqualsString(from, to, &data::FailMsg);
+		halt;
+	}
+}

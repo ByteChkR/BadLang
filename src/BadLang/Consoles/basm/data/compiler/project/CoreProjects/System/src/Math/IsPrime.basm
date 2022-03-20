@@ -1,0 +1,120 @@
+
+.code Math:IsPrime code_raw BadC
+{
+	i8 IsPrime8(i8 number) : export
+	{
+		if(number <= 1)
+		{
+			return 0;
+		};
+		if(number == 2)
+		{
+			return 1;
+		};
+		if(number % 2 == 0)
+		{
+			return 0;
+		};
+
+		i8 boundary = number / 2;
+
+		i8 current = 3;
+		while(current <= boundary)
+		{
+			if(number % current == 0)
+			{
+				return 0;
+			};
+			current += 2;
+		};
+		return 1;
+	}
+
+	i8 IsPrime16(i16 number) : export
+	{
+		if(number <= 1)
+		{
+			return 0;
+		};
+		if(number == 2)
+		{
+			return 1;
+		};
+		if(number % 2 == 0)
+		{
+			return 0;
+		};
+
+		i16 boundary = number / 2;
+
+		i16 current = 3;
+		while(current <= boundary)
+		{
+			if(number % current == 0)
+			{
+				return 0;
+			};
+			current += 2;
+		};
+		return 1;
+	}
+
+	i8 IsPrime32(i32 number) : export
+	{
+		if(number <= 1)
+		{
+			return 0;
+		};
+		if(number == 2)
+		{
+			return 1;
+		};
+		if(number % 2 == 0)
+		{
+			return 0;
+		};
+
+		i32 boundary = number / 2;
+
+		i32 current = 3;
+		while(current <= boundary)
+		{
+			if(number % current == 0)
+			{
+				return 0;
+			};
+			current += 2;
+		};
+		return 1;
+	}
+
+
+	i8 IsPrime64(i64 number) : export
+	{
+		if(number <= 1)
+		{
+			return 0;
+		};
+		if(number == 2)
+		{
+			return 1;
+		};
+		if(number % 2 == 0)
+		{
+			return 0;
+		};
+
+		i64 boundary = number / 2;
+
+		i64 current = 3;
+		while(current <= boundary)
+		{
+			if(number % current == 0)
+			{
+				return 0;
+			};
+			current += 2;
+		};
+		return 1;
+	}
+}

@@ -1,0 +1,21 @@
+.dependency TestFramework
+
+.data data data_raw BASM_DATA
+{
+	.cstr FailMsg assembly "Void Return Failed"
+}
+
+.code code code_raw BadC
+{
+	void __main__() : export
+	{
+		Test();
+		halt;
+	}
+
+	void Test()
+	{
+		return;
+		TestFramework::Assert::Fail(&data::FailMsg);
+	}
+}

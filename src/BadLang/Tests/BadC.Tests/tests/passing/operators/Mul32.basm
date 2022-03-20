@@ -1,0 +1,18 @@
+.dependency TestFramework
+
+.data data data_raw BASM_DATA
+{
+	.cstr FailMsg assembly "32-bit Mul Failed"
+}
+
+.code code code_raw BadC
+{
+	void __main__() : export
+	{
+		i32 value = 2 * 5;
+
+		TestFramework::Assert::Equals32(value, 10, &data::FailMsg);
+
+		halt;
+	}
+}

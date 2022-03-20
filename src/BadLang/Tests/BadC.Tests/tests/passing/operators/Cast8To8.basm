@@ -1,0 +1,20 @@
+.dependency TestFramework
+
+.data data data_raw BASM_DATA
+{
+	.cstr FailMsg assembly "8-bit to 8-bit Cast Failed"
+}
+
+.code code code_raw BadC
+{
+	void __main__() : export
+	{
+		i8 valueA = 10;
+
+		i8 value = cast<i8>(valueA);
+
+		TestFramework::Assert::Equals8(value, 10, &data::FailMsg);
+
+		halt;
+	}
+}

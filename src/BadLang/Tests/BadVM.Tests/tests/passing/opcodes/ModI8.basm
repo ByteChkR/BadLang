@@ -1,0 +1,21 @@
+.dependency TestFramework
+
+.data data data_raw BASM_DATA
+{
+	.cstr EQ8 assembly "TestFramework::Assert::Equals8"
+	.cstr FailMsg assembly "ModI8"
+}
+
+.code code code_raw BASM
+{
+	__main__: export
+		PushI8 124
+		PushI8 2
+		ModI8
+		PushI8 0
+		PushI64 data::FailMsg
+		PushI64 data::EQ8
+		InteropResolve
+		InteropCall
+		Halt
+}

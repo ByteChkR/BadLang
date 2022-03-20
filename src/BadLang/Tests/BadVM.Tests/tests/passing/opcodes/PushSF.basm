@@ -1,0 +1,19 @@
+.dependency TestFramework
+
+.data data data_raw BASM_DATA
+{
+	.cstr EQ64 assembly "TestFramework::Assert::Equals64"
+	.cstr FailMsg assembly "PushSF"
+}
+
+.code code code_raw BASM
+{
+	__main__: export
+		PushSF
+		PushI64 0x107FFF
+		PushI64 data::FailMsg
+		PushI64 data::EQ64
+		InteropResolve
+		InteropCall
+		Halt
+}

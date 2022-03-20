@@ -1,0 +1,23 @@
+.dependency TestFramework
+
+.data data data_raw BASM_DATA
+{
+	.cstr FailMsg assembly "While Branch Failed"
+}
+
+.code code code_raw BadC
+{
+	void __main__() : export
+	{
+		
+		i8 v = 0;
+		while(v < 10)
+		{
+			v++;
+		};
+
+		TestFramework::Assert::Equals8(v, 10, &data::FailMsg);
+
+		halt;
+	}
+}

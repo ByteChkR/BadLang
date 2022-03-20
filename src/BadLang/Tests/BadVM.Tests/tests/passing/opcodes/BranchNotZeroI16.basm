@@ -1,0 +1,23 @@
+.dependency TestFramework
+
+.data data data_raw BASM_DATA
+{
+	.cstr Fail assembly "TestFramework::Assert::Fail"
+	.cstr FailMsg assembly "BranchNotZeroI16"
+}
+
+.code code code_raw BASM
+{
+	__main__: export
+		PushI16 1
+		PushI64 Target
+		BranchNotZeroI16
+		PushI64 data::FailMsg
+		PushI64 data::Fail
+		InteropResolve
+		InteropCall
+
+
+	Target: local
+		Halt
+}

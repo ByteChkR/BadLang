@@ -1,0 +1,21 @@
+.dependency TestFramework
+
+.data data data_raw BASM_DATA
+{
+	.cstr EQ16 assembly "TestFramework::Assert::Equals16"
+	.cstr FailMsg assembly "LoadI16"
+	.i16 NUMBER assembly 123
+}
+
+.code code code_raw BASM
+{
+	__main__: export
+		PushI64 data::NUMBER
+		LoadI16
+		PushI16 123
+		PushI64 data::FailMsg
+		PushI64 data::EQ16
+		InteropResolve
+		InteropCall
+		Halt
+}

@@ -1,0 +1,112 @@
+.dependency Drive
+
+
+.code DriveUtils code_raw BadC
+{
+	
+
+	struct Drive : export
+	{
+		i32 m_DriveID;
+
+		void SetDriveID(i32 driveID)
+		{
+			this->m_DriveID = driveID;
+			return;
+		}
+
+		i32 GetDriveID()
+		{
+			return this->m_DriveID;
+		}
+
+		i32 GetSize() : export
+		{
+			return Drive::Management::GetDriveSize(this->m_DriveID);
+		}
+
+		i8 ReadI8(i32 address) : export
+		{
+			return Drive::IO::ReadI8(this->m_DriveID, address);
+		}
+
+		i16 ReadI16(i32 address) : export
+		{
+			return Drive::IO::ReadI16(this->m_DriveID, address);
+		}
+
+		i32 ReadI32(i32 address) : export
+		{
+			return Drive::IO::ReadI32(this->m_DriveID, address);
+		}
+
+		i64 ReadI64(i32 address) : export
+		{
+			return Drive::IO::ReadI64(this->m_DriveID, address);
+		}
+
+		void WriteI8(i32 address, i8 value) : export
+		{
+			Drive::IO::WriteI8(this->m_DriveID, address, value);
+			return;
+		}
+
+		void WriteI16(i32 address, i16 value) : export
+		{
+			Drive::IO::WriteI16(this->m_DriveID, address, value);
+			return;
+		}
+
+		void WriteI32(i32 address, i32 value) : export
+		{
+			Drive::IO::WriteI32(this->m_DriveID, address, value);
+			return;
+		}
+
+		void WriteI64(i32 address, i64 value) : export
+		{
+			Drive::IO::WriteI64(this->m_DriveID, address, value);
+			return;
+		}
+
+		void ReadBuf(i8* destination, i32 address, i32 size) : export
+		{
+			i32 current = 0;
+
+			while(current < size)
+			{
+				destination[cast<i64>(current)] = this->ReadI8(address + current);
+				current++;
+			};
+
+			return;
+		}
+
+		void WriteBuf(i8* src, i32 address, i32 size) : export
+		{
+			i32 current = 0;
+
+			while(current < size)
+			{
+				this->WriteI8(address + current, src[cast<i64>(current)]);
+				current++;
+			};
+
+			return;
+		}
+
+		void Format() : export
+		{
+			i32 size = this->GetSize();
+			i32 current = 0;
+			while(current < size)
+			{
+				this->WriteI8(current, 0);
+				current++;
+			};
+
+			return;
+		}
+	}
+
+}

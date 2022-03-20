@@ -1,0 +1,43 @@
+
+.code Math:Max code_raw BadC
+{
+	i8 Max8(i8 a, i8 b) : export
+	{
+		if(a > b)
+		{
+			return a;
+		};
+
+		return b;
+	}
+
+	i16 Max16(i16 a, i16 b) : export
+	{
+		if(a > b)
+		{
+			return a;
+		};
+
+		return b;
+	}
+
+	i32 Max32(i32 a, i32 b) : export
+	{
+		if(a > b)
+		{
+			return a;
+		};
+
+		return b;
+	}
+
+	i64 Max64(i64 a, i64 b) : export
+	{
+		if(a > b)
+		{
+			return a;
+		};
+
+		return b;
+	}
+}

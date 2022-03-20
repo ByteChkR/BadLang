@@ -1,0 +1,15 @@
+
+.code code code_raw BadC
+{
+	struct Test : export
+	{
+		Test Inner;
+	}
+
+	void __main__() : export
+	{
+		Test test;
+		halt;
+	}
+
+}

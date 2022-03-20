@@ -1,0 +1,7 @@
+.data Collection_Data data_raw BASM_DATA
+{
+	.cstr Main_Called assembly "Do not start the Collection Library directly."
+	.cstr IndexOutOfBounds assembly "The specified index was outside of the bounds of the Collection"
+	.cstr NegativeCollectionSize assembly "The Collection was initialized with a negative size"
+
+}

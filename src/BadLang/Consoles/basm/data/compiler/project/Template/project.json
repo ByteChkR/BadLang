@@ -1,0 +1,22 @@
+{
+  "ProjectName": "NewProject",
+  "DefaultTarget": "$(DefaultTarget)",
+  "Targets": [
+    {
+      "Name": "$(DefaultTarget)",
+      "SubTargets": [],
+      "Sources": [
+        "$(SystemHeader)",
+        "$(CollectionsHeader)",
+        "./src"
+      ],
+      "OutputFile": "$(DefaultOutput)",
+      "Dependencies": [],
+      "Variables": {}
+    }
+  ],
+  "IncludeFiles": [
+    "$(CompilerDirectory)/data/compiler/project/Default.json"
+  ],
+  "Variables": {}
+}

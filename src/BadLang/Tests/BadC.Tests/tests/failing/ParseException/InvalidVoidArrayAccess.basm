@@ -1,0 +1,10 @@
+
+.code code code_raw BadC
+{
+	void __main__() : export
+	{
+		void* valueA = 10;
+		i8 value = valueA[0]; //Not allowed. We dont know the element size.
+		halt;
+	}
+}

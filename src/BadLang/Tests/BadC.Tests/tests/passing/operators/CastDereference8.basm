@@ -1,0 +1,21 @@
+.dependency TestFramework
+
+.data data data_raw BASM_DATA
+{
+	.i8 VALUE assembly 10
+	.cstr FailMsg assembly "8-bit Cast Pointer Dereference Failed"
+}
+
+.code code code_raw BadC
+{
+	void __main__() : export
+	{
+		void* ptr = &data::VALUE;
+
+		i8 value = *cast<i8*>(ptr);
+
+		TestFramework::Assert::Equals8(value, 10, &data::FailMsg);
+
+		halt;
+	}
+}

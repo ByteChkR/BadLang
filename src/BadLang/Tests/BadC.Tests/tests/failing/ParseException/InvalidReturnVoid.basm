@@ -1,0 +1,13 @@
+
+.code code code_raw BadC
+{
+	void __main__() : export
+	{
+		halt;
+	}
+
+	void Test()
+	{
+		return 0;
+	}
+}

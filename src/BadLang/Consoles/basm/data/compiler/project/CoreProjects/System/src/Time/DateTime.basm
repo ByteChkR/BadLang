@@ -1,0 +1,65 @@
+
+
+.code TimeUtils code_raw BadC
+{
+
+	struct DateTime : export
+	{
+		i64 m_Seconds;
+
+		void SetMinutes(i64 minutes) : export
+		{
+			this->SetSeconds(minutes * 60);
+			return;
+		}
+
+		void SetHours(i64 hours) : export
+		{
+			this->SetMinutes(hours * 60);
+			return;
+		}
+
+		void SetDays(i64 days) : export
+		{
+			this->SetHours(days * 24);
+			return;
+		}
+
+		void SetSeconds(i64 seconds) : export
+		{
+			this->m_Seconds = seconds;
+			return;
+		}
+
+		i64 TotalSeconds() : export
+		{
+			return this->m_Seconds;
+		}
+
+		i64 TotalMinutes() : export
+		{
+			return this->TotalSeconds() / 60;
+		}
+
+		i64 TotalHours() : export
+		{
+			return this->TotalMinutes() / 60;
+		}
+
+		i64 TotalDays() : export
+		{
+			return this->TotalHours() / 24;
+		}
+
+		i64 Seconds() : export
+		{
+			return this->TotalSeconds() % 60;
+		}
+
+		i64 Hours() : export
+		{
+			return this->TotalHours() % 60;
+		}
+	}
+
+}

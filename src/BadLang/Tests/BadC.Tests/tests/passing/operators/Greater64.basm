@@ -1,0 +1,20 @@
+.dependency TestFramework
+
+.data data data_raw BASM_DATA
+{
+	.cstr FailMsg assembly "8-bit Greater Than Failed"
+}
+
+.code code code_raw BadC
+{
+	void __main__() : export
+	{
+		i8 v = 1 > 1;
+		if(v)
+		{
+			TestFramework::Assert::Fail(&data::FailMsg);
+		};
+
+		halt;
+	}
+}
