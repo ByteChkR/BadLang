@@ -9,11 +9,18 @@ namespace BadC.Types.Primitives;
 public class BadCPrimitiveType : BadCType
 {
 
+    public static int GetPrimitiveSize(BadCPrimitiveTypes type)
+    {
+        if (type == BadCPrimitiveTypes.F32) return sizeof(float);
+        if (type == BadCPrimitiveTypes.F64) return sizeof(double);
+        return (int) type;
+    }
+    
     public override IEnumerable < BadCTypeMember > Members => Enumerable.Empty < BadCTypeMember >();
 
     public override AssemblySymbol TypeName { get; }
 
-    public override int Size => ( int )PrimitiveType!;
+    public override int Size => GetPrimitiveSize(PrimitiveType!.Value);
 
     #region Public
 

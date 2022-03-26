@@ -33,6 +33,14 @@ public abstract class BadCType
                 BadCPrimitiveTypes.I64,
                 new BadCPrimitiveType( new AssemblySymbol( "BadC", "Primitives", "I64" ), BadCPrimitiveTypes.I64 )
             },
+            {
+                BadCPrimitiveTypes.F32,
+                new BadCPrimitiveType( new AssemblySymbol( "BadC", "Primitives", "F32" ), BadCPrimitiveTypes.F32 )
+            },
+            {
+                BadCPrimitiveTypes.F64,
+                new BadCPrimitiveType( new AssemblySymbol( "BadC", "Primitives", "F64" ), BadCPrimitiveTypes.F64 )
+            },
         };
 
     public virtual bool IsResolved => TemplateTypes.All( x => x is not BadCTemplateType );

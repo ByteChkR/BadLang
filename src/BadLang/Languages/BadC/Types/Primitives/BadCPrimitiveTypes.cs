@@ -8,5 +8,7 @@ public enum BadCPrimitiveTypes : int
     I16 = 2,
     I32 = 4,
     I64 = 8,
+    F32 = 16,
+    F64 = 32,
 
 }

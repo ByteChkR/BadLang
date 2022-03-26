@@ -168,6 +168,14 @@ public static class InteropHelper
         {
             return "i16";
         }
+        if ( typeof( T ) == typeof( float ) )
+        {
+            return "f32";
+        }
+        if ( typeof( T ) == typeof( double ) )
+        {
+            return "f64";
+        }
 
         throw new NotSupportedException( "Can not convert type " + typeof( T ).Name );
     }

@@ -326,7 +326,7 @@ public class BadCInvocationExpression : BadCExpression
                 throw new ParseException( "Cannot call non-function", SourceToken );
             }
 
-            if ( callSiteType.TryGetBaseType( out callSiteType ) )
+            if (callSiteType.IsPointer && callSiteType.TryGetBaseType( out callSiteType ) )
             {
             }
 

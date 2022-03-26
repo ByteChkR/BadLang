@@ -72,19 +72,49 @@ public static class TestRunner
                                   );
 
             InteropHelper.Register(
-                                   new InteropAction < uint, uint, string >(
-                                                                            "TestFramework::Assert::Equals32",
-                                                                            ( value, expected, msg ) =>
-                                                                            {
-                                                                                if ( value != expected )
-                                                                                {
-                                                                                    throw new TestRunnerException(
-                                                                                         $"Assertion failed: expected {expected}, got {value}: {msg}"
-                                                                                        );
-                                                                                }
-                                                                            }
-                                                                           )
-                                  );
+                new InteropAction < uint, uint, string >(
+                    "TestFramework::Assert::Equals32",
+                    ( value, expected, msg ) =>
+                    {
+                        if ( value != expected )
+                        {
+                            throw new TestRunnerException(
+                                $"Assertion failed: expected {expected}, got {value}: {msg}"
+                            );
+                        }
+                    }
+                )
+            );
+            
+            InteropHelper.Register(
+                new InteropAction < float, float, string >(
+                    "TestFramework::Assert::EqualsF32",
+                    ( value, expected, msg ) =>
+                    {
+                        if ( Math.Abs(value - expected) > 0.00001f )
+                        {
+                            throw new TestRunnerException(
+                                $"Assertion failed: expected {expected}, got {value}: {msg}"
+                            );
+                        }   
+                    }
+                )
+            );
+            
+            InteropHelper.Register(
+                new InteropAction < double, double, string >(
+                    "TestFramework::Assert::EqualsF64",
+                    ( value, expected, msg ) =>
+                    {
+                        if ( Math.Abs(value - expected) > 0.00001f )
+                        {
+                            throw new TestRunnerException(
+                                $"Assertion failed: expected {expected}, got {value}: {msg}"
+                            );
+                        }   
+                    }
+                )
+            );
 
             InteropHelper.Register(
                                    new InteropAction < ulong, ulong, string >(

@@ -1,0 +1,20 @@
+.dependency TestFramework
+
+.data data data_raw BASM_DATA
+{
+	.cstr FailMsg assembly "64-bit to 64-bit float Cast Failed"
+}
+
+.code code code_raw BadC
+{
+	void __main__() : export
+	{
+		i64 valueA = 10;
+
+		f64 value = cast<f64>(valueA);
+
+		TestFramework::Assert::EqualsF64(value, 10, &data::FailMsg);
+
+		halt;
+	}
+}

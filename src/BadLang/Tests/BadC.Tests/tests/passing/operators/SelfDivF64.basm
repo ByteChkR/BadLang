@@ -2,18 +2,18 @@
 
 .data data data_raw BASM_DATA
 {
-	.cstr FailMsg assembly "32-bit float Self Div Failed"
+	.cstr FailMsg assembly "64-bit Self Div Failed"
 }
 
 .code code code_raw BadC
 {
 	void __main__() : export
 	{
-		f32 value = 10;
+		i64 value = 10;
 
 		value /= 2;
 
-		TestFramework::Assert::EqualsF32(value, 5, &data::FailMsg);
+		TestFramework::Assert::Equals64(value, 5, &data::FailMsg);
 
 		halt;
 	}

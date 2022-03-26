@@ -43,6 +43,15 @@
             return BitConverter.ToInt64( bus.Read( address, sizeof( long ) ), 0 );
         }
 
+        public static float ReadFloat(this MemoryBus bus, long address)
+        {
+            return BitConverter.ToSingle(bus.Read(address, sizeof(float)), 0);
+        }
+        public static double ReadDouble(this MemoryBus bus, long address)
+        {
+            return BitConverter.ToDouble(bus.Read(address, sizeof(double)), 0);
+        }
+        
         public static sbyte ReadSByte( this MemoryBus bus, long address )
         {
             return ( sbyte )bus.Read( address );

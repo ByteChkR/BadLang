@@ -153,6 +153,9 @@ public static class BadCTemplateResolver
         PostSegmentParseTasks taskList,
         CodeSectionWriter writer )
     {
+        
+        if (decl.Type.IsResolved) 
+            return decl;
         Dictionary < BadCTemplateType, BadCType > typeMap = new Dictionary < BadCTemplateType, BadCType >();
 
         if ( decl.Type.TemplateTypes.Length != templateTypes.Length )

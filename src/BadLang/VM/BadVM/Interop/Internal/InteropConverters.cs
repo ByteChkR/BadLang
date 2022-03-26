@@ -18,6 +18,8 @@ internal static class InteropConverters
             { typeof( short ), WriteShort },
             { typeof( int ), WriteInt },
             { typeof( long ), WriteLong },
+            { typeof( float ), WriteFloat },
+            { typeof( double ), WriteDouble },
         };
 
     private static readonly Dictionary < Type, Func < VirtualCore, MemoryBus, object > > m_ReadConverters =
@@ -33,6 +35,8 @@ internal static class InteropConverters
             { typeof( int ), ReadInt },
             { typeof( long ), ReadLong },
             { typeof( string ), ReadString },
+            { typeof( float ), ReadFloat },
+            { typeof( double ), ReadDouble },
         };
 
     #region Public
@@ -76,6 +80,20 @@ internal static class InteropConverters
         long l = bus.ReadInt64( core.StackPointer );
         core.FreeStackPointer( sizeof( long ) );
 
+        return l;
+    }
+
+    public static object ReadFloat(VirtualCore core, MemoryBus bus)
+    {
+        float l = bus.ReadFloat(core.StackPointer);
+        core.FreeStackPointer(sizeof(float));
+        return l;
+    }
+    
+    public static object ReadDouble(VirtualCore core, MemoryBus bus)
+    {
+        double l = bus.ReadDouble(core.StackPointer);
+        core.FreeStackPointer(sizeof(double));
         return l;
     }
 
@@ -158,6 +176,16 @@ internal static class InteropConverters
     public static byte[] WriteLong( object value )
     {
         return BitConverter.GetBytes( ( long )value );
+    }
+    
+    public static byte[] WriteFloat(object value)
+    {
+        return BitConverter.GetBytes((float)value);
+    }
+    
+    public static byte[] WriteDouble(object value)
+    {
+        return BitConverter.GetBytes((double)value);
     }
 
     public static byte[] WriteShort( object value )

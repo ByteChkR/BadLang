@@ -33,7 +33,7 @@ public class BadCNumber : BadCExpression
 
         context.AddSymbol( context.Writer, SourceToken );
 
-        context.Writer.Push( baseTypeHint, ( long )Value );
+        context.Writer.Push( baseTypeHint, Value );
     }
 
     public override BadCExpression ResolveTemplateTypes( BadCTemplateTypeContext templateContext )

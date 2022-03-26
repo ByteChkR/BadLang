@@ -65,7 +65,7 @@ public class BadCustomCType : BadCType
 
     public override bool TryGetBaseType( out BadCType baseType )
     {
-        throw new InvalidOperationException( "Can not get base type of non-pointer type" );
+        throw new InvalidOperationException( $"Can not get base type of non-pointer type: {this}" );
     }
 
     #endregion

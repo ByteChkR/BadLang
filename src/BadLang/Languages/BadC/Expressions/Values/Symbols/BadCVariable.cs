@@ -76,6 +76,9 @@ public class BadCVariable : BadCExpression
                            GetPointerType( t.PointerLevel );
         }
 
+        if (t is BadCFunctionType ft) 
+            return ft;
+
         return context.Writer.AssemblyWriter.CompilationData.GetData < BadCElementExporter >().
                        GetType( t.TypeName );
     }

@@ -58,26 +58,36 @@
         AddI16,
         AddI32,
         AddI64,
+        AddF32,
+        AddF64,
 
         SubI8,
         SubI16,
         SubI32,
         SubI64,
+        SubF32,
+        SubF64,
 
         MulI8,
         MulI16,
         MulI32,
         MulI64,
+        MulF32,
+        MulF64,
 
         DivI8,
         DivI16,
         DivI32,
         DivI64,
+        DivF32,
+        DivF64,
 
         ModI8,
         ModI16,
         ModI32,
         ModI64,
+        ModF32,
+        ModF64,
 
         AndI8,
         AndI16,
@@ -131,24 +141,38 @@
         BranchLessI16,
         BranchLessI32,
         BranchLessI64,
+        BranchLessF32,
+        BranchLessF64,
 
         BranchGreaterI8,
         BranchGreaterI16,
         BranchGreaterI32,
         BranchGreaterI64,
+        BranchGreaterF32,
+        BranchGreaterF64,
 
         BranchLessOrEqualI8,
         BranchLessOrEqualI16,
         BranchLessOrEqualI32,
         BranchLessOrEqualI64,
+        BranchLessOrEqualF32,
+        BranchLessOrEqualF64,
 
         BranchGreaterOrEqualI8,
         BranchGreaterOrEqualI16,
         BranchGreaterOrEqualI32,
         BranchGreaterOrEqualI64,
+        BranchGreaterOrEqualF32,
+        BranchGreaterOrEqualF64,
 
         InteropResolve,
         InteropCall,
+        
+        F32ToI32,
+        F64ToI64,
+        I32ToF32,
+        I64ToF64,
+        
 
     }
 

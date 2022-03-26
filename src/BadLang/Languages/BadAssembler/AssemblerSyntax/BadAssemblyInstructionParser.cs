@@ -152,26 +152,36 @@ namespace BadAssembler.AssemblerSyntax
             s_InstructionParsers.Add( new BadAssemblyInstructionParser( OpCode.AddI16, ZeroArgs ) );
             s_InstructionParsers.Add( new BadAssemblyInstructionParser( OpCode.AddI32, ZeroArgs ) );
             s_InstructionParsers.Add( new BadAssemblyInstructionParser( OpCode.AddI64, ZeroArgs ) );
+            s_InstructionParsers.Add( new BadAssemblyInstructionParser( OpCode.AddF32, ZeroArgs ) );
+            s_InstructionParsers.Add( new BadAssemblyInstructionParser( OpCode.AddF64, ZeroArgs ) );
 
             s_InstructionParsers.Add( new BadAssemblyInstructionParser( OpCode.SubI8, ZeroArgs ) );
             s_InstructionParsers.Add( new BadAssemblyInstructionParser( OpCode.SubI16, ZeroArgs ) );
             s_InstructionParsers.Add( new BadAssemblyInstructionParser( OpCode.SubI32, ZeroArgs ) );
             s_InstructionParsers.Add( new BadAssemblyInstructionParser( OpCode.SubI64, ZeroArgs ) );
+            s_InstructionParsers.Add( new BadAssemblyInstructionParser( OpCode.SubF32, ZeroArgs ) );
+            s_InstructionParsers.Add( new BadAssemblyInstructionParser( OpCode.SubF64, ZeroArgs ) );
 
             s_InstructionParsers.Add( new BadAssemblyInstructionParser( OpCode.MulI8, ZeroArgs ) );
             s_InstructionParsers.Add( new BadAssemblyInstructionParser( OpCode.MulI16, ZeroArgs ) );
             s_InstructionParsers.Add( new BadAssemblyInstructionParser( OpCode.MulI32, ZeroArgs ) );
             s_InstructionParsers.Add( new BadAssemblyInstructionParser( OpCode.MulI64, ZeroArgs ) );
+            s_InstructionParsers.Add( new BadAssemblyInstructionParser( OpCode.MulF32, ZeroArgs ) );
+            s_InstructionParsers.Add( new BadAssemblyInstructionParser( OpCode.MulF64, ZeroArgs ) );
 
             s_InstructionParsers.Add( new BadAssemblyInstructionParser( OpCode.DivI8, ZeroArgs ) );
             s_InstructionParsers.Add( new BadAssemblyInstructionParser( OpCode.DivI16, ZeroArgs ) );
             s_InstructionParsers.Add( new BadAssemblyInstructionParser( OpCode.DivI32, ZeroArgs ) );
             s_InstructionParsers.Add( new BadAssemblyInstructionParser( OpCode.DivI64, ZeroArgs ) );
+            s_InstructionParsers.Add( new BadAssemblyInstructionParser( OpCode.DivF32, ZeroArgs ) );
+            s_InstructionParsers.Add( new BadAssemblyInstructionParser( OpCode.DivF64, ZeroArgs ) );
 
             s_InstructionParsers.Add( new BadAssemblyInstructionParser( OpCode.ModI8, ZeroArgs ) );
             s_InstructionParsers.Add( new BadAssemblyInstructionParser( OpCode.ModI16, ZeroArgs ) );
             s_InstructionParsers.Add( new BadAssemblyInstructionParser( OpCode.ModI32, ZeroArgs ) );
             s_InstructionParsers.Add( new BadAssemblyInstructionParser( OpCode.ModI64, ZeroArgs ) );
+            s_InstructionParsers.Add( new BadAssemblyInstructionParser( OpCode.ModF32, ZeroArgs ) );
+            s_InstructionParsers.Add( new BadAssemblyInstructionParser( OpCode.ModF64, ZeroArgs ) );
 
             s_InstructionParsers.Add( new BadAssemblyInstructionParser( OpCode.AndI8, ZeroArgs ) );
             s_InstructionParsers.Add( new BadAssemblyInstructionParser( OpCode.AndI16, ZeroArgs ) );
@@ -239,6 +249,11 @@ namespace BadAssembler.AssemblerSyntax
 
             s_InstructionParsers.Add( new BadAssemblyInstructionParser( OpCode.InteropCall, ZeroArgs ) );
             s_InstructionParsers.Add( new BadAssemblyInstructionParser( OpCode.InteropResolve, ZeroArgs ) );
+            
+            s_InstructionParsers.Add( new BadAssemblyInstructionParser( OpCode.F32ToI32, ZeroArgs ) );
+            s_InstructionParsers.Add( new BadAssemblyInstructionParser( OpCode.F64ToI64, ZeroArgs ) );
+            s_InstructionParsers.Add( new BadAssemblyInstructionParser( OpCode.I32ToF32, ZeroArgs ) );
+            s_InstructionParsers.Add( new BadAssemblyInstructionParser( OpCode.I64ToF64, ZeroArgs ) );
         }
 
         private BadAssemblyInstructionParser( OpCode opCode, Action < OpCode, SourceReader, CodeSectionWriter > parser )

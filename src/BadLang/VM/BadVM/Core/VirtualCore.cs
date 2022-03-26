@@ -566,6 +566,28 @@ namespace BadVM.Core
 
                     break;
                 }
+                
+                
+                case OpCode.AddF32:
+                {
+                    float a = m_MemoryBus.ReadFloat( m_StackPointer );
+                    FreeStackPointer( sizeof( float ) );
+                    float b = m_MemoryBus.ReadFloat( m_StackPointer );
+
+                    m_MemoryBus.Write( m_StackPointer, a + b );
+
+                    break;
+                }
+                case OpCode.AddF64:
+                {
+                    double a = m_MemoryBus.ReadDouble( m_StackPointer );
+                    FreeStackPointer( sizeof( double ) );
+                    double b = m_MemoryBus.ReadDouble( m_StackPointer );
+
+                    m_MemoryBus.Write( m_StackPointer, a + b );
+
+                    break;
+                }
 
                 case OpCode.AddI64:
                 {
@@ -621,6 +643,29 @@ namespace BadVM.Core
 
                     break;
                 }
+                
+                
+                case OpCode.SubF32:
+                {
+                    float b = m_MemoryBus.ReadFloat( m_StackPointer );
+                    FreeStackPointer( sizeof( float ) );
+                    float a = m_MemoryBus.ReadFloat( m_StackPointer );
+
+                    m_MemoryBus.Write( m_StackPointer, a - b );
+
+                    break;
+                }
+
+                case OpCode.SubF64:
+                {
+                    double b = m_MemoryBus.ReadDouble( m_StackPointer );
+                    FreeStackPointer( sizeof( double ) );
+                    double a = m_MemoryBus.ReadDouble( m_StackPointer );
+
+                    m_MemoryBus.Write( m_StackPointer, a - b );
+
+                    break;
+                }
 
                 case OpCode.MulI8:
                 {
@@ -660,6 +705,27 @@ namespace BadVM.Core
                     long a = m_MemoryBus.ReadInt64( m_StackPointer );
                     FreeStackPointer( sizeof( long ) );
                     long b = m_MemoryBus.ReadInt64( m_StackPointer );
+
+                    m_MemoryBus.Write( m_StackPointer, a * b );
+
+                    break;
+                }
+                case OpCode.MulF32:
+                {
+                    float a = m_MemoryBus.ReadFloat( m_StackPointer );
+                    FreeStackPointer( sizeof( float ) );
+                    float b = m_MemoryBus.ReadFloat( m_StackPointer );
+
+                    m_MemoryBus.Write( m_StackPointer, a * b );
+
+                    break;
+                }
+
+                case OpCode.MulF64:
+                {
+                    double a = m_MemoryBus.ReadDouble( m_StackPointer );
+                    FreeStackPointer( sizeof( double ) );
+                    double b = m_MemoryBus.ReadDouble( m_StackPointer );
 
                     m_MemoryBus.Write( m_StackPointer, a * b );
 
@@ -709,6 +775,27 @@ namespace BadVM.Core
 
                     break;
                 }
+                case OpCode.DivF32:
+                {
+                    float b = m_MemoryBus.ReadFloat( m_StackPointer );
+                    FreeStackPointer( sizeof( float ) );
+                    float a = m_MemoryBus.ReadFloat( m_StackPointer );
+
+                    m_MemoryBus.Write( m_StackPointer, a / b );
+
+                    break;
+                }
+
+                case OpCode.DivF64:
+                {
+                    double b = m_MemoryBus.ReadDouble( m_StackPointer );
+                    FreeStackPointer( sizeof( double ) );
+                    double a = m_MemoryBus.ReadDouble( m_StackPointer );
+
+                    m_MemoryBus.Write( m_StackPointer, a / b );
+
+                    break;
+                }
 
                 case OpCode.ModI8:
                 {
@@ -748,6 +835,27 @@ namespace BadVM.Core
                     long b = m_MemoryBus.ReadInt64( m_StackPointer );
                     FreeStackPointer( sizeof( long ) );
                     long a = m_MemoryBus.ReadInt64( m_StackPointer );
+
+                    m_MemoryBus.Write( m_StackPointer, a % b );
+
+                    break;
+                }
+                case OpCode.ModF32:
+                {
+                    float b = m_MemoryBus.ReadFloat( m_StackPointer );
+                    FreeStackPointer( sizeof( float ) );
+                    float a = m_MemoryBus.ReadFloat( m_StackPointer );
+
+                    m_MemoryBus.Write( m_StackPointer, a % b );
+
+                    break;
+                }
+
+                case OpCode.ModF64:
+                {
+                    double b = m_MemoryBus.ReadDouble( m_StackPointer );
+                    FreeStackPointer( sizeof( double ) );
+                    double a = m_MemoryBus.ReadDouble( m_StackPointer );
 
                     m_MemoryBus.Write( m_StackPointer, a % b );
 
@@ -1225,6 +1333,40 @@ namespace BadVM.Core
 
                     break;
                 }
+                
+                case OpCode.BranchLessF32:
+                {
+                    long addr = m_MemoryBus.ReadInt64( m_StackPointer );
+                    FreeStackPointer( sizeof( long ) );
+                    float b = m_MemoryBus.ReadFloat( m_StackPointer );
+                    FreeStackPointer( sizeof( float ) );
+                    float a = m_MemoryBus.ReadFloat( m_StackPointer );
+                    FreeStackPointer( sizeof( float ) );
+
+                    if ( a < b )
+                    {
+                        m_ProgramCounter = addr;
+                    }
+
+                    break;
+                }
+                
+                case OpCode.BranchLessF64:
+                {
+                    long addr = m_MemoryBus.ReadInt64( m_StackPointer );
+                    FreeStackPointer( sizeof( long ) );
+                    double b = m_MemoryBus.ReadDouble( m_StackPointer );
+                    FreeStackPointer( sizeof( double ) );
+                    double a = m_MemoryBus.ReadDouble( m_StackPointer );
+                    FreeStackPointer( sizeof( double ) );
+
+                    if ( a < b )
+                    {
+                        m_ProgramCounter = addr;
+                    }
+
+                    break;
+                }
 
                 case OpCode.BranchGreaterI8:
                 {
@@ -1294,6 +1436,41 @@ namespace BadVM.Core
                     break;
                 }
 
+                case OpCode.BranchGreaterF32:
+                {
+                    long addr = m_MemoryBus.ReadInt64( m_StackPointer );
+                    FreeStackPointer( sizeof( long ) );
+                    float b = m_MemoryBus.ReadFloat( m_StackPointer );
+                    FreeStackPointer( sizeof( float ) );
+                    float a = m_MemoryBus.ReadFloat( m_StackPointer );
+                    FreeStackPointer( sizeof( float ) );
+
+                    if ( a > b )
+                    {
+                        m_ProgramCounter = addr;
+                    }
+
+                    break;
+                }
+
+                case OpCode.BranchGreaterF64:
+                {
+                    long addr = m_MemoryBus.ReadInt64( m_StackPointer );
+                    FreeStackPointer( sizeof( long ) );
+                    double b = m_MemoryBus.ReadDouble( m_StackPointer );
+                    FreeStackPointer( sizeof( double ) );
+                    double a = m_MemoryBus.ReadDouble( m_StackPointer );
+                    FreeStackPointer( sizeof( double ) );
+
+                    if ( a > b )
+                    {
+                        m_ProgramCounter = addr;
+                    }
+
+                    break;
+                }
+
+                
                 case OpCode.BranchLessOrEqualI8:
                 {
                     long addr = m_MemoryBus.ReadInt64( m_StackPointer );
@@ -1362,6 +1539,41 @@ namespace BadVM.Core
                     break;
                 }
 
+                case OpCode.BranchLessOrEqualF32:
+                {
+                    long addr = m_MemoryBus.ReadInt64( m_StackPointer );
+                    FreeStackPointer( sizeof( long ) );
+                    float b = m_MemoryBus.ReadFloat( m_StackPointer );
+                    FreeStackPointer( sizeof( float ) );
+                    float a = m_MemoryBus.ReadFloat( m_StackPointer );
+                    FreeStackPointer( sizeof( float ) );
+
+                    if ( a <= b )
+                    {
+                        m_ProgramCounter = addr;
+                    }
+
+                    break;
+                }
+
+                case OpCode.BranchLessOrEqualF64:
+                {
+                    long addr = m_MemoryBus.ReadInt64( m_StackPointer );
+                    FreeStackPointer( sizeof( long ) );
+                    double b = m_MemoryBus.ReadDouble( m_StackPointer );
+                    FreeStackPointer( sizeof( double ) );
+                    double a = m_MemoryBus.ReadDouble( m_StackPointer );
+                    FreeStackPointer( sizeof( double ) );
+
+                    if ( a <= b )
+                    {
+                        m_ProgramCounter = addr;
+                    }
+
+                    break;
+                }
+
+                
                 case OpCode.BranchGreaterOrEqualI8:
                 {
                     long addr = m_MemoryBus.ReadInt64( m_StackPointer );
@@ -1429,6 +1641,40 @@ namespace BadVM.Core
 
                     break;
                 }
+                
+                case OpCode.BranchGreaterOrEqualF32:
+                {
+                    long addr = m_MemoryBus.ReadInt64( m_StackPointer );
+                    FreeStackPointer( sizeof( long ) );
+                    float b = m_MemoryBus.ReadFloat( m_StackPointer );
+                    FreeStackPointer( sizeof( float ) );
+                    float a = m_MemoryBus.ReadFloat( m_StackPointer );
+                    FreeStackPointer( sizeof( float ) );
+
+                    if ( a >= b )
+                    {
+                        m_ProgramCounter = addr;
+                    }
+
+                    break;
+                }
+
+                case OpCode.BranchGreaterOrEqualF64:
+                {
+                    long addr = m_MemoryBus.ReadInt64( m_StackPointer );
+                    FreeStackPointer( sizeof( long ) );
+                    double b = m_MemoryBus.ReadDouble( m_StackPointer );
+                    FreeStackPointer( sizeof( double ) );
+                    double a = m_MemoryBus.ReadDouble( m_StackPointer );
+                    FreeStackPointer( sizeof( double ) );
+
+                    if ( a >= b )
+                    {
+                        m_ProgramCounter = addr;
+                    }
+
+                    break;
+                }
 
                 case OpCode.InteropResolve:
                 {
@@ -1458,9 +1704,37 @@ namespace BadVM.Core
                     break;
                 }
 
+                case OpCode.F32ToI32:
+                {
+                    float b = m_MemoryBus.ReadFloat( m_StackPointer );
+                    m_MemoryBus.Write(m_StackPointer, (int) b);
+                    break;
+                }
+                
+                case OpCode.F64ToI64:
+                {
+                    double b = m_MemoryBus.ReadDouble( m_StackPointer );
+                    m_MemoryBus.Write(m_StackPointer, (long) b);
+                    break;
+                }
+                
+                case OpCode.I32ToF32:
+                {
+                    int b = m_MemoryBus.ReadInt32( m_StackPointer );
+                    m_MemoryBus.Write(m_StackPointer, (float) b);
+                    break;
+                }
+                
+                case OpCode.I64ToF64:
+                {
+                    long b = m_MemoryBus.ReadInt64( m_StackPointer );
+                    m_MemoryBus.Write(m_StackPointer, (double) b);
+                    break;
+                }
+
                 default:
                 {
-                    throw new ArgumentOutOfRangeException();
+                    throw new ArgumentOutOfRangeException(nameof(op), op, "Unknown opcode");
                 }
             }
 

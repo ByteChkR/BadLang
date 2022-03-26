@@ -16,14 +16,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0"/>
-        <PackageReference Include="NUnit" Version="3.13.2"/>
-        <PackageReference Include="NUnit3TestAdapter" Version="4.0.0"/>
-        <PackageReference Include="coverlet.collector" Version="3.1.0"/>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
+        <PackageReference Include="NUnit" Version="3.13.2" />
+        <PackageReference Include="NUnit3TestAdapter" Version="4.0.0" />
+        <PackageReference Include="coverlet.collector" Version="3.1.0" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\BadLang.TestFramework\BadLang.TestFramework.csproj"/>
+        <ProjectReference Include="..\BadLang.TestFramework\BadLang.TestFramework.csproj" />
     </ItemGroup>
 
     <ItemGroup>
@@ -827,6 +827,138 @@
         </None>
         <None Update="tests\passing\structure\ActionTest.basm">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="tests\passing\operators\AddF64.basm">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="tests\passing\operators\AddF32.basm">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="tests\passing\operators\PreFixDecrementF32.basm">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="tests\passing\operators\MulF32.basm">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="tests\passing\operators\DivF32.basm">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="tests\passing\operators\ModF64.basm">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="tests\passing\operators\PostFixIncrementF32.basm">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="tests\passing\operators\ModF32.basm">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="tests\passing\operators\PostFixIncrementF64.basm">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="tests\passing\operators\PreFixDecrementF64.basm">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="tests\passing\operators\PostFixDecrementF64.basm">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="tests\passing\operators\MulF64.basm">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="tests\passing\operators\DivF64.basm">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="tests\passing\operators\PostFixDecrementF32.basm">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="tests\passing\operators\PreFixIncrementF32.basm">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="tests\passing\operators\PreFixIncrementF64.basm">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="tests\passing\operators\SelfAddF32.basm">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="tests\passing\operators\SelfAddF64.basm">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="tests\passing\operators\SelfDivF32.basm">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="tests\passing\operators\SelfDivF64.basm">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="tests\passing\operators\SelfModF32.basm">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="tests\passing\operators\SelfModF64.basm">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="tests\passing\operators\SelfMulF32.basm">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="tests\passing\operators\SelfMulF64.basm">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="tests\passing\operators\SelfSubF32.basm">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="tests\passing\operators\SelfSubF64.basm">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="tests\passing\operators\SubF32.basm">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="tests\passing\operators\SubF64.basm">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="tests\passing\operators\Cast64ToF64.basm">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="tests\passing\operators\Cast32ToF32.basm">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="tests\passing\operators\CastF32To32.basm">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="tests\passing\operators\CastF64To64.basm">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="tests\passing\operators\Cast16ToF32.basm">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="tests\passing\operators\Cast16ToF64.basm">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="tests\passing\operators\Cast32ToF64.basm">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="tests\passing\operators\Cast64ToF32.basm">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="tests\passing\operators\Cast8ToF32.basm">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="tests\passing\operators\Cast8ToF64.basm">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="tests\passing\operators\CastF32To16.basm">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="tests\passing\operators\CastF32To64.basm">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="tests\passing\operators\CastF32To8.basm">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="tests\passing\operators\CastF64To16.basm">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="tests\passing\operators\CastF64To32.basm">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="tests\passing\operators\CastF64To8.basm">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </None>
     </ItemGroup>
 

@@ -1,7 +1,7 @@
 ﻿using BadC.DebugSymbols;
 using BadC.Templates;
 using BadC.Types;
-
+using BadC.Types.Primitives;
 using BadVM.Shared;
 using BadVM.Shared.AssemblyFormat.Serialization.Sections.Formats.Writers;
 
@@ -73,6 +73,51 @@ public class BadCCastExpression : BadCExpression
 
         context.AddSymbol( context.Writer, SourceToken );
 
+        if (exprType != null && 
+            (exprType.PrimitiveType is BadCPrimitiveTypes.F32 or BadCPrimitiveTypes.F64 || 
+             TargetType.PrimitiveType is BadCPrimitiveTypes.F32 or BadCPrimitiveTypes.F64))
+        {
+            Expression.Emit( context, exprType, isLval );
+
+            if (TargetType.PrimitiveType == exprType.PrimitiveType) return;
+            
+            if (exprType.PrimitiveType == BadCPrimitiveTypes.F64)
+            {
+                context.Writer.Emit(OpCode.F64ToI64, Array.Empty<byte>());
+                if (TargetType.PrimitiveType != BadCPrimitiveTypes.I64)
+                {
+                    m_Converters[exprType.Size][TargetType.Size]( context.Writer );
+                }
+            }
+            else if (exprType.PrimitiveType == BadCPrimitiveTypes.F32)
+            {
+                context.Writer.Emit(OpCode.F32ToI32, Array.Empty<byte>());
+                if (TargetType.PrimitiveType != BadCPrimitiveTypes.I32)
+                {
+                    m_Converters[exprType.Size][TargetType.Size]( context.Writer );
+                }
+            }
+            else
+            {
+                m_Converters[exprType.Size][TargetType.Size]( context.Writer );
+                if (TargetType.PrimitiveType == BadCPrimitiveTypes.F32)
+                {
+                    context.Writer.Emit(OpCode.I32ToF32, Array.Empty<byte>());
+                }
+                else if (TargetType.PrimitiveType == BadCPrimitiveTypes.F64)
+                {
+                    context.Writer.Emit(OpCode.I64ToF64, Array.Empty<byte>());
+                }
+                else throw new Exception();
+            }
+            
+            
+
+            return;
+        }
+
+
+
         if ( exprType == null || exprType.Size == TargetType.Size )
         {
             Expression.Emit( context, exprType ?? baseTypeHint, isLval );
@@ -83,6 +128,15 @@ public class BadCCastExpression : BadCExpression
         Expression.Emit( context, exprType, isLval );
 
         m_Converters[exprType.Size][TargetType.Size]( context.Writer );
+        if (TargetType.PrimitiveType == BadCPrimitiveTypes.F64)
+        {
+            context.Writer.Emit(OpCode.I64ToF64, Array.Empty<byte>());
+            
+        }
+        else if(TargetType.PrimitiveType == BadCPrimitiveTypes.F32)
+        {
+            context.Writer.Emit(OpCode.I32ToF32, Array.Empty<byte>());
+        }
     }
 
     public override BadCType? GetFixedType( BadCEmitContext context )
