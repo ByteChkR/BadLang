@@ -3,6 +3,6 @@
 public interface ILogger
 {
 
-    public void Log( Log log );
+    public void Log( Log message );
 
 }

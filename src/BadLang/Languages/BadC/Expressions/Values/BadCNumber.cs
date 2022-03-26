@@ -12,13 +12,13 @@ namespace BadC.Expressions.Values;
 public class BadCNumber : BadCExpression
 {
 
-    public readonly decimal Value;
+    private readonly decimal m_Value;
 
     #region Public
 
     public BadCNumber( decimal d, SourceToken token ) : base( true, token )
     {
-        Value = d;
+        m_Value = d;
     }
 
     public override void Emit(
@@ -33,7 +33,7 @@ public class BadCNumber : BadCExpression
 
         context.AddSymbol( context.Writer, SourceToken );
 
-        context.Writer.Push( baseTypeHint, Value );
+        context.Writer.Push( baseTypeHint, m_Value );
     }
 
     public override BadCExpression ResolveTemplateTypes( BadCTemplateTypeContext templateContext )

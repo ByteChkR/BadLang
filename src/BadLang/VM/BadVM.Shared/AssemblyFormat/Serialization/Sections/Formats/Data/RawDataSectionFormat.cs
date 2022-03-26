@@ -34,7 +34,7 @@ namespace BadVM.Shared.AssemblyFormat.Serialization.Sections.Formats.Data
             return bytes.ToArray();
         }
 
-        public override AssemblySection Read( byte[] data, int start, out int read, Func < Assembly > asmLookup )
+        public override AssemblySection Read( byte[] data, int start, out int readBytes, Func < Assembly > asmLookup )
         {
             int current = start;
             bool isReadOnly = BitConverter.ToBoolean( data, current );
@@ -57,7 +57,7 @@ namespace BadVM.Shared.AssemblyFormat.Serialization.Sections.Formats.Data
 
             SectionMetaData metaData = SectionMetaData.Deserialize( metaDataBytes );
 
-            read = current - start;
+            readBytes = current - start;
 
             return new RawDataSection( asmLookup, name, metaData, dataBytes );
         }

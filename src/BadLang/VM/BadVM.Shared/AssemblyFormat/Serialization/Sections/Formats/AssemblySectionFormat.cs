@@ -25,7 +25,7 @@ namespace BadVM.Shared.AssemblyFormat.Serialization.Sections.Formats
             s_Formats.Add( format );
         }
 
-        public abstract AssemblySection Read( byte[] data, int start, out int read, Func < Assembly > asmLookup );
+        public abstract AssemblySection Read( byte[] data, int start, out int readBytes, Func < Assembly > asmLookup );
 
         public abstract byte[] Write( ISectionWriter writer );
 

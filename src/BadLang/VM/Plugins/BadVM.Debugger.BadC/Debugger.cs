@@ -37,8 +37,8 @@ public class Debugger : Plugin < DebuggerHost >, IDebugger
     private int m_LastLine = -1;
 
     private bool m_IsFirstCycle = true;
-    private bool m_Step = false;
-    private bool m_Run = false;
+    private bool m_Step;
+    private bool m_Run;
 
     #region Public
 
@@ -46,21 +46,21 @@ public class Debugger : Plugin < DebuggerHost >, IDebugger
     {
         m_LogMask = new LogMask( FriendlyName );
 
-        m_Commands["help"] = ( core, args ) => Help();
+        m_Commands["help"] = ( _, _ ) => Help();
 
-        m_Commands["step"] = ( core, args ) =>
+        m_Commands["step"] = ( _, _  ) =>
                              {
                                  m_Step = !m_Step;
                                  m_LogMask.Info( $"Step Mode: {m_Step}" );
                              };
 
-        m_Commands["callstack"] = ( core, args ) =>
+        m_Commands["callstack"] = ( core, _ ) =>
                                   {
                                       string s = GetStackTrace( core );
                                       m_LogMask.Info( s );
                                   };
 
-        m_Commands["break"] = ( core, args ) =>
+        m_Commands["break"] = ( _, args ) =>
                               {
                                   foreach ( string arg in args )
                                   {
@@ -86,7 +86,7 @@ public class Debugger : Plugin < DebuggerHost >, IDebugger
                                   }
                               };
 
-        m_Commands["unbreak"] = ( core, args ) =>
+        m_Commands["unbreak"] = ( _, args ) =>
                                 {
                                     foreach ( string arg in args )
                                     {
@@ -125,7 +125,7 @@ public class Debugger : Plugin < DebuggerHost >, IDebugger
                                     }
                                 };
 
-        m_Commands["breakpoints"] = ( core, args ) =>
+        m_Commands["breakpoints"] = ( _, _ ) =>
                                     {
                                         foreach ( long addr in m_BreakAddress )
                                         {
@@ -133,7 +133,7 @@ public class Debugger : Plugin < DebuggerHost >, IDebugger
                                         }
                                     };
 
-        m_Commands["linebreak"] = ( core, args ) =>
+        m_Commands["linebreak"] = ( _, args ) =>
                                   {
                                       foreach ( string line in args )
                                       {
@@ -199,7 +199,7 @@ public class Debugger : Plugin < DebuggerHost >, IDebugger
                                       }
                                   };
 
-        m_Commands["linebreakpoints"] = ( core, args ) =>
+        m_Commands["linebreakpoints"] = ( _, _ ) =>
                                         {
                                             foreach ( DebugSymbol symbol in m_BreakSymbols )
                                             {
@@ -211,11 +211,11 @@ public class Debugger : Plugin < DebuggerHost >, IDebugger
                                             }
                                         };
 
-        m_Commands["halt"] = ( core, args ) => { core.Halt(); };
-        m_Commands["breakclear"] = ( core, args ) => { m_BreakAddress.Clear(); };
-        m_Commands["linebreakclear"] = ( core, args ) => { m_BreakSymbols.Clear(); };
+        m_Commands["halt"] = ( core, _ ) => { core.Halt(); };
+        m_Commands["breakclear"] = ( _, _ ) => { m_BreakAddress.Clear(); };
+        m_Commands["linebreakclear"] = ( _, _ ) => { m_BreakSymbols.Clear(); };
 
-        m_Commands["lineunbreak"] = ( core, args ) =>
+        m_Commands["lineunbreak"] = ( _, args ) =>
 
                                     {
                                         foreach ( string line in args )
@@ -276,7 +276,7 @@ public class Debugger : Plugin < DebuggerHost >, IDebugger
                                         }
                                     };
 
-        m_Commands["symbols"] = ( core, args ) =>
+        m_Commands["symbols"] = ( _, _ ) =>
                                 {
                                     IEnumerable < string > symbols = m_MappedSymbols.Select(
                                              s =>
@@ -294,7 +294,7 @@ public class Debugger : Plugin < DebuggerHost >, IDebugger
                                     }
                                 };
 
-        m_Commands["elements"] = ( core, args ) =>
+        m_Commands["elements"] = ( _, _ ) =>
                                  {
                                      IEnumerable < string > symbols = m_MappedSections.SelectMany(
                                               s => s.Key.MetaData.Elements.Select( x => x.Name.ToString() )
@@ -430,9 +430,9 @@ public class Debugger : Plugin < DebuggerHost >, IDebugger
                                   }
                               };
 
-        m_Commands["clear"] = ( core, strings ) => Console.Clear();
+        m_Commands["clear"] = ( _, _ ) => Console.Clear();
 
-        m_Commands["run"] = ( core, strings ) => m_Run = true;
+        m_Commands["run"] = ( _, _ ) => m_Run = true;
     }
 
     public void OnAssemblyLoad( Assembly asm, string? pathHint )
@@ -541,8 +541,8 @@ public class Debugger : Plugin < DebuggerHost >, IDebugger
 
             if ( debugSymbol.AssemblyName == section.Assembly!.Name && debugSymbol.SectionName == section.Name )
             {
-                debugSymbol.SectionOffset += address;
-                m_MappedSymbols.Add( debugSymbol );
+                m_MappedSymbols.Add(new DebugSymbol(debugSymbol.SourceToken, debugSymbol.AssemblyName,
+                    debugSymbol.SectionName, (int) (debugSymbol.SectionOffset + address)));
             }
         }
     }
@@ -553,6 +553,7 @@ public class Debugger : Plugin < DebuggerHost >, IDebugger
 
     protected override void Initialize( string globalConfigDirectory, string presetConfigDirectory )
     {
+        //Debugger has no config files to load
     }
 
     protected override void Load( DebuggerHost o )
@@ -717,7 +718,7 @@ public class Debugger : Plugin < DebuggerHost >, IDebugger
             }
 
             string[] args = line.Split( new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries );
-            string cmd = args[0].ToLower();
+            string cmd = args[0].ToLower(CultureInfo.InvariantCulture);
             args = args.Skip( 1 ).ToArray();
 
             if ( m_Commands.ContainsKey( cmd ) )

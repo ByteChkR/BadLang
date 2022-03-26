@@ -1,6 +1,6 @@
 ﻿namespace BadVM.Shared;
 
-public struct SourceToken
+public struct SourceToken : IEquatable<SourceToken>
 {
 
     public SourceToken( string fileName, int index )
@@ -34,4 +34,21 @@ public struct SourceToken
         return $"{FileName}:{line}";
     }
 
+    public bool Equals(SourceToken other)
+    {
+        return FileName == other.FileName && Index == other.Index;
+    }
+
+    public override bool Equals(object? obj)
+    {
+        return obj is SourceToken other && Equals(other);
+    }
+
+    public override int GetHashCode()
+    {
+        unchecked
+        {
+            return (FileName.GetHashCode() * 397) ^ Index;
+        }
+    }
 }

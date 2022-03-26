@@ -7,13 +7,13 @@ namespace BadC.Expressions;
 public abstract class BadCBinaryExpression : BadCExpression
 {
 
-    public BadCExpression Left { get; }
+    protected BadCExpression Left { get; }
 
-    public BadCExpression Right { get; }
+    protected BadCExpression Right { get; }
 
     #region Public
 
-    public BadCBinaryExpression( BadCExpression left, BadCExpression right, SourceToken token ) : base( false, token )
+    protected BadCBinaryExpression( BadCExpression left, BadCExpression right, SourceToken token ) : base( false, token )
     {
         Left = left;
         Right = right;

@@ -21,10 +21,18 @@ public class BadCTypeField : BadCTypeMember
         string name,
         AssemblyElementVisibility visibility,
         BadCType fieldType,
-        int? offset = null ) : base( name, visibility )
+        int? offset) : base( name, visibility )
     {
         FieldType = fieldType;
         Offset = offset;
+    }
+    public BadCTypeField(
+        string name,
+        AssemblyElementVisibility visibility,
+        BadCType fieldType ): base( name, visibility )
+    {
+        FieldType = fieldType;
+        Offset = null;
     }
 
     public override BadCTypeMember ResolveTemplate( BadCTemplateTypeContext templateContext )

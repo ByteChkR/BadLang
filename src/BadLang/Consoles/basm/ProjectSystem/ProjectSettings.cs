@@ -25,9 +25,14 @@ public class ProjectSettings
         return settings;
     }
 
-    public ProjectBuildContext CreateContext( string workingDir, string? targetName = null )
+    public ProjectBuildContext CreateContext( string workingDir, string? targetName  )
     {
         return new ProjectBuildContext( this, targetName ?? DefaultTarget, workingDir );
+    }
+
+    public ProjectBuildContext CreateContext( string workingDir )
+    {
+        return new ProjectBuildContext( this, DefaultTarget, workingDir );
     }
 
     #endregion

@@ -18,8 +18,8 @@ namespace BadC.Operators;
 public abstract class BadCBinaryOperator
 {
 
-    public readonly int Precedence;
-    public readonly string Key;
+    protected readonly int Precedence;
+    private readonly string m_Key;
 
     private static readonly List < BadCBinaryOperator > s_Operators = new List < BadCBinaryOperator >
                                                                       {
@@ -64,7 +64,7 @@ public abstract class BadCBinaryOperator
     {
         foreach ( BadCBinaryOperator op in s_Operators )
         {
-            if ( op.Precedence <= p && op.Key == key )
+            if ( op.Precedence <= p && op.m_Key == key )
             {
                 return op;
             }
@@ -87,7 +87,7 @@ public abstract class BadCBinaryOperator
     protected BadCBinaryOperator( int precedence, string key )
     {
         Precedence = precedence;
-        Key = key;
+        m_Key = key;
     }
 
     #endregion

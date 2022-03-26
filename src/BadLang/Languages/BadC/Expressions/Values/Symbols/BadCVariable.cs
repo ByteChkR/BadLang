@@ -12,7 +12,7 @@ namespace BadC.Expressions.Values.Symbols;
 public class BadCVariable : BadCExpression
 {
 
-    public readonly AssemblySymbol Name;
+    public AssemblySymbol Name { get; }
 
     #region Public
 

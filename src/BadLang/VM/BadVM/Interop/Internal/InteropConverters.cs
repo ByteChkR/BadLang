@@ -214,7 +214,7 @@ internal static class InteropConverters
 
     private static byte[] WriteByte( object value )
     {
-        return new byte[] { ( byte )value };
+        return new [] { ( byte )value };
     }
 
     #endregion

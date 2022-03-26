@@ -33,7 +33,7 @@ namespace BadVM.Shared.AssemblyFormat.Serialization.Sections.Formats.Code
             return bytes.ToArray();
         }
 
-        public override AssemblySection Read( byte[] data, int start, out int read, Func < Assembly > asmResolve )
+        public override AssemblySection Read( byte[] data, int start, out int readBytes, Func < Assembly > asmResolve )
         {
             int current = start;
             int nameLen = BitConverter.ToInt32( data, current );
@@ -52,7 +52,7 @@ namespace BadVM.Shared.AssemblyFormat.Serialization.Sections.Formats.Code
             Array.Copy( data, current, metaData, 0, metaDataLen );
             current += metaDataLen;
             SectionMetaData meta = SectionMetaData.Deserialize( metaData );
-            read = current - start;
+            readBytes = current - start;
 
             return new RawCodeSection( asmResolve, name, meta, code );
         }

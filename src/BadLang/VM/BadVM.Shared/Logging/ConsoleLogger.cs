@@ -3,19 +3,19 @@
 public class ConsoleLogger : ILogger
 {
 
-    public ConsoleColor InfoColor = ConsoleColor.White;
-    public ConsoleColor LogColor = ConsoleColor.DarkGray;
-    public ConsoleColor WarningColor = ConsoleColor.Yellow;
+    public static ConsoleColor InfoColor { get;} = ConsoleColor.White;
+    public static ConsoleColor LogColor { get; } = ConsoleColor.DarkGray;
+    public static ConsoleColor WarningColor { get; } = ConsoleColor.Yellow;
 
-    public static bool operator ==( ConsoleLogger? left, ConsoleLogger? right )
-    {
-        return Equals( left, right );
-    }
-
-    public static bool operator !=( ConsoleLogger? left, ConsoleLogger? right )
-    {
-        return !Equals( left, right );
-    }
+    // public static bool operator ==( ConsoleLogger? left, ConsoleLogger? right )
+    // {
+    //     return Equals( left, right );
+    // }
+    //
+    // public static bool operator !=( ConsoleLogger? left, ConsoleLogger? right )
+    // {
+    //     return !Equals( left, right );
+    // }
 
     #region Public
 
@@ -29,22 +29,22 @@ public class ConsoleLogger : ILogger
         return 0;
     }
 
-    public void Log( Log log )
+    public void Log( Log message )
     {
-        switch ( log.Type )
+        switch ( message.Type )
         {
             case LogType.Info:
-                Write( $"[{log.Type}][{log.LogMask}] {log.Message}", InfoColor );
+                Write( $"[{message.Type}][{message.LogMask}] {message.Message}", InfoColor );
 
                 break;
 
             case LogType.Log:
-                Write( $"[{log.Type}][{log.LogMask}] {log.Message}", LogColor );
+                Write( $"[{message.Type}][{message.LogMask}] {message.Message}", LogColor );
 
                 break;
 
             case LogType.Warning:
-                Write( $"[{log.Type}][{log.LogMask}] {log.Message}", WarningColor );
+                Write( $"[{message.Type}][{message.LogMask}] {message.Message}", WarningColor );
 
                 break;
 

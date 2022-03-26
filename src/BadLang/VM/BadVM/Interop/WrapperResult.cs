@@ -1,6 +1,6 @@
 ﻿namespace BadVM.Interop;
 
-public struct WrapperResult
+public class WrapperResult
 {
 
     private readonly Dictionary < string, (string asm, string header) > m_Assemblies;

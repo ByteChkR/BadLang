@@ -9,8 +9,8 @@ namespace BadC.Templates;
 public class BadCTemplateTypeContext
 {
 
-    public readonly PostSegmentParseTasks TaskList;
-    public readonly CodeSectionWriter Writer;
+    public PostSegmentParseTasks TaskList{ get; }
+    public CodeSectionWriter Writer { get; }
 
     private readonly Dictionary < BadCTemplateType, BadCType > m_Types;
 

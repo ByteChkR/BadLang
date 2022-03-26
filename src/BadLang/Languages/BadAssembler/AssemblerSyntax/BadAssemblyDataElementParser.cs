@@ -177,7 +177,7 @@ namespace BadAssembler.AssemblerSyntax
                 SourceReaderToken token = reader.ParseHexNumber();
                 decimal d = ( decimal )token.ParsedValue;
 
-                T num = BadAssemblyInstructionParser.
+                object? num = BadAssemblyInstructionParser.
                     ConvertNumber < T >( d );
 
                 if ( num == null )

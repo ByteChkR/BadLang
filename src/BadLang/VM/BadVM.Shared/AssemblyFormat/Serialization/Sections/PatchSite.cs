@@ -1,7 +1,7 @@
 ﻿namespace BadVM.Shared.AssemblyFormat.Serialization.Sections
 {
 
-    public readonly struct PatchSite
+    public readonly struct PatchSite : IEquatable<PatchSite>
     {
 
         public PatchSite( AssemblySymbol symbol, int size )
@@ -19,6 +19,23 @@
             return Symbol.ToString();
         }
 
+        public bool Equals(PatchSite other)
+        {
+            return Size == other.Size && Symbol.Equals(other.Symbol);
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is PatchSite other && Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return (Size * 397) ^ Symbol.GetHashCode();
+            }
+        }
     }
 
 }

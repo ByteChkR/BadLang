@@ -219,13 +219,13 @@ namespace BadVM.AssemblyFormat
             return current;
         }
 
-        private Assembly ResolveAssembly( string name )
+        private void ResolveAssembly( string name )
         {
-            Assembly asm = m_LoadedAssemblies.FirstOrDefault( a => a.Name == name );
+            Assembly? asm = m_LoadedAssemblies.FirstOrDefault( a => a.Name == name );
 
             if ( asm != null )
             {
-                return asm;
+                return;
             }
 
             LogMask.LogMessage( $"Resolving assembly {name}" );
@@ -237,7 +237,8 @@ namespace BadVM.AssemblyFormat
 
                 if ( args.IsResolved && args.AssemblyBytes != null )
                 {
-                    return LoadAssembly( args.AssemblyBytes, args.PathHint );
+                    LoadAssembly( args.AssemblyBytes, args.PathHint );
+                    return;
                 }
             }
 
