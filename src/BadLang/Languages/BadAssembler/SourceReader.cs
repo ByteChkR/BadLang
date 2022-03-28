@@ -123,6 +123,64 @@ namespace BadAssembler
             return IsWordStart( Current );
         }
 
+        public string ReadToEndOfBlock(char startBlock, char endBlock, string commentChar)
+        {
+            int start = CurrentIndex;
+            int current = 1;
+            while (current > 0)
+            {
+                SkipWhitespaceAndNewlineAndComments(commentChar);
+                if (Is('\"'))
+                {
+                    ParseString();
+                }
+                else
+                {
+                    if (Is(startBlock))
+                    {
+                        current++;
+                    }
+                    else if (Is(endBlock))
+                    {
+                        current--;
+                    }
+                    
+                    Eat(Current);
+                }
+            }
+
+            return Source.Substring(start, CurrentIndex - 1 - start);
+
+        }
+        
+        public string[] ParseList()
+        {
+            List<string> elems = new List<string>();
+
+            while (true)
+            {
+                StringBuilder sb = new();
+                SkipWhitespaceAndNewlineAndComments("//");
+                while (!Is(')') && !Is(',') && !IsEoF)
+                {
+                    sb.Append(Current);
+                    Eat(Current);
+                }
+                
+                elems.Add(sb.ToString().Trim());
+                
+                SkipWhitespaceAndNewlineAndComments("//");
+                if(Is(')'))
+                {
+                    break;
+                }
+                Eat(',');
+                SkipWhitespaceAndNewlineAndComments("//");
+            }
+
+            return elems.ToArray();
+        }
+        
         public SourceReaderToken ParseDigits()
         {
             int start = CurrentIndex;

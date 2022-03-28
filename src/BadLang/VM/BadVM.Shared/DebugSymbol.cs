@@ -1,12 +1,12 @@
 ﻿namespace BadVM.Shared;
 
-public readonly struct DebugSymbol : IEquatable<DebugSymbol>
+public  struct DebugSymbol : IEquatable<DebugSymbol>
 {
 
-    public readonly SourceToken SourceToken;
-    public readonly string AssemblyName;
-    public readonly string SectionName;
-    public readonly long SectionOffset;
+    public  SourceToken SourceToken;
+    public  string AssemblyName;
+    public  string SectionName;
+    public  long SectionOffset;
 
     public DebugSymbol( SourceToken sourceToken, string assemblyName, string sectionName, int sectionOffset )
     {

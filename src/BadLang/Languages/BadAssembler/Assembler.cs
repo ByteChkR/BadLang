@@ -1,4 +1,6 @@
-﻿using BadVM.Shared.AssemblyFormat;
+﻿using BadAssembler.Exceptions;
+using BadVM.Shared;
+using BadVM.Shared.AssemblyFormat;
 using BadVM.Shared.AssemblyFormat.Exceptions;
 using BadVM.Shared.AssemblyFormat.Serialization;
 using BadVM.Shared.Logging;

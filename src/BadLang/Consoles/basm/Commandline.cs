@@ -1,5 +1,6 @@
 ﻿using BadAssembler;
 using BadAssembler.AssemblerSyntax;
+using BadAssembler.Preprocessor;
 using BadAssembler.Segments;
 
 using BadC;
@@ -98,7 +99,7 @@ namespace basm
 
         #region Public
 
-        public static IEnumerable < SourceFile > LoadFiles( IEnumerable < string > input, string workingDir = "./" )
+        public static void LoadFiles(PreprocessorContext ctx, IEnumerable<string> input, string workingDir = "./")
         {
             foreach ( string s in input )
             {
@@ -117,7 +118,7 @@ namespace basm
                 {
                     LogMask.LogMessage( $"Loading file {path}" );
 
-                    yield return new SourceFile( path );
+                    ctx.ReadFile(path);
                 }
                 else if ( Directory.Exists( path ) )
                 {
@@ -125,7 +126,7 @@ namespace basm
                     {
                         LogMask.LogMessage( $"Loading file {ss}" );
 
-                        yield return new SourceFile( ss );
+                        ctx.ReadFile(ss);
                     }
                 }
             }
@@ -135,14 +136,14 @@ namespace basm
                 if ( Directory.Exists( includeDir ) )
                 {
                     foreach ( string includeFile in Directory.GetFiles(
-                                                                       includeDir,
-                                                                       "*.basm",
-                                                                       SearchOption.AllDirectories
-                                                                      ) )
+                                 includeDir,
+                                 "*.basm",
+                                 SearchOption.AllDirectories
+                             ) )
                     {
                         LogMask.LogMessage( $"Loading file {includeFile}" );
 
-                        yield return new SourceFile( includeFile );
+                        ctx.ReadFile(includeFile);
                     }
                 }
             }
@@ -201,8 +202,12 @@ namespace basm
                         string asmOutputPath = Path.Combine( args.OutputFile, asmName + ".bvm" );
                         AssemblyWriter wwriter = new AssemblyWriter( asmName, AssemblySectionFormat.Formats );
 
+                        PreprocessorContext wctx = new PreprocessorContext( );
+
+                        LoadFiles(wctx, new[] {asmSourcePath});
+                        
                         ( byte[] wasmBytes, AssemblyCompilationDataContainer wdata ) =
-                            assembler.Assemble( LoadFiles( new[] { asmSourcePath } ), wwriter );
+                            assembler.Assemble( wctx.GetSources(), wwriter );
 
                         File.WriteAllBytes(
                                            asmOutputPath,
@@ -225,9 +230,12 @@ namespace basm
             {
                 Directory.CreateDirectory( outDir );
             }
+            
+            PreprocessorContext ctx = new PreprocessorContext( );
+            LoadFiles(ctx, args.SourceFiles);
 
             ( byte[] asmBytes, AssemblyCompilationDataContainer data ) =
-                assembler.Assemble( LoadFiles( args.SourceFiles ), writer );
+                assembler.Assemble( ctx.GetSources(), writer );
 
             File.WriteAllBytes( args.OutputFile, asmBytes );
             data.Export( args.OutputFile );

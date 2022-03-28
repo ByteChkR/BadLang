@@ -55,7 +55,9 @@ public abstract class BadCBinaryOperator
                                                                           new BadCLessThanOperator(),
                                                                           new BadCGreaterThanOperator(),
                                                                           new BadCLessOrEqualOperator(),
-                                                                          new BadCGreaterOrEqualOperator()
+                                                                          new BadCGreaterOrEqualOperator(),
+                                                                          new BadCInlineIfOperator(),
+                                                                          new BadCInlineNullCoalescingOperator(),
                                                                       };
 
     #region Public

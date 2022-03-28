@@ -1,5 +1,6 @@
 ﻿using BadAssembler;
 using BadAssembler.AssemblerSyntax;
+using BadAssembler.Preprocessor;
 using BadAssembler.Segments;
 
 using BadC;
@@ -109,8 +110,12 @@ public class ProjectBuildContext
             Directory.CreateDirectory( outDir );
         }
 
+        PreprocessorContext ctx = new PreprocessorContext();
+        
+        Commandline.LoadFiles(ctx, Target.Sources, m_WorkingDir);
+        
         ( byte[] asmBytes, AssemblyCompilationDataContainer data ) =
-            assembler.Assemble( Commandline.LoadFiles( Target.Sources, m_WorkingDir ), writer );
+            assembler.Assemble( ctx.GetSources(), writer );
 
         File.WriteAllBytes( outFile, asmBytes );
         data.Export( outFile );
