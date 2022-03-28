@@ -8,6 +8,7 @@ using BadC.Expressions.Access;
 using BadC.Expressions.Branch;
 using BadC.Expressions.Flow;
 using BadC.Expressions.Flow.Invocation;
+using BadC.Expressions.Pointer;
 using BadC.Expressions.Type;
 using BadC.Expressions.Values;
 using BadC.Expressions.Values.Symbols;
@@ -1461,6 +1462,32 @@ namespace BadC
                 decimal d = ( decimal )token.ParsedValue;
 
                 return new BadCNumber( d, token.SourceToken );
+            }
+
+            if (reader.Is('\''))
+            {
+                SourceReaderToken token = reader.ParseChar();
+                char c = (char)token.ParsedValue;
+
+                return new BadCNumber(c, token.SourceToken);
+            }
+            
+            if (reader.Is('"'))
+            {
+                SourceReaderToken token = reader.ParseString();
+                DataSectionWriter dataWriter =
+                    context.Writer.AssemblyWriter.GetDataWriter(context.Writer.SectionName + "_DATA", "data_raw",
+                        true);
+
+                AssemblySymbol sym = new AssemblySymbol(dataWriter.AssemblyName, dataWriter.SectionName,
+                    "str_" + dataWriter.CurrentSize);
+                
+                string s = token.ParsedValue.ToString() + '\0';
+                byte[] data = s.ToCharArray().SelectMany( BitConverter.GetBytes ).ToArray();
+                dataWriter.AddData(sym.SymbolName, AssemblyElementVisibility.Assembly, data);
+
+                return new BadCAddressOfExpression(new BadCVariable(sym, token.SourceToken), token.SourceToken);
+
             }
 
             throw new ParseException( "Expected value", reader.SourceFile.GetToken( reader.CurrentIndex ) );

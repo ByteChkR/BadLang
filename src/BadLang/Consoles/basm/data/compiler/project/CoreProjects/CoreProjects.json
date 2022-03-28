@@ -1,5 +1,6 @@
 {
   "Variables": {
+    "BiosHeader": "$(CoreProjects)/BIOS/BIOS.basm",
     "SystemHeader": "$(LibraryPath)/System.header.basm",
     "SystemProject": "$(CoreProjects)/System/project.json",
     "CollectionsHeader": "$(LibraryPath)/Collections.header.basm",

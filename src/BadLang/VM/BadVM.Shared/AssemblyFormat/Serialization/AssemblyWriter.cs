@@ -98,6 +98,10 @@ namespace BadVM.Shared.AssemblyFormat.Serialization
 
         public DataSectionWriter GetDataWriter( string name, string format, bool isReadOnly )
         {
+            if (m_Data.Any(x => x.SectionName == name))
+            {
+                return (m_Data.First(x => x.SectionName == name) as DataSectionWriter)!;
+            }
             DataSectionWriter w = new DataSectionWriter( format, Name, name, isReadOnly );
             LogMask.LogMessage( $"Adding Data Section {name} with format {format}" );
             m_Data.Add( w );

@@ -8,13 +8,13 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="CommandLineParser" Version="2.9.0-preview1"/>
-        <PackageReference Include="Newtonsoft.Json" Version="13.0.1"/>
+        <PackageReference Include="CommandLineParser" Version="2.9.0-preview1" />
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\Languages\BadAssembler\BadAssembler.csproj"/>
-        <ProjectReference Include="..\..\Languages\BadC\BadC.csproj"/>
+        <ProjectReference Include="..\..\Languages\BadAssembler\BadAssembler.csproj" />
+        <ProjectReference Include="..\..\Languages\BadC\BadC.csproj" />
     </ItemGroup>
 
     <ItemGroup>
@@ -104,6 +104,12 @@
         </None>
         <None Update="data\compiler\project\CoreProjects\System\src\Math\Max.basm">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="data\compiler\project\CoreProjects\BIOS\BIOS.basm">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Update="data\compiler\project\CoreProjects\System\src\CString.basm">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </None>
     </ItemGroup>
 

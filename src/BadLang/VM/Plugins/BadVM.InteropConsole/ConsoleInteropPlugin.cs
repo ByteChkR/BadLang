@@ -1,4 +1,5 @@
 ﻿using BadVM.Interop;
+using BadVM.Shared.Memory;
 using BadVM.Shared.PluginSystem;
 
 using Newtonsoft.Json;
@@ -6,10 +7,12 @@ using Newtonsoft.Json;
 namespace BadVM.InteropConsole
 {
 
-    public class ConsoleInteropPlugin : Plugin
+    public class ConsoleInteropPlugin : Plugin<MemoryBus>
     {
 
         private ConsoleInteropSettings? m_Settings;
+
+        private MemoryBus? m_Bus;
 
         #region Public
 
@@ -30,6 +33,24 @@ namespace BadVM.InteropConsole
                 return;
             }
 
+            InteropHelper.Register(new InteropFunction<int>("Console::Interop::ReadKey", Console.Read));
+            InteropHelper.Register(new InteropFunction<long, long, long>("Console::Interop::ReadLine", (addr, maxLen) =>
+            {
+                maxLen--; //Leave room for null character
+                string? s = Console.ReadLine();
+                if (s == null) return 0;
+                if (s.Length > maxLen)
+                {
+                    s = s.Substring(0, (int)maxLen);
+                }
+
+                if(m_Bus==null)throw new Exception("m_Bus is null");
+
+                m_Bus.WriteCString(addr, s);
+                
+                return s.Length;
+            }));
+            
             InteropHelper.Register( new InteropAction < string >( "Console::Interop::WriteLine", Console.WriteLine ) );
             InteropHelper.Register( new InteropAction < string >( "Console::Interop::Write", Console.Write ) );
             InteropHelper.Register( new InteropAction < char >( "Console::Interop::WriteChar", Console.Write ) );
@@ -249,9 +270,11 @@ namespace BadVM.InteropConsole
             }
         }
 
-        protected override void Load( object o )
+        protected override void Load(MemoryBus o)
         {
+            m_Bus = o;
         }
+
 
         #endregion
 

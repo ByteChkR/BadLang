@@ -171,6 +171,8 @@ namespace bvm
             }
 
             MemoryBus bus = CreateBus( Settings );
+            
+            PluginLoader.LoadPlugins(bus);
 
             VirtualCPU cpu = new VirtualCPU( Settings, bus );
 

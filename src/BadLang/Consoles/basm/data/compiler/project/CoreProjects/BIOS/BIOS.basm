@@ -1,0 +1,48 @@
+ 
+
+#define BIOS_INIT(ramStart, ramLen, entryC, mainFunc)
+{
+	.dependency System
+	.dependency Console
+
+	.data BIOS_DATA data_raw BASM_DATA
+	{
+		.i64 ALLOC_PTR assembly 0
+	}
+
+	.code code code_raw BadC
+	{
+		void __main__()
+		{
+			System::Allocator::Allocator alloc;
+			alloc.SetBlock(ramStart, ramLen, entryC);
+			BIOS_DATA::ALLOC_PTR = cast<i64>(&alloc);
+
+			mainFunc();
+			halt;
+		}
+	}
+
+	.code BIOS:Memory code_raw BadC
+	{
+		void* malloc(i64 size) : export
+		{
+			System::Allocator::Allocator* alloc = cast<System::Allocator::Allocator*>(BIOS_DATA::ALLOC_PTR);
+			return alloc->Allocate(size);
+		}
+
+		void free(void* ptr) : export
+		{
+			System::Allocator::Allocator* alloc = cast<System::Allocator::Allocator*>(BIOS_DATA::ALLOC_PTR);
+			alloc->Free(ptr);
+			return;		
+		}
+
+		void mallocinfo() : export
+		{
+			System::Allocator::Allocator* alloc = cast<System::Allocator::Allocator*>(BIOS_DATA::ALLOC_PTR);
+			alloc->PrintAllocationTable();
+			return;
+		}
+	}
+}

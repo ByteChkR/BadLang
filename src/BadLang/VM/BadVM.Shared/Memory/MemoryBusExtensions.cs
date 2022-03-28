@@ -138,14 +138,14 @@
 
             int i = 0;
 
-            while ( current < value.Length )
+            while ( i < value.Length )
             {
                 current += bus.Write( current, value[i] );
                 i++;
             }
 
-            bus.Write( address + value.Length, '\0' );
-            current += sizeof( char );
+            
+            current += bus.Write( current, '\0' );
 
             return ( int )( current - address );
         }

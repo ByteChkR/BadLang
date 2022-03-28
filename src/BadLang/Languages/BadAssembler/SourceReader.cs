@@ -166,8 +166,12 @@ namespace BadAssembler
                     sb.Append(Current);
                     Eat(Current);
                 }
-                
-                elems.Add(sb.ToString().Trim());
+
+                string s = sb.ToString().Trim();
+                if (!string.IsNullOrEmpty(s))
+                {
+                    elems.Add(s);   
+                }
                 
                 SkipWhitespaceAndNewlineAndComments("//");
                 if(Is(')'))
@@ -262,6 +266,48 @@ namespace BadAssembler
             return new SourceReaderToken( start, CurrentIndex, this, token );
         }
 
+        public SourceReaderToken ParseChar()
+        {
+            SourceToken token = SourceFile.GetToken( CurrentIndex );
+
+            if ( !Is( '\'' ) )
+            {
+                throw new ParseException( "Expected '\''", token );
+            }
+
+            int pos = CurrentIndex;
+            Eat( '\'' );
+            StringBuilder sb = new StringBuilder();
+            bool isEscaped = false;
+
+            while ( !Is( '\'' ) && !Is( '\n' ) )
+            {
+                if ( Current == '\\' )
+                {
+                    isEscaped = true;
+                }
+                else
+                {
+                    sb.Append( Current );
+                }
+
+                Eat( Current );
+
+                if ( isEscaped )
+                {
+                    string s = Regex.Unescape( "\\" + Current );
+                    sb.Append( s );
+
+                    Eat( Current );
+                    isEscaped = false;
+                }
+            }
+
+            Eat( '\'' );
+
+            return new SourceReaderToken( pos, CurrentIndex, this, char.Parse(sb.ToString()), token );
+        }
+        
         public SourceReaderToken ParseString()
         {
             SourceToken token = SourceFile.GetToken( CurrentIndex );

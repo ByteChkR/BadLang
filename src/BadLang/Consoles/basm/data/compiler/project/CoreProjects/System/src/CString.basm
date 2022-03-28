@@ -1,0 +1,137 @@
+
+
+.code CString code_raw BadC
+{
+
+	i64 Length(i16* str) : export
+	{
+		i64 c = 0;
+		while(str[c] != 0)
+		{
+			c++;
+		};
+		return c;
+	}
+
+	i8 ContainsChar(i16* str, i16 char) : export
+	{
+		i64 i = 0;
+		while(str[i] != 0)
+		{
+			if(str[i] == char)
+			{
+				return 1;
+			};
+
+			i += sizeof(i16);
+		};
+
+		return 0;
+	}
+
+	i8 Contains(i16* str, i16* part, i64 start) : export
+	{
+		i64 partLen = Length(part);
+		i64 strLen = Length(str);
+		if(partLen > strLen)
+		{
+			return 0;
+		};
+
+		i64 l = strLen - partLen;
+		i64 c = start;
+		while(c < l)
+		{
+			i64 i = 0;
+			i8 ret = 1;
+			while(i < partLen)
+			{
+				if(str[c + i] != part[i])
+				{
+					ret = 0;
+				};
+				i++;
+			};
+
+			if(ret)
+			{
+				return 1;
+			};
+			c++;
+		};
+
+		return 0;
+
+	}
+
+	i8 StartsWith(i16* str, i16* part) : export
+	{
+
+		i64 partLen = Length(part);
+		i64 strLen = Length(str);
+		if(partLen > strLen)
+		{
+			return 0;
+		};
+
+		i64 i = 0;
+		while(i < partLen)
+		{
+			if(str[i] != part[i])
+			{
+				return 0;
+			};
+			i++;
+		};
+
+		
+		return 1;
+	}
+
+	i8 Equals(i16* a, i16* b) : export
+	{
+		i64 i = 0;
+
+		i64 aL = Length(a);
+		i64 bL = Length(b);
+
+		if(aL != bL)
+		{
+			return 0;
+		};
+
+		while(i < aL)
+		{
+			if(a[i] != b[i])
+			{
+				return 0;
+			};
+			i++;
+		};
+		return 1;
+	}
+
+	i8 EndsWith(i16* str, i16* part) : export
+	{
+		i64 partLen = Length(part);
+		i64 strLen = Length(str);
+		if(partLen > strLen)
+		{
+			return 0;
+		};
+
+		i64 c = strLen - partLen;
+		i64 i = 0;
+		while(i < partLen)
+		{
+			if(str[c + i] != part[i])
+			{
+				return 0;
+			};
+			i++;
+		};
+
+		return 1;
+	}
+
+}
