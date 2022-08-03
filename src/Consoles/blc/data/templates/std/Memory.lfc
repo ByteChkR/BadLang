@@ -1,0 +1,4 @@
+extern void std::Memory::Free(i8* ptr);
+extern i8* std::Memory::Alloc(i32 size);
+extern void std::Memory::Set(i8* ptr, i64 size, i8 value);
+extern void std::Memory::Copy(i8* src, i8* dst, i64 size);

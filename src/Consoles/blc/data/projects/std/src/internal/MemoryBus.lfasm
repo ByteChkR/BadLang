@@ -1,0 +1,46 @@
+.code LFASM_MemoryBus
+{
+	.export Write8
+	Write8:
+		WriteBus8
+		Return
+
+	.export Write16
+	Write16:
+		WriteBus16
+		Return
+
+	.export Write32
+	Write32:
+		WriteBus32
+		Return
+
+	.export Write64
+	Write64:
+		WriteBus64
+		Return
+
+	.export Read8
+	Read8:
+		ReadBus8
+		Return
+
+
+	.export Read16
+	Read16:
+		ReadBus16
+		Return
+
+
+	.export Read32
+	Read32:
+		ReadBus32
+		Return
+
+
+	.export Read64
+	Read64:
+		ReadBus64
+		Return
+		
+}

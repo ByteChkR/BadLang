@@ -1,0 +1,29 @@
+{
+  "Variables": {
+    "Input": "./src/Program.lfc",
+    "Output": "./bin/Program.lfbin"
+  },
+  "DefaultTarget": "build",
+  "Targets": {
+    "build": {
+      "Input": "$(Variables.Input)",
+      "Output": "$(Variables.Output)"
+    },
+    "run": {
+      "DependsOn": [
+        {
+          "Target": "build"
+        }
+      ],
+      "PostBuild": [
+        "$(CoreTools.BL) $(#Variables.Output)"
+      ]
+    },
+    "clean": {
+      "Delete": [
+        "$(#Variables.Output)",
+        "$(#Variables.Output).sym"
+      ]
+    }
+  }
+}

@@ -1,0 +1,47 @@
+namespace Memory
+{
+	//Import Memory Implementation
+	#include "./internal/Memory.lfasm"
+	#import LFASM_Memory
+	#import Pointer
+
+	//Define Extern Functions
+	extern i8* LFASM_Memory::Alloc(i32 size);
+	extern void LFASM_Memory::Free(i8* ptr);
+
+	//Define Export Functions
+	#export Alloc
+	#export Free
+	#export Set
+	#export Copy
+
+	i8* Alloc(i32 size)
+	{
+		return LFASM_Memory::Alloc(size);
+	}
+
+	void Free(i8* ptr)
+	{
+		LFASM_Memory::Free(ptr);
+	}
+
+	void Set(i8* ptr, i64 size, i8 value)
+	{
+		i64 count = 0;
+		while(count < size)
+		{
+			*Pointer::Add(ptr, count) = value;
+			count = count + 1;
+		}
+	}
+
+	void Copy(i8* src, i8* dst, i64 size)
+	{
+		i64 count = 0;
+		while(count < size)
+		{
+			*Pointer::Add(dst, count) = *Pointer::Add(src, count);
+			count = count + 1;
+		}
+	}
+}

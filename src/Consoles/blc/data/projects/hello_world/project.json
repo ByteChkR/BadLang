@@ -1,0 +1,39 @@
+{
+  "Variables": {
+    "Output": "./bin/HelloWorld.lfbin"
+  },
+  "DefaultTarget": "static",
+  "Targets": {
+    "static": {
+      "Input": "./src/HelloWorld_Static.lfc",
+      "Output": "$(Variables.Output)"
+    },
+    "dynamic": {
+      "Input": "./src/HelloWorld_Dynamic.lfc",
+      "Output": "$(Variables.Output)",
+      "DependsOn": [
+        {
+          "Project": "../std/project.json",
+          "Target": "build",
+          "Output": "./bin/std.lfbin"
+        }
+      ]
+    },
+    "run": {
+      "DependsOn": [
+        {
+          "Target": "static|dynamic"
+        }
+      ],
+      "PostBuild": [
+        "$(CoreTools.BL) $(#Variables.Output)"
+      ]
+    },
+    "clean": {
+      "Delete": [
+        "$(#Variables.Output)",
+        "$(#Variables.Output).sym"
+      ]
+    }
+  }
+}

@@ -1,0 +1,3 @@
+extern i64 std::Time::GetUnixMicroSeconds();
+extern i64 std::Time::GetUnixMilliSeconds();
+extern i64 std::Time::GetUnixSeconds();

@@ -1,0 +1,9 @@
+#include "../../std/src/std.lfc"
+
+#entry Main
+#import Console
+
+void Main()
+{
+	Console::WriteCStrLine("Hello World!");
+}

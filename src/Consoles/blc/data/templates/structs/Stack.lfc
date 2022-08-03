@@ -1,0 +1,91 @@
+
+
+struct Stack<T>
+{
+	Array<T> m_Memory;
+	i64 m_Count;
+	Stack(i64 size)
+	{
+		const_ctor(&this->m_Memory, size);
+		this->m_Count = 0;
+	}
+
+	i8 IsDisposed()
+	{
+		return this->m_Memory.IsDisposed();
+	}
+
+	void Dispose()
+	{
+
+		if(this->IsDisposed())
+		{
+			std::Core::Error("Stack::Dispose: underlying buffer was disposed");
+		}
+
+		this->m_Memory.Dispose();
+		this->m_Count = 0;
+	}
+
+	i64 GetCapacity()
+	{
+		if(this->IsDisposed())
+		{
+			std::Core::Error("Stack::GetCapacity: underlying buffer was disposed");
+		}
+
+		return this->m_Memory.GetLength();
+	}
+
+	i64 GetCount()
+	{
+		return this->m_Count;
+	}
+
+	void Push(T value)
+	{
+		if(this->IsDisposed())
+		{
+			std::Core::Error("Stack::Push: underlying buffer was disposed");
+		}
+		
+		if(this->GetCount() >= this->GetCapacity())
+		{
+			std::Core::Error("Stack::Push: Stack overflow");
+		}
+
+		i64 count = this->m_Count;
+		this->m_Memory.Set(count, value);
+		this->m_Count = count + 1;
+	}
+
+	T Peek()
+	{
+		return this->m_Memory.Get(this->m_Count - 1);
+	}
+
+	T Pop()
+	{
+		if(this->IsDisposed())
+		{
+			std::Core::Error("Stack::Pop: underlying buffer was disposed");
+		}
+
+		if(this->GetCount() == 0)
+		{
+			std::Core::Error("Stack::Pop: Stack underflow");
+		}
+
+		i64 count = this->m_Count - 1;
+		this->m_Count = count;
+		return this->m_Memory.Get(count);
+	}
+
+	void Clear()
+	{
+		while(this->GetCount())
+		{
+			this->Pop();
+		}
+	}
+}

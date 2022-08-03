@@ -1,0 +1,79 @@
+
+#ifndef STD_STRING
+{
+	#define STD_STRING FALSE
+}
+
+#if STD_STRING TRUE
+{
+
+	struct String
+	{
+		i8* m_Pointer;
+
+
+		String(i8* cstr)
+		{
+			this->m_Pointer = cstr;
+		}
+
+		i8 GetChar(i64 index)
+		{
+			return *std::Pointer::Add(this->m_Pointer, index);
+		}
+
+		i8 Equals(String other)
+		{
+			i64 count = 0;
+			i64 thisLen = this->GetLength();
+			i64 otherLen = other.GetLength();
+			if(thisLen != otherLen)
+			{
+				return 0;
+			}
+
+			while(count < thisLen)
+			{
+				if(this->GetChar(count) != other.GetChar(count))
+				{
+					return 0;
+				}
+				count = count + 1;
+			}
+			return 1;
+		}
+
+		i64 IndexOf(String other, i64 start)
+		{
+			i64 endStart = this->GetLength() - other.GetLength();
+			while(start <= endStart)
+			{
+				i64 current = 0;
+				while(this->GetChar(start + current) == other.GetChar(current))
+				{
+					current = current + 1;
+					if(current == other.GetLength())
+					{
+						return 1;
+					}
+				}
+				start = start + 1;
+			}
+			return this->GetLength();
+		}
+
+		i64 GetLength()
+		{
+			i64 count = 0;
+			i8 char = *this->m_Pointer;
+			while(char)
+			{
+				count = count + 1;
+				char = this->GetChar(count);
+			}
+
+			return count;
+		}
+	}
+
+}

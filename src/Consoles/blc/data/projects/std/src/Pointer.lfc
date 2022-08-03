@@ -1,0 +1,18 @@
+namespace Pointer
+{
+	
+	#export Add
+	#export Subtract
+
+	i8* Add(i8* ptr, i64 count)
+	{
+		return unsafe_cast<i8*>(unsafe_cast<i64>(ptr) + count);
+	}
+
+
+	i8* Subtract(i8* ptr, i64 count)
+	{
+		return unsafe_cast<i8*>(unsafe_cast<i64>(ptr) - count);
+	}
+
+}

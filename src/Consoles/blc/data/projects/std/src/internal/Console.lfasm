@@ -1,0 +1,73 @@
+.code LFASM_Console
+{
+	.import CONSOLE_DATA
+
+	.export WriteChar
+	WriteChar:
+		Push64 CONSOLE_DATA::COUT_BUS_ADDR
+		Load64
+		WriteBus8
+		Return
+
+
+	.export WriteNum
+	WriteNum:
+		Push64 CONSOLE_DATA::COUT_NUM_BUS_ADDR
+		Load64
+		WriteBus64
+		Return
+
+	.export WriteHex
+	WriteHex:
+		Push64 CONSOLE_DATA::COUT_HEX_BUS_ADDR
+		Load64
+		WriteBus64
+		Return
+
+
+
+
+	.export ReadChar
+	ReadChar:
+		Push64 CONSOLE_DATA::CIN_BUS_ADDR
+		Load64
+		ReadBus8
+		Return
+
+    .export WriteCStr
+	WriteCStr: ; [<ptr>]
+		Dup64 ; [<ptr>, <ptr>]
+		Load8 ; [<ptr>, <char>]
+		Dup8 ; [<ptr>, <char>, <char>]
+		Push64 WriteCStr_END ; [<ptr>, <char>, <char>, WriteCStr_END]
+		JumpZero8 ; [<ptr>, <char>]
+		Push64 WriteChar ; [<ptr>, <char>, WriteChar]
+		Call ; [<ptr>]
+		Push64 1 ; [<ptr>, 1]
+		Add64 ; [<ptr>]
+		Push64 WriteCStr ; [<ptr>, WriteCStr]
+		Jump ; [<ptr>]
+
+		WriteCStr_END: ; [<ptr>, <char>]
+		Pop8 ; [<ptr>]
+		Pop64 ; []
+		RETURN
+	
+	.export WriteCStrLine
+	WriteCStrLine:
+	    Push64 WriteCStr
+	    Call
+	    Push8 '\n'
+	    Push64 WriteChar
+	    Call
+	    RETURN
+
+}
+
+.data CONSOLE_DATA
+{
+	i64 COUT_BUS_ADDR 4210752250
+	i64 CIN_BUS_ADDR 4210752251
+	i64 COUT_NUM_BUS_ADDR 4210752252
+	i64 COUT_HEX_BUS_ADDR 4210752253
+}

@@ -1,0 +1,117 @@
+namespace Console
+{
+	//Import Console Implementation
+	#include "./internal/Console.lfasm"
+	#import LFASM_Console
+
+	//Define Extern Functions
+	extern void LFASM_Console::WriteChar(i8 char);
+	extern void LFASM_Console::WriteNum(i64 num);
+	extern void LFASM_Console::WriteHex(i64 num);
+	extern void LFASM_Console::WriteCStr(i8* cstr);
+	extern void LFASM_Console::WriteCStrLine(i8* cstr);
+	extern i8 LFASM_Console::ReadChar();
+
+	//Define Export Functions
+	#export WriteChar
+	#export WriteCStr
+	#export WriteCStrLine
+	#export ReadChar
+	#export ReadLine
+
+	#export WriteNum8
+	#export WriteNum16
+	#export WriteNum32
+	#export WriteNum64
+	#export WriteHex8
+	#export WriteHex16
+	#export WriteHex32
+	#export WriteHex64
+
+	void WriteChar(i8 char)
+	{
+		LFASM_Console::WriteChar(char);
+	}
+
+	void WriteCStr(i8* cstr)
+	{
+		LFASM_Console::WriteCStr(cstr);
+	}
+
+	void WriteCStrLine(i8* cstr)
+	{
+		LFASM_Console::WriteCStrLine(cstr);
+	}
+
+	i8 ReadChar()
+	{
+		return LFASM_Console::ReadChar();
+	}
+
+	i64 ReadLine(i8* ptr, i64 size)
+	{
+		i8 char = ReadChar();
+		i64 current = 0;
+		while(char != 10 & unsafe_cast<i8>(current < size))
+		{
+			i8* addr = unsafe_cast<i8*>(unsafe_cast<i64>(ptr) + current);
+			*addr = char;
+			char = ReadChar();
+			current = current + 1;
+		}
+
+		return current;
+	}
+
+
+	void WriteNum<T>(T num)
+	{
+		LFASM_Console::WriteNum(unsafe_cast<i64>(num));
+	}
+
+	void WriteNum8(i8 num)
+	{
+		WriteNum<i8>(num);
+	}
+
+	void WriteNum16(i16 num)
+	{
+		WriteNum<i16>(num);
+	}
+
+	void WriteNum32(i32 num)
+	{
+		WriteNum<i32>(num);
+	}
+
+	void WriteNum64(i64 num)
+	{
+		WriteNum<i64>(num);
+	}
+
+	void WriteHex<T>(T num)
+	{
+		LFASM_Console::WriteHex(unsafe_cast<i64>(num));
+	}
+
+	void WriteHex8(i8 num)
+	{
+		WriteHex<i8>(num);
+	}
+
+	void WriteHex16(i16 num)
+	{
+		WriteHex<i16>(num);
+	}
+
+	void WriteHex32(i32 num)
+	{
+		WriteHex<i32>(num);
+	}
+
+	void WriteHex64(i64 num)
+	{
+		WriteHex<i64>(num);
+	}
+
+}

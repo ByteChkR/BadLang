@@ -1,0 +1,250 @@
+
+#ifndef STD_FILE
+{
+	#define STD_FILE FALSE
+}
+
+#if STD_FILE TRUE
+{
+	struct File
+	{
+		i8* m_FilePath;
+		i64 m_FileHandle;
+		File(i8* filePath)
+		{
+			this->m_FilePath = filePath;
+			this->m_FileHandle = 0;
+		}
+
+		void OpenRead()
+		{
+			if(this->m_FileHandle)
+			{
+				std::Core::Error("File already Open");
+			}
+			i64 oldFile = std::FileSystem::GetFile();
+			std::FileSystem::FileOpenRead(this->m_FilePath);
+			this->m_FileHandle = std::FileSystem::GetFile();
+			std::FileSystem::SetFile(oldFile);
+		}
+
+		void OpenWrite()
+		{
+			if(this->m_FileHandle)
+			{
+				std::Core::Error("File already Open");
+			}
+			i64 oldFile = std::FileSystem::GetFile();
+			std::FileSystem::FileOpenWrite(this->m_FilePath);
+			this->m_FileHandle = std::FileSystem::GetFile();
+			std::FileSystem::SetFile(oldFile);
+		}
+
+		void Close()
+		{
+			if(!this->m_FileHandle)
+			{
+				std::Core::Error("File not Open");
+			}
+			std::FileSystem::SetFile(this->m_FileHandle);
+			std::FileSystem::FileClose();
+			this->m_FileHandle = 0;
+		}
+
+		i8 Exists()
+		{
+			i64 oldFile = std::FileSystem::GetFile();
+			if(!this->m_FileHandle)
+			{
+				this->OpenRead();
+				std::FileSystem::SetFile(this->m_FileHandle);
+				i8 exists = std::FileSystem::FileExists();
+				this->Close();
+				std::FileSystem::SetFile(oldFile);
+				return exists;
+			}
+			else
+			{
+				std::FileSystem::SetFile(this->m_FileHandle);
+				i8 exists = std::FileSystem::FileExists();
+				std::FileSystem::SetFile(oldFile);
+				return exists;
+			}
+		}
+
+		i8 Read8()
+		{
+			if(!this->m_FileHandle)
+			{
+				std::Core::Error("File not Open");
+			}
+			i64 oldFile = std::FileSystem::GetFile();
+			std::FileSystem::SetFile(this->m_FileHandle);
+			i8 value = std::FileSystem::Read8();
+			std::FileSystem::SetFile(oldFile);
+			return value;
+		}
+
+		i16 Read16()
+		{
+			if(!this->m_FileHandle)
+			{
+				std::Core::Error("File not Open");
+			}
+			i64 oldFile = std::FileSystem::GetFile();
+			std::FileSystem::SetFile(this->m_FileHandle);
+			i16 value = std::FileSystem::Read16();
+			std::FileSystem::SetFile(oldFile);
+			return value;
+		}
+
+		i32 Read32()
+		{
+			if(!this->m_FileHandle)
+			{
+				std::Core::Error("File not Open");
+			}
+			i64 oldFile = std::FileSystem::GetFile();
+			std::FileSystem::SetFile(this->m_FileHandle);
+			i32 value = std::FileSystem::Read32();
+			std::FileSystem::SetFile(oldFile);
+			return value;
+		}
+
+		i64 Read64()
+		{
+			if(!this->m_FileHandle)
+			{
+				std::Core::Error("File not Open");
+			}
+			i64 oldFile = std::FileSystem::GetFile();
+			std::FileSystem::SetFile(this->m_FileHandle);
+			i64 value = std::FileSystem::Read64();
+			std::FileSystem::SetFile(oldFile);
+			return value;
+		}
+
+		void Write8(i8 value)
+		{
+			if(!this->m_FileHandle)
+			{
+				std::Core::Error("File not Open");
+			}
+			i64 oldFile = std::FileSystem::GetFile();
+			std::FileSystem::SetFile(this->m_FileHandle);
+			std::FileSystem::Write8(value);
+			std::FileSystem::SetFile(oldFile);
+		}
+
+		void Write16(i16 value)
+		{
+			if(!this->m_FileHandle)
+			{
+				std::Core::Error("File not Open");
+			}
+			i64 oldFile = std::FileSystem::GetFile();
+			std::FileSystem::SetFile(this->m_FileHandle);
+			std::FileSystem::Write16(value);
+			std::FileSystem::SetFile(oldFile);
+		}
+
+		void Write32(i32 value)
+		{
+			if(!this->m_FileHandle)
+			{
+				std::Core::Error("File not Open");
+			}
+			i64 oldFile = std::FileSystem::GetFile();
+			std::FileSystem::SetFile(this->m_FileHandle);
+			std::FileSystem::Write32(value);
+			std::FileSystem::SetFile(oldFile);
+		}
+
+		void Write64(i64 value)
+		{
+			if(!this->m_FileHandle)
+			{
+				std::Core::Error("File not Open");
+			}
+			i64 oldFile = std::FileSystem::GetFile();
+			std::FileSystem::SetFile(this->m_FileHandle);
+			std::FileSystem::Write64(value);
+			std::FileSystem::SetFile(oldFile);
+		}
+
+		i64 Size()
+		{
+			if(!this->m_FileHandle)
+			{
+				std::Core::Error("File not Open");
+			}
+			i64 oldFile = std::FileSystem::GetFile();
+			std::FileSystem::SetFile(this->m_FileHandle);
+			i64 size = std::FileSystem::GetSize();
+			std::FileSystem::SetFile(oldFile);
+			return size;
+		}
+
+		i64 Position()
+		{
+			if(!this->m_FileHandle)
+			{
+				std::Core::Error("File not Open");
+			}
+			i64 oldFile = std::FileSystem::GetFile();
+			std::FileSystem::SetFile(this->m_FileHandle);
+			i64 position = std::FileSystem::GetPosition();
+			std::FileSystem::SetFile(oldFile);
+			return position;
+		}
+
+		i8 IsEOF()
+		{
+			if(!this->m_FileHandle)
+			{
+				std::Core::Error("File not Open");
+			}
+			i64 oldFile = std::FileSystem::GetFile();
+			std::FileSystem::SetFile(this->m_FileHandle);
+			i8 value = std::FileSystem::IsEOF();
+			std::FileSystem::SetFile(oldFile);
+			return value;
+		}
+
+
+		void Read(i8* buffer, i64 length)
+		{
+			if(!this->m_FileHandle)
+			{
+				std::Core::Error("File not Open");
+			}
+			i64 oldFile = std::FileSystem::GetFile();
+			std::FileSystem::SetFile(this->m_FileHandle);
+			i64 current = 0;
+			while(current < length)
+			{
+				*std::Pointer::Add(buffer, current) = std::FileSystem::Read8();
+				current = current + 1;
+			}
+			std::FileSystem::SetFile(oldFile);
+		}
+
+		void Write(i8* buffer, i64 length)
+		{
+			if(!this->m_FileHandle)
+			{
+				std::Core::Error("File not Open");
+			}
+			i64 oldFile = std::FileSystem::GetFile();
+			std::FileSystem::SetFile(this->m_FileHandle);
+			i64 current = 0;
+			while(current < length)
+			{
+				std::FileSystem::Write8(*std::Pointer::Add(buffer, current));
+				current = current + 1;
+			}
+			std::FileSystem::SetFile(oldFile);
+		}
+
+	}
+}

@@ -1,0 +1,205 @@
+
+
+struct LinkedListNode<T>
+{
+	T Value;
+	LinkedListNode<T>* Next;
+
+	LinkedListNode(T value)
+	{
+		this->Value = value;
+		this->Next = unsafe_cast<LinkedListNode<T>*>(0);
+	}
+
+	i8 HasNext()
+	{
+		return unsafe_cast<i8>(unsafe_cast<i64>(this->Next) != 0);
+	}
+}
+
+struct LinkedList<T>
+{
+	LinkedListNode<T>* Start;
+
+	LinkedList()
+	{
+		this->Start = unsafe_cast<LinkedListNode<T>*>(0);
+	}
+
+	i8 HasStart()
+	{
+		return unsafe_cast<i8>(unsafe_cast<i64>(this->Start) != 0);
+	}
+
+	LinkedListNode<T>* FindEnd()
+	{
+		LinkedListNode<T>* current = this->Start;
+		while(current->HasNext())
+		{
+			current = current->Next;
+		}
+
+		return current;
+	}
+
+	void Add(T value)
+	{
+		if(!this->HasStart())
+		{
+			this->Start = new LinkedListNode<T>(value);
+		}
+		else
+		{
+			this->FindEnd()->Next = new LinkedListNode<T>(value);
+		}
+	}
+
+	T Get(i64 index)
+	{
+		if(index >= this->GetLength())
+		{
+			std::Core::Error("LinkedList<T>::Get: Index is out of range");
+		}
+
+		i64 idx = 0;
+
+		LinkedListNode<T>* current = this->Start;
+
+		while(idx < index)
+		{
+			current = current->Next;
+
+			idx = idx + 1;
+		}
+
+		return current->Value;
+	}
+
+	void Set(i64 index, T value)
+	{
+		if(index >= this->GetLength())
+		{
+			std::Core::Error("LinkedList<T>::Set: Index is out of range");
+		}
+
+		i64 idx = 0;
+
+		LinkedListNode<T>* current = this->Start;
+		while(idx < index)
+		{
+			current = current->Next;
+			idx = idx + 1;
+		}
+
+		current->Value = value;
+	}
+
+	void RemoveStart()
+	{
+		LinkedListNode<T>* start = this->Start;
+		if(start->HasNext())
+		{
+			this->Start = start->Next;
+		}
+		else
+		{
+			this->Start = unsafe_cast<LinkedListNode<T>*>(0);
+		}
+		std::Memory::Free(unsafe_cast<i8*>(start));
+	}
+
+	void RemoveAtNonZero(i64 index)
+	{
+		LinkedListNode<T>* current = this->Start;
+		i64 idx = 0;
+		i64 end = index - 1;
+		while(idx != end)
+		{
+			current = current->Next;
+			idx = idx + 1;
+		}
+
+		LinkedListNode<T>* target = current->Next;
+		if(target->HasNext())
+		{
+			current->Next = target->Next;
+		}
+		else
+		{
+			current->Next = unsafe_cast<LinkedListNode<T>*>(0);
+		}
+		std::Memory::Free(unsafe_cast<i8*>(target));
+	}
+
+	void RemoveAt(i64 index)
+	{
+		if(index >= this->GetLength())
+		{
+			std::Core::Error("LinkedList<T>::RemoveAt: Index is out of range");
+		}
+
+		if(index == 0)
+		{
+			this->RemoveStart();
+		}
+		else
+		{
+			this->RemoveAtNonZero(index);
+		}
+	}
+
+	void Insert(i64 index, T value)
+	{
+		if(index >= this->GetLength())
+		{
+			std::Core::Error("LinkedList<T>::Insert: Index is out of range");
+		}
+
+		i64 idx = 0;
+
+		LinkedListNode<T>* current = this->Start;
+		LinkedListNode<T>* newElem = new LinkedListNode<T>(value);
+		if(index == 0)
+		{
+			newElem->Next = this->Start;
+			this->Start = newElem;
+		}
+		else
+		{
+			while(idx < index - 1)
+			{
+				current = current->Next;
+				idx = idx + 1;
+			}
+
+			newElem->Next = current->Next;
+			current->Next = newElem;
+		}
+	}
+
+	i64 GetLength()
+	{
+		
+		i64 len = 0;
+		if(!this->HasStart())
+		{
+			return len;
+		}
+		len = len + 1;
+		LinkedListNode<T>* current = this->Start;
+		while(current->HasNext())
+		{
+			len = len + 1;
+			current = current->Next;
+		}
+		return len;
+	}
+
+	void Clear()
+	{
+		while(this->GetLength())
+		{
+			this->RemoveAt(0);
+		}
+	}
+}

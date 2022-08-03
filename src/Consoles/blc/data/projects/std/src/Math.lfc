@@ -1,0 +1,185 @@
+namespace Math
+{
+	#export Pow8
+	#export Pow16
+	#export Pow32
+	#export Pow64
+
+	#export Min8
+	#export Min16
+	#export Min32
+	#export Min64
+
+	#export Max8
+	#export Max16
+	#export Max32
+	#export Max64
+
+	#export Clamp8
+	#export Clamp16
+	#export Clamp32
+	#export Clamp64
+
+	#export Fib8
+	#export Fib16
+	#export Fib32
+	#export Fib64
+
+
+//____________________________MIN____________________________
+
+	T Min<T>(T a, T b)
+	{
+		if(a > b)
+		{
+			return b;
+		}
+		return a;
+	}
+
+	i8 Min8(i8 a, i8 b)
+	{
+		return Min<i8>(a, b);
+	}
+
+	i16 Min16(i16 a, i16 b)
+	{
+		return Min<i16>(a, b);
+	}
+
+	i32 Min32(i32 a, i32 b)
+	{
+		return Min<i32>(a, b);
+	}
+
+	i64 Min64(i64 a, i64 b)
+	{
+		return Min<i64>(a, b);
+	}
+
+	
+//____________________________MAX____________________________
+
+	T Max<T>(T a, T b)
+	{
+		if(a < b)
+		{
+			return b;
+		}
+		return a;
+	}
+
+	i8 Max8(i8 a, i8 b)
+	{
+		return Max<i8>(a, b);
+	}
+
+	i16 Max16(i16 a, i16 b)
+	{
+		return Max<i16>(a, b);
+	}
+
+	i32 Max32(i32 a, i32 b)
+	{
+		return Max<i32>(a, b);
+	}
+
+	i64 Max64(i64 a, i64 b)
+	{
+		return Max<i64>(a, b);
+	}
+
+//____________________________POW____________________________
+
+	T Pow<T>(T b, T exp)
+	{
+		T ret = 1;
+		T count = 0;
+		while(count < exp)
+		{
+			ret = ret * b;
+			count = count + 1;
+		}
+		return ret;
+	}
+
+	i8 Pow8(i8 b, i8 exp)
+	{
+		return Pow<i8>(b, exp);
+	}
+	
+	i16 Pow16(i16 b, i16 exp)
+	{
+		return Pow<i16>(b, exp);
+	}
+
+	i32 Pow32(i32 b, i32 exp)
+	{
+		return Pow<i32>(b, exp);
+	}
+
+	i64 Pow64(i64 b, i64 exp)
+	{
+		return Pow<i64>(b, exp);
+	}
+
+
+//____________________________CLAMP____________________________
+
+	T Clamp<T>(T value, T min, T max)
+	{
+		return Max<T>(Min<T>(value, max), min);
+	}
+
+	i8 Clamp8(i8 value, i8 min, i8 max)
+	{
+		return Clamp<i8>(value, min, max);
+	}
+
+
+	i16 Clamp16(i16 value, i16 min, i16 max)
+	{
+		return Clamp<i16>(value, min, max);
+	}
+
+
+	i32 Clamp32(i32 value, i32 min, i32 max)
+	{
+		return Clamp<i32>(value, min, max);
+	}
+
+
+	i64 Clamp64(i64 value, i64 min, i64 max)
+	{
+		return Clamp<i64>(value, min, max);
+	}
+
+
+//____________________________FIB____________________________
+
+	T Fib<T>(T n)
+	{
+		return n + Fib<T>(n - 1);
+	}
+
+	i8 Fib8(i8 n)
+	{
+		return Fib<i8>(n);
+	}
+
+	i16 Fib16(i16 n)
+	{
+		return Fib<i16>(n);
+	}
+
+	i32 Fib32(i32 n)
+	{
+		return Fib<i32>(n);
+	}
+
+	i64 Fib64(i64 n)
+	{
+		return Fib<i64>(n);
+	}
+
+}

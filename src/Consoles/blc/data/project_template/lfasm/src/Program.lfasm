@@ -1,0 +1,17 @@
+.require <std>
+
+.code entry
+{
+	.import Console
+	.import entry_data
+	Main:
+		Push64 entry_data::HelloWorld
+		Push64 std::Console::WriteCStrLine
+		Call
+		Halt
+}
+
+.data entry_data
+{
+	cstr HelloWorld "Hello World!"
+}

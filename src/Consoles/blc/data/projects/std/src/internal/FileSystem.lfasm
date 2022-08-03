@@ -1,0 +1,165 @@
+
+
+.code LFASM_FileSystem
+{
+	.import FILESYSTEM_DATA
+
+	.export GetStatus
+	GetStatus:
+		Push64 FILESYSTEM_DATA::GET_STATUS_ADDR
+		Load64
+		ReadBus64
+		Return
+
+	.export FileOpenRead
+	FileOpenRead:
+		Push64 FILESYSTEM_DATA::FILE_OPEN_READ
+		Load64
+		WriteBus64
+		Return
+
+	.export FileOpenWrite
+	FileOpenWrite:
+		Push64 FILESYSTEM_DATA::FILE_OPEN_WRITE
+		Load64
+		WriteBus64
+		Return
+
+	.export SetFile
+	SetFile:
+		Push64 FILESYSTEM_DATA::SET_FILE
+		Load64
+		WriteBus64
+		Return
+
+	.export GetFile
+	GetFile:
+		Push64 FILESYSTEM_DATA::GET_FILE
+		Load64
+		ReadBus64
+		Return
+
+	.export Write8
+	Write8:
+		Push64 FILESYSTEM_DATA::WRITE_8
+		Load64
+		WriteBus8
+		Return
+
+	.export Write16
+	Write16:
+		Push64 FILESYSTEM_DATA::WRITE_16
+		Load64
+		WriteBus16
+		Return
+
+	.export Write32
+	Write32:
+		Push64 FILESYSTEM_DATA::WRITE_32
+		Load64
+		WriteBus32
+		Return
+
+	.export Write64
+	Write64:
+		Push64 FILESYSTEM_DATA::WRITE_64
+		Load64
+		WriteBus64
+		Return
+
+
+	.export Read8
+	Read8:
+		Push64 FILESYSTEM_DATA::READ_8
+		Load64
+		ReadBus8
+		Return
+
+
+	.export Read16
+	Read16:
+		Push64 FILESYSTEM_DATA::READ_16
+		Load64
+		ReadBus16
+		Return
+
+
+	.export Read32
+	Read32:
+		Push64 FILESYSTEM_DATA::READ_32
+		Load64
+		ReadBus32
+		Return
+
+
+	.export Read64
+	Read64:
+		Push64 FILESYSTEM_DATA::READ_64
+		Load64
+		ReadBus64
+		Return
+
+	.export FileClose
+	FileClose:
+		Push64 FILESYSTEM_DATA::FILE_CLOSE
+		Load64
+		ReadBus64
+		Return
+
+	.export GetPosition
+	GetPosition:
+		Push64 FILESYSTEM_DATA::GET_POSITION
+		Load64
+		ReadBus64
+		Return
+
+	.export IsEOF
+	IsEOF:
+		Push64 FILESYSTEM_DATA::GET_EOF
+		Load64
+		ReadBus8
+		Return
+
+	.export GetSize
+	GetSize:
+		Push64 FILESYSTEM_DATA::GET_SIZE
+		Load64
+		ReadBus64
+		Return
+
+	.export FileExists
+	FileExists:
+		Push64 FILESYSTEM_DATA::FILE_EXISTS
+		Load64
+		ReadBus8
+		Return
+
+}
+
+
+.data FILESYSTEM_DATA
+{
+	i64 GET_STATUS_ADDR 3673881328
+	i64 FILE_OPEN_READ 3673881329
+	i64 FILE_OPEN_WRITE 3673881330
+
+	i64 SET_FILE 3673881331
+	i64 GET_FILE 3673881332
+	
+	i64 WRITE_8 3673881333
+	i64 WRITE_16 3673881334
+	i64 WRITE_32 3673881335
+	i64 WRITE_64 3673881336
+
+	i64 READ_8 3673881337
+	i64 READ_16 3673881338
+	i64 READ_32 3673881339
+	i64 READ_64 3673881340
+
+	i64 FILE_CLOSE 3673881341
+	i64 GET_POSITION 3673881342
+	i64 GET_EOF 3673881343
+	i64 GET_SIZE 3673881344
+	i64 FILE_EXISTS 3673881345
+	
+}

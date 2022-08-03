@@ -1,0 +1,66 @@
+
+
+struct Array<T>
+{
+	T* m_Memory;
+	i64 m_Size;
+
+	Array(i64 elementCount)
+	{
+		this->m_Size = elementCount;
+		this->m_Memory = unsafe_cast<T*>(std::Memory::Alloc(unsafe_cast<i32>(elementCount * sizeof<T>())));
+	}
+
+	i8 IsDisposed()
+	{
+		return unsafe_cast<i8>(unsafe_cast<i64>(this->m_Memory) == 0);
+	}
+
+	void Dispose()
+	{
+		std::Memory::Free(unsafe_cast<i8*>(this->m_Memory));
+		this->m_Memory = unsafe_cast<T*>(0);
+		this->m_Size = 0;
+	}
+
+	T* GetPointer(i64 index)
+	{
+		if(this->IsDisposed())
+		{
+			std::Core::Error("Array<T>::GetPointer: Array was disposed");
+		}
+		if(index >= this->m_Size)
+		{
+			std::Core::Error("Array<T>::GetPointer: index out of range");
+		}
+		i64 off = index * sizeof<T>();
+		return unsafe_cast<T*>(unsafe_cast<i64>(this->m_Memory) + off);
+	}
+
+	T Get(i64 index)
+	{
+		return *this->GetPointer(index);	
+	}
+
+	void Set(i64 index, T value)
+	{
+		*this->GetPointer(index) = value;
+	}
+
+	i64 GetLength()
+	{
+		return this->m_Size;
+	}
+
+	void ForEach(Function<void, T> func)
+	{
+		i64 count = 0;
+		i64 length = this->GetLength();
+		while(count < length)
+		{
+			func(this->Get(count));
+			count = count + 1;
+		}
+	}
+}
+

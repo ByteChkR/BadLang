@@ -1,0 +1,12 @@
+.code LFASM_Memory
+{
+	.export Alloc
+	Alloc:
+		Alloc
+		Return
+
+	.export Free
+	Free:
+		Free
+		Return
+}

@@ -1,0 +1,9 @@
+extern void std::MemoryBus::Write8(i8* address, i8 value);
+extern void std::MemoryBus::Write16(i8* address, i16 value);
+extern void std::MemoryBus::Write32(i8* address, i32 value);
+extern void std::MemoryBus::Write64(i8* address, i64 value);
+
+extern i8 std::MemoryBus::Read8(i8* address);
+extern i16 std::MemoryBus::Read16(i8* address);
+extern i32 std::MemoryBus::Read32(i8* address);
+extern i64 std::MemoryBus::Read64(i8* address);

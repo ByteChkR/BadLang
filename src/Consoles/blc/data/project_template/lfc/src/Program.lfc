@@ -1,0 +1,11 @@
+#link <std>
+#inline "$(LFC_TEMPLATES)/std.lfc"
+
+#entry Main
+
+void Main() 
+{
+	std::Console::WriteCStrLine("Hello World!");
+}
+
+

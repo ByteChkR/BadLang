@@ -1,0 +1,11 @@
+#link "std.lfbin"
+
+#entry Main
+#import Console
+
+extern void std::Console::WriteCStrLine(i8* cstr);
+
+void Main()
+{
+	std::Console::WriteCStrLine("Hello World!");
+}

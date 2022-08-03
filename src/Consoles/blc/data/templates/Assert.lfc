@@ -1,0 +1,38 @@
+
+#import Core
+extern void std::Core::Error(i8* ptr);
+
+#macro ASSERT_FAIL(msg) std::Core::Error(msg);
+
+
+void Assert_True<T>(T value, i8* msg)
+{
+	if(value == 0)
+	{
+		ASSERT_FAIL(msg);
+	}
+}
+
+void Assert_False<T>(T value, i8* msg)
+{
+	if(value)
+	{
+		ASSERT_FAIL(msg);
+	}
+}
+
+void Assert_Equal<T>(T a, T b, i8* msg)
+{
+	if(a != b)
+	{
+		ASSERT_FAIL(msg);
+	}
+}
+
+void Assert_NotEqual<T>(T a, T b, i8* msg)
+{
+	if(a == b)
+	{
+		ASSERT_FAIL(msg);
+	}
+}

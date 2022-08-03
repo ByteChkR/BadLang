@@ -1,0 +1,8 @@
+#include "Console.lfc"
+#include "Core.lfc"
+#include "FileSystem.lfc"
+#include "Math.lfc"
+#include "Memory.lfc"
+#include "MemoryBus.lfc"
+#include "Pointer.lfc"
+#include "Time.lfc"

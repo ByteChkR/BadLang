@@ -1,0 +1,17 @@
+.code LFASM_Time
+{
+	.import TIME_DATA
+
+	.export GetUnixMicroSeconds
+	GetUnixMicroSeconds:
+		Push64 TIME_DATA::TIME_BUS_ADDR
+		Load64
+		ReadBus64
+		Return
+
+}
+
+.data TIME_DATA
+{
+	i64 TIME_BUS_ADDR 1416195429
+}

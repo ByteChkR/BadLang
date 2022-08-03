@@ -1,0 +1,2 @@
+extern i8* std::Pointer::Add(i8* ptr, i64 count);
+extern i8* std::Pointer::Subtract(i8* ptr, i64 count);

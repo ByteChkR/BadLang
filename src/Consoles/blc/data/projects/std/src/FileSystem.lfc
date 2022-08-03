@@ -1,0 +1,180 @@
+namespace FileSystem
+{
+	#include "./internal/FileSystem.lfasm"
+	#import LFASM_FileSystem
+	#import Console
+	#import Core
+
+	extern i64 LFASM_FileSystem::GetStatus();
+	extern void LFASM_FileSystem::FileOpenRead(i8* path);
+	extern void LFASM_FileSystem::FileOpenWrite(i8* path);
+
+	extern void LFASM_FileSystem::SetFile(i64 file);
+	extern i64 LFASM_FileSystem::GetFile();
+
+	extern i8 LFASM_FileSystem::Read8();
+	extern i16 LFASM_FileSystem::Read16();
+	extern i32 LFASM_FileSystem::Read32();
+	extern i64 LFASM_FileSystem::Read64();
+
+	extern void LFASM_FileSystem::Write8(i8 value);
+	extern void LFASM_FileSystem::Write16(i16 value);
+	extern void LFASM_FileSystem::Write32(i32 value);
+	extern void LFASM_FileSystem::Write64(i64 value);
+
+	extern i64 LFASM_FileSystem::FileClose();
+	extern i64 LFASM_FileSystem::GetPosition();
+	extern i8 LFASM_FileSystem::IsEOF();
+	extern i64 LFASM_FileSystem::GetSize();
+	extern i8 LFASM_FileSystem::FileExists();
+
+
+	#export GetStatus
+	i64 GetStatus()
+	{
+		return LFASM_FileSystem::GetStatus();
+	}
+
+	#export FileOpenRead
+	void FileOpenRead(i8* path)
+	{
+		LFASM_FileSystem::FileOpenRead(path);
+		CheckError();
+	}
+
+	#export FileOpenWrite
+	void FileOpenWrite(i8* path)
+	{
+		LFASM_FileSystem::FileOpenWrite(path);
+		CheckError();
+	}
+
+	#export GetFile
+	i64 GetFile()
+	{
+		i64 r = LFASM_FileSystem::GetFile();
+		CheckError();
+		return r;
+	}
+
+	#export SetFile
+	void SetFile(i64 file)
+	{
+		LFASM_FileSystem::SetFile(file);
+		CheckError();
+	}
+
+	#export Read8
+	i8 Read8()
+	{
+		i8 r = LFASM_FileSystem::Read8();
+		CheckError();
+		return r;
+	}
+
+	#export Read16
+	i16 Read16()
+	{
+		i16 r = LFASM_FileSystem::Read16();
+		CheckError();
+		return r;
+	}
+
+	#export Read32
+	i32 Read32()
+	{
+		i32 r = LFASM_FileSystem::Read32();
+		CheckError();
+		return r;
+	}
+
+
+	#export Read64
+	i64 Read64()
+	{
+		i64 r = LFASM_FileSystem::Read64();
+		CheckError();
+		return r;
+	}
+
+	#export Write8
+	void Write8(i8 value)
+	{
+		LFASM_FileSystem::Write8(value);
+		CheckError();
+	}
+
+	#export Write16
+	void Write16(i16 value)
+	{
+		LFASM_FileSystem::Write16(value);
+		CheckError();
+	}
+
+	#export Write32
+	void Write32(i32 value)
+	{
+		LFASM_FileSystem::Write32(value);
+		CheckError();
+	}
+
+	#export Write64
+	void Write64(i64 value)
+	{
+		LFASM_FileSystem::Write64(value);
+		CheckError();
+	}
+
+
+	#export FileClose
+	i64 FileClose()
+	{
+		i64 r = LFASM_FileSystem::FileClose();
+		CheckError();
+		return r;
+	}
+
+	#export IsEOF
+	i8 IsEOF()
+	{
+		i8 r = LFASM_FileSystem::IsEOF();
+		CheckError();
+		return r;
+	}
+
+	#export IsStatusError
+	i8 IsStatusError()
+	{
+		return unsafe_cast<i8>(GetStatus() % 2 == 0);
+	}
+
+	#export GetSize
+	i64 GetSize()
+	{
+		return LFASM_FileSystem::GetSize();
+	}
+
+	#export GetPosition
+	i64 GetPosition()
+	{
+		return LFASM_FileSystem::GetPosition();
+	}
+
+	#export FileExists
+	i8 FileExists()
+	{
+		return LFASM_FileSystem::FileExists();
+	}
+
+
+	void CheckError()
+	{
+		if(IsStatusError())
+		{
+			Console::WriteCStr("File System Error: ");
+			Console::WriteNum64(GetStatus());
+			Console::WriteCStrLine("");
+			Core::Error("File System Error");
+		}
+	}
+}

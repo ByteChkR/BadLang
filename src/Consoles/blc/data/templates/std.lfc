@@ -1,0 +1,8 @@
+#inline "$(LFC_TEMPLATES)/std/Console.lfc"
+#inline "$(LFC_TEMPLATES)/std/Core.lfc"
+#inline "$(LFC_TEMPLATES)/std/Math.lfc"
+#inline "$(LFC_TEMPLATES)/std/Memory.lfc"
+#inline "$(LFC_TEMPLATES)/std/Pointer.lfc"
+#inline "$(LFC_TEMPLATES)/std/Time.lfc"
+#inline "$(LFC_TEMPLATES)/std/MemoryBus.lfc"
+#inline "$(LFC_TEMPLATES)/std/FileSystem.lfc"

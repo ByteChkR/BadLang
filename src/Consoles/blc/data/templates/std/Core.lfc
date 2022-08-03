@@ -1,0 +1,2 @@
+extern void std::Core::Halt();
+extern void std::Core::Error(i8* message);

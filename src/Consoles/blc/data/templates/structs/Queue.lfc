@@ -1,0 +1,41 @@
+struct Queue<T>
+{
+	LinkedList<T> m_Memory;
+	Queue()
+	{		
+		const_ctor(&this->m_Memory);
+	}
+
+
+	void Enqueue(T value)
+	{
+		this->m_Memory.Add(value);
+	}
+
+
+	T Dequeue()
+	{
+		T value = this->m_Memory.Get(0);
+		this->m_Memory.RemoveAt(0);
+		return value;
+	}
+
+	i64 GetLength()
+	{
+		return this->m_Memory.GetLength();
+	}
+
+
+	T Peek()
+	{
+		return this->m_Memory.Get(0);
+	}
+
+	void Clear()
+	{
+		while(this->m_Memory.GetLength())
+		{
+			this->m_Memory.Clear();
+		}
+	}
+}

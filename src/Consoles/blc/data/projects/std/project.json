@@ -1,0 +1,19 @@
+{
+  "Variables": {
+    "Input": "./src/std.lfc",
+    "Output": "./bin/std.lfbin"
+  },
+  "DefaultTarget": "build",
+  "Targets": {
+    "build": {
+      "Input": "$(Variables.Input)",
+      "Output": "$(Variables.Output)"
+    },
+    "clean": {
+      "Delete": [
+        "$(#Variables.Output)",
+        "$(#Variables.Output).sym"
+      ]
+    }
+  }
+}

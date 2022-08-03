@@ -1,0 +1,24 @@
+extern i8 std::Math::Pow8(i8 b, i8 exp);
+extern i16 std::Math::Pow16(i16 b, i16 exp);
+extern i32 std::Math::Pow32(i32 b, i32 exp);
+extern i64 std::Math::Pow64(i64 b, i64 exp);
+
+extern i8 std::Math::Min8(i8 a, i8 b);
+extern i16 std::Math::Min16(i16 a, i16 b);
+extern i32 std::Math::Min32(i32 a, i32 b);
+extern i64 std::Math::Min64(i64 a, i64 b);
+
+extern i8 std::Math::Max8(i8 a, i8 b);
+extern i16 std::Math::Max16(i16 a, i16 b);
+extern i32 std::Math::Max32(i32 a, i32 b);
+extern i64 std::Math::Max64(i64 a, i64 b);
+
+extern i8 std::Math::Clamp8(i8 value, i8 min, i8 max);
+extern i16 std::Math::Clamp16(i16 value, i16 min, i16 max);
+extern i32 std::Math::Clamp32(i32 value, i32 min, i32 max);
+extern i64 std::Math::Clamp64(i64 value, i64 min, i64 max);
+
+extern i8 std::Math::Fib8(i8 n);
+extern i16 std::Math::Fib16(i16 n);
+extern i32 std::Math::Fib32(i32 n);
+extern i64 std::Math::Fib64(i64 n);

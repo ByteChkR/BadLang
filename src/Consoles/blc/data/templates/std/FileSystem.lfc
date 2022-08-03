@@ -1,0 +1,23 @@
+
+extern i64 std::FileSystem::GetStatus();
+extern void std::FileSystem::FileOpenRead(i8* path);
+extern void std::FileSystem::FileOpenWrite(i8* path);
+
+extern void std::FileSystem::SetFile(i64 file);
+extern i64 std::FileSystem::GetFile();
+
+extern i8 std::FileSystem::Read8();
+extern i16 std::FileSystem::Read16();
+extern i32 std::FileSystem::Read32();
+extern i64 std::FileSystem::Read64();
+
+extern void std::FileSystem::Write8(i8 value);
+extern void std::FileSystem::Write16(i16 value);
+extern void std::FileSystem::Write32(i32 value);
+extern void std::FileSystem::Write64(i64 value);
+
+extern i64 std::FileSystem::FileClose();
+extern i64 std::FileSystem::GetPosition();
+extern i8 std::FileSystem::IsEOF();
+extern i64 std::FileSystem::GetSize();
+extern i8 std::FileSystem::FileExists();

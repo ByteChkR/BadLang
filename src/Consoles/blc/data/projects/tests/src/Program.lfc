@@ -1,0 +1,1229 @@
+#link <std>
+
+#inline "$(LFC_TEMPLATES)/std.lfc"
+
+#define STD_STRING TRUE
+
+#inline "$(LFC_TEMPLATES)/structs.lfc"
+#include "$(LFC_TEMPLATES)/Assert.lfc"
+
+void TestFalse<T>()
+{
+	Assert_False<T>(0, "0 is not false");
+}
+
+void TestTrue<T>()
+{
+	Assert_True<T>(1, "1 is not true");
+}
+
+void TestEqual<T>()
+{
+	Assert_Equal<T>(0, 0, "0 is not equal 0");
+}
+
+void TestNotEqual<T>()
+{
+	Assert_NotEqual<T>(0, 1, "0 is equal 1");
+}
+
+void TestComparisons<T>()
+{
+	Assert_True<T>(1 < 2, "1 is not smaller than 2");
+	Assert_False<T>(2 < 2, "2 is smaller than 2");
+	Assert_False<T>(3 < 2, "3 is smaller than 2");
+	
+	Assert_True<T>(2 > 1, "2 is not greater than 1");
+	Assert_False<T>(2 > 2, "2 is greater than 2");
+	Assert_False<T>(2 > 3, "2 is greater than 3");
+
+	Assert_True<T>(2 >= 1, "2 is not greater or equal 1");
+	Assert_True<T>(2 >= 2, "2 is not greater or equal 2");
+	Assert_False<T>(2 >= 3, "2 is greater or equal 3");
+
+	Assert_True<T>(1 <= 2, "1 is not smaller or equal 1");
+	Assert_True<T>(2 <= 2, "2 is not smaller or equal 2");
+	Assert_False<T>(3 <= 2, "3 is smaller or equal 3");
+}
+
+void TestShift<T>()
+{
+	Assert_Equal<T>(1 << 1, 2, "1 << 1 is not 2");
+	Assert_Equal<T>(1 >> 1, 0, "1 >> 1 is not 0");
+}
+
+
+void TestShiftSelf<T>()
+{
+	T valueLeft = 1;
+	valueLeft <<= 1;
+	Assert_Equal<T>(valueLeft, 2, "1 <<= 1 is not 2");
+	T valueRight = 1;
+	valueRight >>= 1;
+	Assert_Equal<T>(valueRight, 0, "1 >>= 1 is not 0");
+}
+
+void TestAdd<T>()
+{
+	Assert_Equal<T>(1 + 3, 4, "1 + 3 is not equal 4");
+}
+
+void TestAddSelf<T>()
+{
+	T value = 1;
+	value += 3;
+	Assert_Equal<T>(value, 4, "1 += 3 is not equal 4");
+}
+
+void TestSubtractSelf<T>()
+{
+	T value = 3;
+	value -= 2;
+	Assert_Equal<T>(value, 1, "3 -= 2 is not equal 1");
+}
+
+void TestSubtract<T>()
+{
+	Assert_Equal<T>(3 - 2, 1, "3 - 2 is not equal 1");
+}
+
+void TestMultiply<T>()
+{
+	Assert_Equal<T>(3 * 3, 9, "3 * 3 is not equal 9");
+}
+
+void TestMultiplySelf<T>()
+{
+	T value = 3;
+	value *= 3;
+	Assert_Equal<T>(value, 9, "3 *= 3 is not equal 9");
+}
+
+void TestDivide<T>()
+{
+	Assert_Equal<T>(24 / 6, 4, "24 / 6 is not equal 4");
+}
+
+
+void TestDivideSelf<T>()
+{
+	T value = 24;
+	value /= 6;
+	Assert_Equal<T>(value, 4, "24 /= 6 is not equal 4");
+}
+
+void TestModulo<T>()
+{
+	Assert_Equal<T>(24 % 5, 4, "24 % 5 is not equal 4");
+}
+
+void TestModuloSelf<T>()
+{
+	T value = 24;
+	value %= 5;
+	Assert_Equal<T>(value, 4, "24 %= 5 is not equal 4");
+}
+
+void TestAnd<T>()
+{
+	Assert_Equal<T>(1 & 3, 1, "1 & 3 is not equal 1");
+	Assert_Equal<T>(1 & 2, 0, "1 & 0 is not equal 0");
+}
+
+void TestAnd<T>()
+{
+	Assert_Equal<T>(1 & 3, 1, "1 & 3 is not equal 1");
+	Assert_Equal<T>(1 & 2, 0, "1 & 2 is not equal 0");
+}
+void TestAndSelf<T>()
+{
+	T value1 = 1;
+	value1 &= 3;
+	Assert_Equal<T>(value1, 1, "1 &= 3 is not equal 1");
+	T value2 = 1;
+	value2 &= 2;
+	Assert_Equal<T>(value2, 0, "1 &= 2 is not equal 0");
+}
+
+void TestOrSelf<T>()
+{
+	T value1 = 1;
+	value1 |= 2;
+	Assert_Equal<T>(value1, 3, "1 |= 2 is not equal 3");
+
+	T value2 = 1;
+	value2 |= 3;
+	Assert_Equal<T>(value2, 3, "1 |= 3 is not equal 3");
+}
+
+void TestOr<T>()
+{
+	Assert_Equal<T>(1 | 2, 3, "1 | 2 is not equal 3");
+	Assert_Equal<T>(1 | 3, 3, "1 | 3 is not equal 3");
+}
+
+void TestXOrSelf<T>()
+{
+	T value1 = 1;
+	value1 ^= 2;
+	Assert_Equal<T>(value1, 3, "1 ^= 2 is not equal 3");
+
+	T value2 = 1;
+	value2 ^= 3;
+	Assert_Equal<T>(value2, 2, "1 ^= 3 is not equal 2");
+}
+
+void TestXOr<T>()
+{
+	Assert_Equal<T>(1 ^ 2, 3, "1 ^ 2 is not equal 3");
+	Assert_Equal<T>(1 ^ 3, 2, "1 ^ 3 is not equal 2");
+}
+
+void TestLogicAnd<T>()
+{
+	Assert_True<T>(1 && 2, "1 && 2 is not true");
+	Assert_False<T>(0 && 2, "0 && 2 is not false");
+}
+
+void TestLogicOr<T>()
+{
+	Assert_True<T>(1 || 2, "1 || 2 is not true");
+	Assert_True<T>(0 || 2, "0 || 2 is not true");
+	Assert_False<T>(0 || 0, "0 || 0 is not false");
+}
+
+void TestPostValueIncrement<T>()
+{
+	T c = 0;
+	Assert_Equal<T>(c++, 0, "c++ is not 0");
+	Assert_Equal<T>(c, 1, "c is not 1");
+}
+
+void TestPostValueDecrement<T>()
+{
+	T c = 1;
+	Assert_Equal<T>(c--, 1, "c-- is not 1");
+	Assert_Equal<T>(c, 0, "c is not 0");
+}
+
+void TestPreValueIncrement<T>()
+{
+	T c = 0;
+	Assert_Equal<T>(++c, 1, "++c is not 1");
+	Assert_Equal<T>(c, 1, "c is not 1");
+}
+
+void TestWhile<T>()
+{
+	T c = 0;
+	while(c < 10)
+	{
+		c++;
+	}
+
+	Assert_Equal<T>(c, 10, "c is not 10");
+}
+
+void TestFor<T>()
+{
+	T c = 0;
+	for(; c < 10; c++)
+	{
+
+	}
+
+	Assert_Equal<T>(c, 10, "c is not 10");
+}
+
+
+void TestTernary<T>()
+{
+	T a = 1;
+	T b = 2;
+	
+	T c = 0;
+	Assert_Equal<T>(c ? a : b, 2, "0 ? 1 : 2 is not 2");
+
+	c = 1;
+	Assert_Equal<T>(c ? a : b, 1, "1 ? 1 : 2 is not 1");
+}
+
+
+void TestPreValueDecrement<T>()
+{
+	T c = 1;
+	Assert_Equal<T>(--c, 0, "--c is not 0");
+	Assert_Equal<T>(c, 0, "c is not 0");
+}
+
+struct TestStruct
+{
+	i8 V8;
+	i64 V64;
+}
+
+void TestStructOnStack()
+{
+	TestStruct obj;
+	obj.V8 = 10;
+	obj.V64 = 10;
+
+	Assert_Equal<i8>(obj.V8, 10, "OnStack Member access error");
+	Assert_Equal<i64>(obj.V64, 10, "OnStack Member access error");
+}
+
+void TestStructCopy()
+{
+	TestStruct obj;
+	obj.V8 = 10;
+	obj.V64 = 10;
+
+	TestStruct other = obj;
+
+	Assert_Equal<i8>(obj.V8, other.V8, "Struct Copy Error");
+	Assert_Equal<i64>(obj.V64, other.V64, "Struct Copy Error");
+}
+
+void TestStructDereference()
+{
+	TestStruct* obj = unsafe_cast<TestStruct*>(std::Memory::Alloc(sizeof<TestStruct>()));
+	obj->V8 = 10;
+	obj->V64 = 10;
+
+	TestStruct other = *obj;
+
+	Assert_Equal<i8>(obj->V8, other.V8, "Struct Dereference Error");
+	Assert_Equal<i64>(obj->V64, other.V64, "Struct Dereference Error");
+
+	std::Memory::Free(unsafe_cast<i8*>(obj));
+}
+
+void TestStructOnHeap()
+{
+	TestStruct* obj = unsafe_cast<TestStruct*>(std::Memory::Alloc(sizeof<TestStruct>()));
+	obj->V8 = 10;
+	obj->V64 = 10;
+
+	Assert_Equal<i8>(obj->V8, 10, "OnHeap Member access error");
+	Assert_Equal<i64>(obj->V64, 10, "OnHeap Member access error");
+
+	std::Memory::Free(unsafe_cast<i8*>(obj));
+}
+
+
+
+struct TestStructCTor
+{
+	i8 V8;
+	i64 V64;
+
+	TestStructCTor(i8 v8, i64 v64)
+	{
+		this->V8 = v8;
+		this->V64 = v64;
+	}
+}
+
+struct TestOverrideStructCTor
+{
+	i8 V8;
+	i64 V64;
+
+	TestOverrideStructCTor(i8 v8, i64 v64)
+	{
+		this->V8 = v8;
+		this->V64 = v64;
+	}
+
+	override i8 op_Add(TestOverrideStructCTor val, i64 other)
+	{
+		return val.V8 + unsafe_cast<i8>(other);
+	}
+
+	override void op_AddSelf(TestOverrideStructCTor* val, i64 other)
+	{
+		val->V8 += unsafe_cast<i8>(other);
+	}
+
+	override i8 op_Sub(TestOverrideStructCTor val, i64 other)
+	{
+		return val.V8 - unsafe_cast<i8>(other);
+	}
+
+	override void op_SubSelf(TestOverrideStructCTor* val, i64 other)
+	{
+		val->V8 -= unsafe_cast<i8>(other);
+	}
+
+	override i8 op_Mul(TestOverrideStructCTor val, i64 other)
+	{
+		return val.V8 * unsafe_cast<i8>(other);
+	}
+
+	override void op_MulSelf(TestOverrideStructCTor* val, i64 other)
+	{
+		val->V8 *= unsafe_cast<i8>(other);
+	}
+
+
+	override i8 op_Div(TestOverrideStructCTor val, i64 other)
+	{
+		return val.V8 / unsafe_cast<i8>(other);
+	}
+
+	override void op_DivSelf(TestOverrideStructCTor* val, i64 other)
+	{
+		val->V8 /= unsafe_cast<i8>(other);
+	}
+
+
+	override i8 op_Mod(TestOverrideStructCTor val, i64 other)
+	{
+		return val.V8 % unsafe_cast<i8>(other);
+	}
+
+	override void op_ModSelf(TestOverrideStructCTor* val, i64 other)
+	{
+		val->V8 %= unsafe_cast<i8>(other);
+	}
+
+	override i8 op_And(TestOverrideStructCTor val, i64 other)
+	{
+		return val.V8 & unsafe_cast<i8>(other);
+	}
+
+	override void op_AndSelf(TestOverrideStructCTor* val, i64 other)
+	{
+		val->V8 &= unsafe_cast<i8>(other);
+	}
+
+	override i8 op_Or(TestOverrideStructCTor val, i64 other)
+	{
+		return val.V8 | unsafe_cast<i8>(other);
+	}
+
+	override void op_OrSelf(TestOverrideStructCTor* val, i64 other)
+	{
+		val->V8 |= unsafe_cast<i8>(other);
+	}
+
+	override i8 op_XOr(TestOverrideStructCTor val, i64 other)
+	{
+		return val.V8 ^ unsafe_cast<i8>(other);
+	}
+
+	override void op_XOrSelf(TestOverrideStructCTor* val, i64 other)
+	{
+		val->V8 ^= unsafe_cast<i8>(other);
+	}
+
+	override i8 op_Equal(TestOverrideStructCTor val, i64 other)
+	{
+		return val.V8 == unsafe_cast<i8>(other);
+	}
+
+	override i8 op_NotEqual(TestOverrideStructCTor val, i64 other)
+	{
+		return val.V8 != unsafe_cast<i8>(other);
+	}
+
+	override i8 op_GreaterOrEqual(TestOverrideStructCTor val, i64 other)
+	{
+		return val.V8 >= unsafe_cast<i8>(other);
+	}
+
+	override i8 op_GreaterThan(TestOverrideStructCTor val, i64 other)
+	{
+		return val.V8 > unsafe_cast<i8>(other);
+	}
+	override i8 op_LessOrEqual(TestOverrideStructCTor val, i64 other)
+	{
+		return val.V8 <= unsafe_cast<i8>(other);
+	}
+
+	override i8 op_LessThan(TestOverrideStructCTor val, i64 other)
+	{
+		return val.V8 < unsafe_cast<i8>(other);
+	}
+
+}
+
+void TestStructOverrides()
+{
+	TestOverrideStructCTor obj(10, 10);
+
+	Assert_Equal<i8>(obj + 1, 11, "Override Add error");
+	Assert_Equal<i8>(1 + obj, 11, "Override Add error");
+	obj += 1;
+	obj += 1;
+	Assert_Equal<i8>(obj.V8, 12, "Override AddSelf error");
+
+	Assert_Equal<i8>(obj - 1, 11, "Override Sub error");
+	obj -= 1;
+	Assert_Equal<i8>(obj.V8, 11, "Override SubSelf error");
+
+	Assert_Equal<i8>(obj * 2, 22, "Override Mul error");
+	Assert_Equal<i8>(2 * obj, 22, "Override Mul error");
+	obj *= 2;
+	Assert_Equal<i8>(obj.V8, 22, "Override MulSelf error");
+
+	Assert_Equal<i8>(obj / 2, 11, "Override Div error");
+	obj /= 2;
+	Assert_Equal<i8>(obj.V8, 11, "Override DivSelf error");
+
+	Assert_Equal<i8>(obj % 10, 1, "Override Mod error");
+	obj %= 10;
+	Assert_Equal<i8>(obj.V8, 1, "Override ModSelf error");
+
+	Assert_Equal<i8>(obj & 0, 0, "Override And error");
+	obj &= 0;
+	Assert_Equal<i8>(obj.V8, 0, "Override AndSelf error");
+
+	Assert_Equal<i8>(obj | 1, 1, "Override Or error");
+	obj |= 1;
+	Assert_Equal<i8>(obj.V8, 1, "Override OrSelf error");
+
+	Assert_Equal<i8>(obj ^ 1, 0, "Override XOr error");
+	obj ^= 1;
+	Assert_Equal<i8>(obj.V8, 0, "Override XOrSelf error");
+
+
+	obj.V8 = 1;
+	Assert_True<i8>(obj == 1, "Override Equal error");
+	Assert_True<i8>(obj != 2, "Override NotEqual error");
+	Assert_True<i8>(obj > 0, "Override GreaterThan error");
+	Assert_True<i8>(obj >= 1, "Override GreaterOrEqual error");
+	Assert_True<i8>(obj < 2, "Override LessThan error");
+	Assert_True<i8>(obj <= 1, "Override LessrOrEqual error");
+}
+
+void TestStructConstructor()
+{
+	TestStructCTor obj(10, 10);
+
+	Assert_Equal<i8>(obj.V8, 10, "Constructor error");
+	Assert_Equal<i64>(obj.V64, 10, "Constructor error");
+
+}
+
+void OnStackArray<T>()
+{
+	Array<T> elems(10);
+
+	T count = 0;
+	while(count < 10)
+	{
+		elems.Set(unsafe_cast<i64>(count), count);
+		count = count + 1;
+	}
+
+	count = 0;
+	while(count < 10)
+	{
+		Assert_Equal<T>(count, elems.Get(unsafe_cast<i64>(count)), "Array Element Error");
+		count = count + 1;
+	}
+
+	elems.Dispose();
+}
+
+void OnHeapArray<T>()
+{
+	Array<T>* elems = new Array<T>(10);
+
+	T count = 0;
+	while(count < 10)
+	{
+		elems->Set(unsafe_cast<i64>(count), count);
+		count = count + 1;
+	}
+
+	count = 0;
+	while(count < 10)
+	{
+		Assert_Equal<T>(count, elems->Get(unsafe_cast<i64>(count)), "Array Element Error");
+		count = count + 1;
+	}
+
+	elems->Dispose();
+	std::Memory::Free(unsafe_cast<i8*>(elems));
+}
+
+void OnStackStack<T>()
+{
+	Stack<T> stack(2);
+
+	stack.Push(5);
+	stack.Push(33);
+
+	Assert_Equal<T>(stack.Pop(), 33, "Stack Element Error");
+	Assert_Equal<T>(stack.Pop(), 5, "Stack Element Error");
+
+	stack.Dispose();
+}
+
+void OnHeapStack<T>()
+{
+	Stack<T>* stack = new Stack<T>(2);
+
+	stack->Push(5);
+	stack->Push(33);
+
+	Assert_Equal<T>(stack->Pop(), 33, "Stack Element Error");
+	Assert_Equal<T>(stack->Pop(), 5, "Stack Element Error");
+
+	stack->Dispose();
+	std::Memory::Free(unsafe_cast<i8*>(stack));
+}
+
+void OnStackLL<T>()
+{
+	LinkedList<T> ll();
+
+	ll.Add(69);
+	ll.Add(66);
+	ll.Add(22);
+
+	Assert_Equal<T>(ll.Get(0), 69, "Linked List Element Error");
+	Assert_Equal<T>(ll.Get(1), 66, "Linked List Element Error");
+	Assert_Equal<T>(ll.Get(2), 22, "Linked List Element Error");
+
+	ll.Set(1, 54);
+
+	Assert_Equal<T>(ll.Get(1), 54, "Linked List Element Error");
+
+	ll.RemoveAt(1);
+
+	Assert_Equal<T>(ll.Get(0), 69, "Linked List Element Error");
+	Assert_Equal<T>(ll.Get(1), 22, "Linked List Element Error");
+
+	ll.Insert(1, 42);
+
+	Assert_Equal<T>(ll.Get(0), 69, "Linked List Element Error");
+	Assert_Equal<T>(ll.Get(1), 42, "Linked List Element Error");
+	Assert_Equal<T>(ll.Get(2), 22, "Linked List Element Error");
+
+	ll.Clear();
+
+	Assert_Equal<i64>(ll.GetLength(), 0, "Linked List Clear Error");
+}
+
+void OnHeapLL<T>()
+{
+	LinkedList<T>* ll = new LinkedList<T>();
+
+	ll->Add(69);
+	ll->Add(66);
+	ll->Add(22);
+
+	Assert_Equal<T>(ll->Get(0), 69, "Linked List Element Error");
+	Assert_Equal<T>(ll->Get(1), 66, "Linked List Element Error");
+	Assert_Equal<T>(ll->Get(2), 22, "Linked List Element Error");
+
+	ll->Set(1, 54);
+
+	Assert_Equal<T>(ll->Get(1), 54, "Linked List Element Error");
+
+	ll->RemoveAt(1);
+
+	Assert_Equal<T>(ll->Get(0), 69, "Linked List Element Error");
+	Assert_Equal<T>(ll->Get(1), 22, "Linked List Element Error");
+
+	ll->Insert(1, 42);
+
+	Assert_Equal<T>(ll->Get(0), 69, "Linked List Element Error");
+	Assert_Equal<T>(ll->Get(1), 42, "Linked List Element Error");
+	Assert_Equal<T>(ll->Get(2), 22, "Linked List Element Error");
+
+	ll->Clear();
+
+	Assert_Equal<i64>(ll->GetLength(), 0, "Linked List Clear Error");
+	std::Memory::Free(unsafe_cast<i8*>(ll));
+}
+
+void OnStackQueue<T>()
+{
+	Queue<T> queue();
+	queue.Enqueue(66);
+	queue.Enqueue(69);
+	queue.Enqueue(22);
+	Assert_Equal<T>(queue.Dequeue(), 66, "Queue Element Error");
+	Assert_Equal<T>(queue.Dequeue(), 69, "Queue Element Error");
+	Assert_Equal<T>(queue.Peek(), 22, "Queue Element Error");
+	queue.Clear();
+
+	Assert_Equal<i64>(queue.GetLength(), 0, "Queue Clear Error");
+
+}
+
+void OnHeapQueue<T>()
+{
+	Queue<T>* queue = new Queue<T>();
+	queue->Enqueue(66);
+	queue->Enqueue(69);
+	queue->Enqueue(22);
+	Assert_Equal<T>(queue->Dequeue(), 66, "Queue Element Error");
+	Assert_Equal<T>(queue->Dequeue(), 69, "Queue Element Error");
+	Assert_Equal<T>(queue->Peek(), 22, "Queue Element Error");
+	queue->Clear();
+
+	Assert_Equal<i64>(queue->GetLength(), 0, "Queue Clear Error");
+
+}
+
+void PointerArrayAccess<T>()
+{
+	TestStructCTor* buffer = unsafe_cast<TestStructCTor*>(std::Memory::Alloc(sizeof<TestStructCTor>() * 2));
+
+	
+
+	const_ctor(buffer, 1, 2);
+	const_ctor(unsafe_cast<TestStructCTor*>(std::Pointer::Add(unsafe_cast<i8*>(buffer), sizeof<TestStructCTor>())), 3, 4);
+
+	T zero = 0;
+	T one = 1;
+
+	Assert_Equal<i8>(buffer[zero]->V8, 1, "Array Access Error");
+	Assert_Equal<i64>(buffer[zero]->V64, 2, "Array Access Error");
+	Assert_Equal<i8>(buffer[one]->V8, 3, "Array Access Error");
+	Assert_Equal<i64>(buffer[one]->V64, 4, "Array Access Error");
+
+	const_ctor(buffer[zero], 5, 6);
+	const_ctor(buffer[one], 7, 8);
+
+	Assert_Equal<i8>(buffer[zero]->V8, 5, "Array Access Error");
+	Assert_Equal<i64>(buffer[zero]->V64, 6, "Array Access Error");
+	Assert_Equal<i8>(buffer[one]->V8, 7, "Array Access Error");
+	Assert_Equal<i64>(buffer[one]->V64, 8, "Array Access Error");
+
+	std::Memory::Free(unsafe_cast<i8*>(buffer));
+}
+
+void TestSwitchCase<T>()
+{
+	T value = 10;
+	i8 result = 0;
+	switch(value)
+	{
+		case 10:
+			result = 1;
+			break;
+	}
+	Assert_True<i8>(result, "Switch Case: Case 10 was not hit");
+
+	result = 0;
+	switch(value)
+	{
+		case 1:
+		case 10:
+		case 22:
+			result = 1;
+			break;
+	}
+
+	Assert_True<i8>(result, "Switch Case: Case Fallthrough Failed");
+
+	result = 0;
+	switch(value)
+	{
+		case 1:
+			break;
+		default:
+			result = 1;
+	}
+
+	Assert_True<i8>(result, "Switch Case: Case Default was not hit");
+}
+
+void TestForContinue<T>()
+{
+	T sum = 0;
+	for (T i = 0; i < 5; ++i)
+	{
+		if(i % 2 == 0)
+		{
+			continue;
+		}
+
+		sum += i;
+	}
+
+	Assert_Equal<T>(sum, 4, "For Loop: Continue Statement Error");
+}
+
+void TestWhileContinue<T>()
+{
+	T sum = 0;
+	T i = 0;
+	while(i < 5)
+	{
+		i++;
+
+		if(i % 2 == 0)
+		{
+			continue;
+		}
+		sum += i;
+	}
+	Assert_Equal<T>(sum, 9, "While Loop: Continue Statement Error");
+}
+void TestWhileBreak<T>()
+{
+	T sum = 0;
+	T i = 0;
+	while(i < 5)
+	{
+		i++;
+
+		sum += i;
+
+		if(i >= 2)
+		{
+			break;
+		}
+	}
+	Assert_Equal<T>(sum, 3, "While Loop: Break Statement Error");
+}
+
+void TestForBreak<T>()
+{
+	T sum = 0;
+	for (T i = 0; i < 10; ++i)
+	{
+		if(i >= 5)
+		{
+			break;
+		}
+
+		sum += i;
+	}
+
+	Assert_Equal<T>(sum, 10, "For Loop: Break Statement Error");
+}
+
+#entry Main
+void Main() 
+{
+	std::Console::WriteCStrLine("Test False<i8>");
+	TestFalse<i8>();
+	std::Console::WriteCStrLine("Test False<i16>");
+	TestFalse<i16>();
+	std::Console::WriteCStrLine("Test False<i32>");
+	TestFalse<i32>();
+	std::Console::WriteCStrLine("Test False<i64>");
+	TestFalse<i64>();
+	
+	std::Console::WriteCStrLine("Test True<i8>");
+	TestTrue<i8>();
+	std::Console::WriteCStrLine("Test True<i16>");
+	TestTrue<i16>();
+	std::Console::WriteCStrLine("Test True<i32>");
+	TestTrue<i32>();
+	std::Console::WriteCStrLine("Test True<i64>");
+	TestTrue<i64>();
+
+	std::Console::WriteCStrLine("Test Equal<i8>");
+	TestEqual<i8>();
+	std::Console::WriteCStrLine("Test Equal<i16>");
+	TestEqual<i16>();
+	std::Console::WriteCStrLine("Test Equal<i32>");
+	TestEqual<i32>();
+	std::Console::WriteCStrLine("Test Equal<i64>");
+	TestEqual<i64>();
+
+	std::Console::WriteCStrLine("Test NotEqual<i8>");
+	TestNotEqual<i8>();
+	std::Console::WriteCStrLine("Test NotEqual<i16>");
+	TestNotEqual<i16>();
+	std::Console::WriteCStrLine("Test NotEqual<i32>");
+	TestNotEqual<i32>();
+	std::Console::WriteCStrLine("Test NotEqual<i64>");
+	TestNotEqual<i64>();
+
+	std::Console::WriteCStrLine("Test Comparisons<i8>");
+	TestComparisons<i8>();
+	std::Console::WriteCStrLine("Test Comparisons<i16>");
+	TestComparisons<i16>();
+	std::Console::WriteCStrLine("Test Comparisons<i32>");
+	TestComparisons<i32>();
+	std::Console::WriteCStrLine("Test Comparisons<i64>");
+	TestComparisons<i64>();
+
+	std::Console::WriteCStrLine("Test Shift<i8>");
+	TestShift<i8>();
+	std::Console::WriteCStrLine("Test Shift<i16>");
+	TestShift<i16>();
+	std::Console::WriteCStrLine("Test Shift<i32>");
+	TestShift<i32>();
+	std::Console::WriteCStrLine("Test Shift<i64>");
+	TestShift<i64>();
+
+	std::Console::WriteCStrLine("Test Add<i8>");
+	TestAdd<i8>();
+	std::Console::WriteCStrLine("Test Add<i16>");
+	TestAdd<i16>();
+	std::Console::WriteCStrLine("Test Add<i32>");
+	TestAdd<i32>();
+	std::Console::WriteCStrLine("Test Add<i64>");
+	TestAdd<i64>();
+
+	std::Console::WriteCStrLine("Test TestAddSelf<i8>");
+	TestAddSelf<i8>();
+	std::Console::WriteCStrLine("Test TestAddSelf<i16>");
+	TestAddSelf<i16>();
+	std::Console::WriteCStrLine("Test TestAddSelf<i32>");
+	TestAddSelf<i32>();
+	std::Console::WriteCStrLine("Test TestAddSelf<i64>");
+	TestAddSelf<i64>();
+
+	std::Console::WriteCStrLine("Test Subtract<i8>");
+	TestSubtract<i8>();
+	std::Console::WriteCStrLine("Test Subtract<i16>");
+	TestSubtract<i16>();
+	std::Console::WriteCStrLine("Test Subtract<i32>");
+	TestSubtract<i32>();
+	std::Console::WriteCStrLine("Test Subtract<i64>");
+	TestSubtract<i64>();
+
+	std::Console::WriteCStrLine("Test SubtractSelf<i8>");
+	TestSubtractSelf<i8>();
+	std::Console::WriteCStrLine("Test SubtractSelf<i16>");
+	TestSubtractSelf<i16>();
+	std::Console::WriteCStrLine("Test SubtractSelf<i32>");
+	TestSubtractSelf<i32>();
+	std::Console::WriteCStrLine("Test SubtractSelf<i64>");
+	TestSubtractSelf<i64>();
+
+	std::Console::WriteCStrLine("Test Multiply<i8>");
+	TestMultiply<i8>();
+	std::Console::WriteCStrLine("Test Multiply<i16>");
+	TestMultiply<i16>();
+	std::Console::WriteCStrLine("Test Multiply<i32>");
+	TestMultiply<i32>();
+	std::Console::WriteCStrLine("Test Multiply<i64>");
+	TestMultiply<i64>();
+
+	std::Console::WriteCStrLine("Test MultiplySelf<i8>");
+	TestMultiplySelf<i8>();
+	std::Console::WriteCStrLine("Test MultiplySelf<i16>");
+	TestMultiplySelf<i16>();
+	std::Console::WriteCStrLine("Test MultiplySelf<i32>");
+	TestMultiplySelf<i32>();
+	std::Console::WriteCStrLine("Test MultiplySelf<i64>");
+	TestMultiplySelf<i64>();
+
+	std::Console::WriteCStrLine("Test Divide<i8>");
+	TestDivide<i8>();
+	std::Console::WriteCStrLine("Test Divide<i16>");
+	TestDivide<i16>();
+	std::Console::WriteCStrLine("Test Divide<i32>");
+	TestDivide<i32>();
+	std::Console::WriteCStrLine("Test Divide<i64>");
+	TestDivide<i64>();
+
+	std::Console::WriteCStrLine("Test DivideSelf<i8>");
+	TestDivideSelf<i8>();
+	std::Console::WriteCStrLine("Test DivideSelf<i16>");
+	TestDivideSelf<i16>();
+	std::Console::WriteCStrLine("Test DivideSelf<i32>");
+	TestDivideSelf<i32>();
+	std::Console::WriteCStrLine("Test DivideSelf<i64>");
+	TestDivideSelf<i64>();
+
+	std::Console::WriteCStrLine("Test Modulo<i8>");
+	TestModulo<i8>();
+	std::Console::WriteCStrLine("Test Modulo<i16>");
+	TestModulo<i16>();
+	std::Console::WriteCStrLine("Test Modulo<i32>");
+	TestModulo<i32>();
+	std::Console::WriteCStrLine("Test Modulo<i64>");
+	TestModulo<i64>();
+
+	std::Console::WriteCStrLine("Test ModuloSelf<i8>");
+	TestModuloSelf<i8>();
+	std::Console::WriteCStrLine("Test ModuloSelf<i16>");
+	TestModuloSelf<i16>();
+	std::Console::WriteCStrLine("Test ModuloSelf<i32>");
+	TestModuloSelf<i32>();
+	std::Console::WriteCStrLine("Test ModuloSelf<i64>");
+	TestModuloSelf<i64>();
+
+	std::Console::WriteCStrLine("Test And<i8>");
+	TestAnd<i8>();
+	std::Console::WriteCStrLine("Test And<i16>");
+	TestAnd<i16>();
+	std::Console::WriteCStrLine("Test And<i32>");
+	TestAnd<i32>();
+	std::Console::WriteCStrLine("Test And<i64>");
+	TestAnd<i64>();
+
+	std::Console::WriteCStrLine("Test AndSelf<i8>");
+	TestAndSelf<i8>();
+	std::Console::WriteCStrLine("Test AndSelf<i16>");
+	TestAndSelf<i16>();
+	std::Console::WriteCStrLine("Test AndSelf<i32>");
+	TestAndSelf<i32>();
+	std::Console::WriteCStrLine("Test AndSelf<i64>");
+	TestAndSelf<i64>();
+
+	std::Console::WriteCStrLine("Test Or<i8>");
+	TestOr<i8>();
+	std::Console::WriteCStrLine("Test Or<i16>");
+	TestOr<i16>();
+	std::Console::WriteCStrLine("Test Or<i32>");
+	TestOr<i32>();
+	std::Console::WriteCStrLine("Test Or<i64>");
+	TestOr<i64>();
+
+	std::Console::WriteCStrLine("Test OrSelf<i8>");
+	TestOrSelf<i8>();
+	std::Console::WriteCStrLine("Test OrSelf<i16>");
+	TestOrSelf<i16>();
+	std::Console::WriteCStrLine("Test OrSelf<i32>");
+	TestOrSelf<i32>();
+	std::Console::WriteCStrLine("Test OrSelf<i64>");
+	TestOrSelf<i64>();
+
+	std::Console::WriteCStrLine("Test XOr<i8>");
+	TestXOr<i8>();
+	std::Console::WriteCStrLine("Test XOr<i16>");
+	TestXOr<i16>();
+	std::Console::WriteCStrLine("Test XOr<i32>");
+	TestXOr<i32>();
+	std::Console::WriteCStrLine("Test XOr<i64>");
+	TestXOr<i64>();
+
+	std::Console::WriteCStrLine("Test XOrSelf<i8>");
+	TestXOrSelf<i8>();
+	std::Console::WriteCStrLine("Test XOrSelf<i16>");
+	TestXOrSelf<i16>();
+	std::Console::WriteCStrLine("Test XOrSelf<i32>");
+	TestXOrSelf<i32>();
+	std::Console::WriteCStrLine("Test XOrSelf<i64>");
+	TestXOrSelf<i64>();
+
+	std::Console::WriteCStrLine("Test TestLogicOr<i8>");
+	TestLogicOr<i8>();
+	std::Console::WriteCStrLine("Test TestLogicOr<i16>");
+	TestLogicOr<i16>();
+	std::Console::WriteCStrLine("Test TestLogicOr<i32>");
+	TestLogicOr<i32>();
+	std::Console::WriteCStrLine("Test TestLogicOr<i64>");
+	TestLogicOr<i64>();
+
+	std::Console::WriteCStrLine("Test TestLogicAnd<i8>");
+	TestLogicAnd<i8>();
+	std::Console::WriteCStrLine("Test TestLogicAnd<i16>");
+	TestLogicAnd<i16>();
+	std::Console::WriteCStrLine("Test TestLogicAnd<i32>");
+	TestLogicAnd<i32>();
+	std::Console::WriteCStrLine("Test TestLogicAnd<i64>");
+	TestLogicAnd<i64>();
+
+	std::Console::WriteCStrLine("Test TestPreValueDecrement<i8>");
+	TestPreValueDecrement<i8>();
+	std::Console::WriteCStrLine("Test TestPreValueDecrement<i16>");
+	TestPreValueDecrement<i16>();
+	std::Console::WriteCStrLine("Test TestPreValueDecrement<i32>");
+	TestPreValueDecrement<i32>();
+	std::Console::WriteCStrLine("Test TestPreValueDecrement<i64>");
+	TestPreValueDecrement<i64>();
+
+	std::Console::WriteCStrLine("Test TestPreValueIncrement<i8>");
+	TestPreValueIncrement<i8>();
+	std::Console::WriteCStrLine("Test TestPreValueIncrement<i16>");
+	TestPreValueIncrement<i16>();
+	std::Console::WriteCStrLine("Test TestPreValueIncrement<i32>");
+	TestPreValueIncrement<i32>();
+	std::Console::WriteCStrLine("Test TestPreValueIncrement<i64>");
+	TestPreValueIncrement<i64>();
+
+	std::Console::WriteCStrLine("Test TestPostValueDecrement<i8>");
+	TestPostValueDecrement<i8>();
+	std::Console::WriteCStrLine("Test TestPostValueDecrement<i16>");
+	TestPostValueDecrement<i16>();
+	std::Console::WriteCStrLine("Test TestPostValueDecrement<i32>");
+	TestPostValueDecrement<i32>();
+	std::Console::WriteCStrLine("Test TestPostValueDecrement<i64>");
+	TestPostValueDecrement<i64>();
+
+	std::Console::WriteCStrLine("Test TestPostValueIncrement<i8>");
+	TestPostValueIncrement<i8>();
+	std::Console::WriteCStrLine("Test TestPostValueIncrement<i16>");
+	TestPostValueIncrement<i16>();
+	std::Console::WriteCStrLine("Test TestPostValueIncrement<i32>");
+	TestPostValueIncrement<i32>();
+	std::Console::WriteCStrLine("Test TestPostValueIncrement<i64>");
+	TestPostValueIncrement<i64>();
+
+
+	std::Console::WriteCStrLine("Test TestWhile<i8>");
+	TestWhile<i8>();
+	std::Console::WriteCStrLine("Test TestWhile<i16>");
+	TestWhile<i16>();
+	std::Console::WriteCStrLine("Test TestWhile<i32>");
+	TestWhile<i32>();
+	std::Console::WriteCStrLine("Test TestWhile<i64>");
+	TestWhile<i64>();
+
+
+	std::Console::WriteCStrLine("Test TestFor<i8>");
+	TestFor<i8>();
+	std::Console::WriteCStrLine("Test TestFor<i16>");
+	TestFor<i16>();
+	std::Console::WriteCStrLine("Test TestFor<i32>");
+	TestFor<i32>();
+	std::Console::WriteCStrLine("Test TestFor<i64>");
+	TestFor<i64>();
+
+
+	std::Console::WriteCStrLine("Test TestTernary<i8>");
+	TestTernary<i8>();
+	std::Console::WriteCStrLine("Test TestTernary<i16>");
+	TestTernary<i16>();
+	std::Console::WriteCStrLine("Test TestTernary<i32>");
+	TestTernary<i32>();
+	std::Console::WriteCStrLine("Test TestTernary<i64>");
+	TestTernary<i64>();
+
+
+
+	std::Console::WriteCStrLine("Test StructOnStack");
+	TestStructOnStack();
+	std::Console::WriteCStrLine("Test StructOnHeap");
+	TestStructOnHeap();
+	std::Console::WriteCStrLine("Test StructCopy");
+	TestStructCopy();
+	std::Console::WriteCStrLine("Test StructDereference");
+	TestStructDereference();
+	std::Console::WriteCStrLine("Test StructConstructor");
+	TestStructConstructor();
+	std::Console::WriteCStrLine("Test StructOverrides");
+	TestStructOverrides();
+
+	std::Console::WriteCStrLine("Test ArrayOnStack<i8>");
+	OnStackArray<i8>();
+	std::Console::WriteCStrLine("Test ArrayOnHeap<i8>");
+	OnHeapArray<i8>();
+	std::Console::WriteCStrLine("Test StackOnStack<i8>");
+	OnStackStack<i8>();
+	std::Console::WriteCStrLine("Test ArrayOnHeap<i8>");
+	OnHeapStack<i8>();
+	std::Console::WriteCStrLine("Test LinkedListOnStack<i8>");
+	OnStackLL<i8>();
+	std::Console::WriteCStrLine("Test LinkedListOnHeap<i8>");
+	OnHeapLL<i8>();
+	std::Console::WriteCStrLine("Test QueueOnStack<i8>");
+	OnStackQueue<i8>();
+	std::Console::WriteCStrLine("Test QueueOnHeap<i8>");
+	OnHeapQueue<i8>();
+
+	std::Console::WriteCStrLine("Test ArrayOnStack<i16>");
+	OnStackArray<i16>();
+	std::Console::WriteCStrLine("Test ArrayOnHeap<i16>");
+	OnHeapArray<i16>();
+	std::Console::WriteCStrLine("Test StackOnStack<i16>");
+	OnStackStack<i16>();
+	std::Console::WriteCStrLine("Test ArrayOnHeap<i16>");
+	OnHeapStack<i16>();
+	std::Console::WriteCStrLine("Test LinkedListOnStack<i16>");
+	OnStackLL<i16>();
+	std::Console::WriteCStrLine("Test LinkedListOnHeap<i16>");
+	OnHeapLL<i16>();
+	std::Console::WriteCStrLine("Test QueueOnStack<i16>");
+	OnStackQueue<i16>();
+	std::Console::WriteCStrLine("Test QueueOnHeap<i16>");
+	OnHeapQueue<i16>();
+
+	std::Console::WriteCStrLine("Test ArrayOnStack<i32>");
+	OnStackArray<i32>();
+	std::Console::WriteCStrLine("Test ArrayOnHeap<i32>");
+	OnHeapArray<i32>();
+	std::Console::WriteCStrLine("Test StackOnStack<i32>");
+	OnStackStack<i32>();
+	std::Console::WriteCStrLine("Test ArrayOnHeap<i32>");
+	OnHeapStack<i32>();
+	std::Console::WriteCStrLine("Test LinkedListOnStack<i32>");
+	OnStackLL<i32>();
+	std::Console::WriteCStrLine("Test LinkedListOnHeap<i32>");
+	OnHeapLL<i32>();
+	std::Console::WriteCStrLine("Test QueueOnStack<i32>");
+	OnStackQueue<i32>();
+	std::Console::WriteCStrLine("Test QueueOnHeap<i32>");
+	OnHeapQueue<i32>();
+
+	std::Console::WriteCStrLine("Test ArrayOnStack<i64>");
+	OnStackArray<i64>();
+	std::Console::WriteCStrLine("Test ArrayOnHeap<i64>");
+	OnHeapArray<i64>();
+	std::Console::WriteCStrLine("Test StackOnStack<i64>");
+	OnStackStack<i64>();
+	std::Console::WriteCStrLine("Test ArrayOnHeap<i64>");
+	OnHeapStack<i64>();
+	std::Console::WriteCStrLine("Test LinkedListOnStack<i64>");
+	OnStackLL<i64>();
+	std::Console::WriteCStrLine("Test LinkedListOnHeap<i64>");
+	OnHeapLL<i64>();
+	std::Console::WriteCStrLine("Test QueueOnStack<i64>");
+	OnStackQueue<i64>();
+	std::Console::WriteCStrLine("Test QueueOnHeap<i64>");
+	OnHeapQueue<i64>();
+
+	std::Console::WriteCStrLine("Test PointerArrayAccess<i8>");
+	PointerArrayAccess<i8>();
+	std::Console::WriteCStrLine("Test PointerArrayAccess<i16>");
+	PointerArrayAccess<i16>();
+	std::Console::WriteCStrLine("Test PointerArrayAccess<i32>");
+	PointerArrayAccess<i32>();
+	std::Console::WriteCStrLine("Test PointerArrayAccess<i64>");
+	PointerArrayAccess<i64>();
+
+	std::Console::WriteCStrLine("Test TestWhileBreak<i8>");
+	TestWhileBreak<i8>();
+	std::Console::WriteCStrLine("Test TestWhileBreak<i16>");
+	TestWhileBreak<i16>();
+	std::Console::WriteCStrLine("Test TestWhileBreak<i32>");
+	TestWhileBreak<i32>();
+	std::Console::WriteCStrLine("Test TestWhileBreak<i64>");
+	TestWhileBreak<i64>();
+
+	std::Console::WriteCStrLine("Test TestWhileContinue<i8>");
+	TestWhileContinue<i8>();
+	std::Console::WriteCStrLine("Test TestWhileContinue<i16>");
+	TestWhileContinue<i16>();
+	std::Console::WriteCStrLine("Test TestWhileContinue<i32>");
+	TestWhileContinue<i32>();
+	std::Console::WriteCStrLine("Test TestWhileContinue<i64>");
+	TestWhileContinue<i64>();
+
+
+	std::Console::WriteCStrLine("Test TestForBreak<i8>");
+	TestForBreak<i8>();
+	std::Console::WriteCStrLine("Test TestForBreak<i16>");
+	TestForBreak<i16>();
+	std::Console::WriteCStrLine("Test TestForBreak<i32>");
+	TestForBreak<i32>();
+	std::Console::WriteCStrLine("Test TestForBreak<i64>");
+	TestForBreak<i64>();
+
+	std::Console::WriteCStrLine("Test TestForContinue<i8>");
+	TestForContinue<i8>();
+	std::Console::WriteCStrLine("Test TestForContinue<i16>");
+	TestForContinue<i16>();
+	std::Console::WriteCStrLine("Test TestForContinue<i32>");
+	TestForContinue<i32>();
+	std::Console::WriteCStrLine("Test TestForContinue<i64>");
+	TestForContinue<i64>();
+
+	std::Console::WriteCStrLine("Test TestSwitchCase<i8>");
+	TestSwitchCase<i8>();
+	std::Console::WriteCStrLine("Test TestSwitchCase<i16>");
+	TestSwitchCase<i16>();
+	std::Console::WriteCStrLine("Test TestSwitchCase<i32>");
+	TestSwitchCase<i32>();
+	std::Console::WriteCStrLine("Test TestSwitchCase<i64>");
+	TestSwitchCase<i64>();
+
+}
+
+

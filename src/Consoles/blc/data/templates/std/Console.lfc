@@ -1,0 +1,16 @@
+extern void std::Console::WriteChar(i8 char);
+extern void std::Console::WriteCStr(i8* cstr);
+extern void std::Console::WriteCStrLine(i8* cstr);
+
+extern void std::Console::WriteNum8(i8 num);
+extern void std::Console::WriteNum16(i16 num);
+extern void std::Console::WriteNum32(i32 num);
+extern void std::Console::WriteNum64(i64 num);
+
+extern void std::Console::WriteHex8(i8 num);
+extern void std::Console::WriteHex16(i16 num);
+extern void std::Console::WriteHex32(i32 num);
+extern void std::Console::WriteHex64(i64 num);
+
+extern i8 std::Console::ReadChar();
+extern i64 std::Console::ReadLine(i8* ptr, i64 size);

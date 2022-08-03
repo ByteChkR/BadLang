@@ -1,0 +1,41 @@
+struct Vector2<T>
+{
+	T X;
+	T Y;
+
+	Vector2(T x, T y)
+	{
+		this->X = x;
+		this->Y = y;
+	}
+}
+
+struct Vector3<T>
+{
+	T X;
+	T Y;
+	T Z;
+
+	Vector3(T x, T y, T z)
+	{
+		this->X = x;
+		this->Y = y;
+		this->Z = z;
+	}
+}
+
+struct Vector4<T>
+{
+	T X;
+	T Y;
+	T Z;
+	T W;
+
+	Vector4(T x, T y, T z, T w)
+	{
+		this->X = x;
+		this->Y = y;
+		this->Z = z;
+		this->W = w;
+	}
+}

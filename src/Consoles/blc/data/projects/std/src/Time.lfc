@@ -1,0 +1,31 @@
+namespace Time
+{
+	//Import Time Implementation
+	#include "./internal/Time.lfasm"
+	#import LFASM_Time
+
+	//Define Extern Functions
+	extern i64 LFASM_Time::GetUnixMicroSeconds();
+
+	//Define Export Functions
+	#export GetUnixMicroSeconds
+	#export GetUnixMilliSeconds
+	#export GetUnixSeconds
+
+	i64 GetUnixMicroSeconds()
+	{
+		return LFASM_Time::GetUnixMicroSeconds();
+	}
+
+	i64 GetUnixMilliSeconds()
+	{
+		return GetUnixMicroSeconds() / 1000;
+	}
+
+	i64 GetUnixSeconds()
+	{
+		return GetUnixMilliSeconds() / 1000;
+	}
+
+
+}

@@ -1,0 +1,24 @@
+namespace Core
+{
+	//Import Core Implementation
+	#include "./internal/Core.lfasm"
+	#import LFASM_Core
+
+	//Define Extern Functions
+	extern void LFASM_Core::Halt();
+	extern void LFASM_Core::Error(i8* message);
+
+	//Define Export Functions
+	#export Halt
+	#export Error
+
+	void Halt()
+	{
+		LFASM_Core::Halt();
+	}
+
+	void Error(i8* message)
+	{
+		LFASM_Core::Error(message);
+	}
+}

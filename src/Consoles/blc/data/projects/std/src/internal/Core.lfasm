@@ -1,0 +1,10 @@
+.code LFASM_Core
+{
+	.export Halt
+	Halt:
+		Halt
+
+	.export Error
+	Error:
+		Error
+}

@@ -1,0 +1,67 @@
+namespace MemoryBus
+{
+	#include "./internal/MemoryBus.lfasm"
+	#import LFASM_MemoryBus
+
+	extern void LFASM_MemoryBus::Write8(i8 value, i8* address);
+	extern void LFASM_MemoryBus::Write16(i16 value, i8* address);
+	extern void LFASM_MemoryBus::Write32(i32 value, i8* address);
+	extern void LFASM_MemoryBus::Write64(i64 value, i8* address);
+
+	extern i8 LFASM_MemoryBus::Read8(i8* address);
+	extern i16 LFASM_MemoryBus::Read16(i8* address);
+	extern i32 LFASM_MemoryBus::Read32(i8* address);
+	extern i64 LFASM_MemoryBus::Read64(i8* address);
+
+	#export Write8
+	void Write8(i8* address, i8 value)
+	{
+		LFASM_MemoryBus::Write8(value, address);
+	}
+
+
+	#export Write16
+	void Write16(i8* address, i16 value)
+	{
+		LFASM_MemoryBus::Write16(value, address);
+	}
+
+
+	#export Write32
+	void Write32(i8* address, i32 value)
+	{
+		LFASM_MemoryBus::Write32(value, address);
+	}
+
+	#export Write64
+	void Write64(i8* address, i64 value)
+	{
+		LFASM_MemoryBus::Write64(value, address);
+	}
+
+
+	#export Read8
+	i8 Read8(i8* address)
+	{
+		return LFASM_MemoryBus::Read8(address);
+	}
+
+	#export Read16
+	i16 Read16(i8* address)
+	{
+		return LFASM_MemoryBus::Read16(address);
+	}
+
+	#export Read32
+	i32 Read32(i8* address)
+	{
+		return LFASM_MemoryBus::Read32(address);
+	}
+
+	#export Read64
+	i64 Read64(i8* address)
+	{
+		return LFASM_MemoryBus::Read64(address);
+	}
+
+}

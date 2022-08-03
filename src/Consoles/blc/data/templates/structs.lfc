@@ -1,0 +1,7 @@
+#inline "$(LFC_TEMPLATES)/structs/Array.lfc"
+#inline "$(LFC_TEMPLATES)/structs/File.lfc"
+#inline "$(LFC_TEMPLATES)/structs/LinkedList.lfc"
+#inline "$(LFC_TEMPLATES)/structs/Queue.lfc"
+#inline "$(LFC_TEMPLATES)/structs/Stack.lfc"
+#inline "$(LFC_TEMPLATES)/structs/String.lfc"
+#inline "$(LFC_TEMPLATES)/structs/Vector.lfc"
